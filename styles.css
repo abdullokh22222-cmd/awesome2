@@ -266,10 +266,18 @@ h3 {
 
 .hero-text {
   max-width: 720px;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
   color: #d4deec;
   font-size: clamp(18px, 2vw, 23px);
   line-height: 1.55;
+}
+
+.hero-description {
+  max-width: 760px;
+  margin-bottom: 32px;
+  color: rgba(212, 222, 236, 0.82);
+  font-size: clamp(15px, 1.45vw, 18px);
+  line-height: 1.65;
 }
 
 .hero-actions,
