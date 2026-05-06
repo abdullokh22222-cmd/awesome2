@@ -27,7 +27,10 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Manrope", Arial, sans-serif;
+  font-feature-settings: "liga" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
   background:
     linear-gradient(90deg, rgba(167, 230, 255, 0.028) 1px, transparent 1px),
     linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
@@ -109,7 +112,7 @@ textarea {
   border-radius: 6px;
   color: var(--muted);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   background: transparent;
   cursor: pointer;
 }
@@ -138,7 +141,7 @@ textarea {
   gap: clamp(18px, 3vw, 34px);
   color: var(--muted);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .main-nav a {
@@ -158,7 +161,7 @@ textarea {
   border-radius: var(--radius);
   color: var(--text);
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 800;
   background:
     linear-gradient(135deg, rgba(110, 231, 255, 0.1), rgba(155, 140, 255, 0.08)),
     rgba(255, 255, 255, 0.025);
@@ -226,7 +229,7 @@ textarea {
   margin: 0 0 16px;
   color: var(--blue);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -239,6 +242,7 @@ p {
 }
 
 h1 {
+  font-family: "Inter", "Manrope", Arial, sans-serif;
   max-width: 940px;
   margin-bottom: 24px;
   font-size: clamp(42px, 6.4vw, 86px);
@@ -251,8 +255,9 @@ h1 {
 h2 {
   max-width: 860px;
   margin-bottom: 0;
-  font-size: clamp(32px, 4.8vw, 64px);
-  line-height: 1;
+  font-size: clamp(30px, 4.4vw, 58px);
+  font-weight: 800;
+  line-height: 1.08;
 }
 
 .section-heading h2,
@@ -266,6 +271,13 @@ h2 {
 h3 {
   margin-bottom: 10px;
   font-size: 20px;
+  font-weight: 800;
+}
+
+.hero .eyebrow,
+.hero-text,
+.hero-description {
+  font-family: "Inter", "Manrope", Arial, sans-serif;
 }
 
 .hero-text {
@@ -273,6 +285,7 @@ h3 {
   margin-bottom: 12px;
   color: #d4deec;
   font-size: clamp(18px, 2vw, 23px);
+  font-weight: 700;
   line-height: 1.55;
 }
 
@@ -281,6 +294,7 @@ h3 {
   margin-bottom: 32px;
   color: rgba(212, 222, 236, 0.82);
   font-size: clamp(15px, 1.45vw, 18px);
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -300,7 +314,7 @@ h3 {
   padding: 0 22px;
   border: 0;
   border-radius: var(--radius);
-  font-weight: 900;
+  font-weight: 800;
   cursor: pointer;
 }
 
@@ -358,7 +372,7 @@ h3 {
 .hero-stats span {
   color: var(--muted);
   font-size: 11px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -449,7 +463,7 @@ h3 {
   border-radius: var(--radius);
   color: var(--blue);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   background: rgba(110, 231, 255, 0.055);
 }
 
@@ -492,7 +506,7 @@ h3 {
 .contact-links span {
   color: var(--muted);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -554,7 +568,7 @@ h3 {
   margin-bottom: 8px;
   color: var(--blue);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -590,7 +604,7 @@ h3 {
   display: block;
   margin-bottom: 12px;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .about-panel {
