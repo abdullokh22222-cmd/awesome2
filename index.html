@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HYPE PRODUCTION | Cinematic Video Studio</title>
+    <meta
+      name="description"
+      content="HYPE PRODUCTION creates commercials, AI videos, reels, promo films and cinematic content for modern brands."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="HYPE PRODUCTION home">
+        <img class="brand-logo" src="assets/hype-logo-transparent.png" alt="HYPE PRODUCTION" />
+      </a>
+
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#home" data-i18n="navHome">Home</a>
+        <a href="#services" data-i18n="navServices">Services</a>
+        <a href="#works" data-i18n="navWorks">Works</a>
+        <a href="#contact" data-i18n="navContact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switcher" aria-label="Language switcher">
+          <button class="active" type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ru">RU</button>
+          <button type="button" data-lang="uz">UZ</button>
+        </div>
+        <a class="header-cta" href="#contact" data-i18n="headerCta">Start project</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+          <source src="assets/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-noise" aria-hidden="true"></div>
+        <button class="video-toggle" type="button" data-i18n="videoPause">Pause video</button>
+
+        <div class="hero-content">
+          <p class="eyebrow" data-i18n="heroEyebrow">Cinematic video production studio</p>
+          <h1 data-i18n="heroTitle">We create videos that make brands look powerful</h1>
+          <p class="hero-text" data-i18n="heroText">
+            Commercials, AI videos, reels, promo films and cinematic content for modern brands.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact" data-i18n="heroPrimary">Start a project</a>
+            <a class="btn secondary" href="#works" data-i18n="heroSecondary">View works</a>
+          </div>
+          <div class="hero-stats" aria-label="Studio statistics">
+            <div>
+              <strong>1000+</strong>
+              <span data-i18n="statVideos">videos created</span>
+            </div>
+            <div>
+              <strong>7+</strong>
+              <span data-i18n="statCompanies">companies</span>
+            </div>
+            <div>
+              <strong>15</strong>
+              <span data-i18n="statBloggers">bloggers</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section services reveal" id="services">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="servicesEyebrow">Services</p>
+          <h2 data-i18n="servicesTitle">Production built for attention, trust and conversion.</h2>
+        </div>
+
+        <div class="service-grid">
+          <article class="premium-card reveal">
+            <span class="service-icon">CM</span>
+            <h3 data-i18n="serviceCommercialTitle">Commercial Videos</h3>
+            <p data-i18n="serviceCommercialText">High-impact videos for campaigns, launches and paid media.</p>
+          </article>
+          <article class="premium-card reveal">
+            <span class="service-icon">AI</span>
+            <h3 data-i18n="serviceAiTitle">AI Generated Videos</h3>
+            <p data-i18n="serviceAiText">Concept worlds, cinematic scenes and visual systems powered by AI.</p>
+          </article>
+          <article class="premium-card reveal">
+            <span class="service-icon">RL</span>
+            <h3 data-i18n="serviceReelsTitle">Social Media Reels</h3>
+            <p data-i18n="serviceReelsText">Fast, sharp vertical edits built for retention and sharing.</p>
+          </article>
+          <article class="premium-card reveal">
+            <span class="service-icon">BR</span>
+            <h3 data-i18n="serviceBrandTitle">Brand Promo Films</h3>
+            <p data-i18n="serviceBrandText">Premium storytelling that makes the brand feel bigger and stronger.</p>
+          </article>
+          <article class="premium-card reveal">
+            <span class="service-icon">MD</span>
+            <h3 data-i18n="serviceMotionTitle">Motion Design</h3>
+            <p data-i18n="serviceMotionText">Titles, transitions, UI motion, kinetic typography and visual polish.</p>
+          </article>
+          <article class="premium-card reveal">
+            <span class="service-icon">AD</span>
+            <h3 data-i18n="serviceProductTitle">Product Ads</h3>
+            <p data-i18n="serviceProductText">Clean product-focused videos for offers, funnels and launches.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section portfolio reveal" id="works">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="portfolioEyebrow">Portfolio</p>
+          <h2 data-i18n="portfolioTitle">Dark cinematic systems for modern brands.</h2>
+        </div>
+
+        <div class="portfolio-grid">
+          <article class="project-card reveal">
+            <div class="project-thumb video-thumb">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="assets/ugc-blogger-content.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p data-i18n="projectOneCategory">UGC</p>
+            <h3 data-i18n="projectOneTitle">UGC blogger content</h3>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb video-thumb">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="assets/hyper-motion-product-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p data-i18n="projectTwoCategory">AI Video</p>
+            <h3 data-i18n="projectTwoTitle">Hyper motion product video</h3>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb video-thumb">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="assets/promo-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p data-i18n="projectThreeCategory">Reels</p>
+            <h3 data-i18n="projectThreeTitle">Promo video</h3>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb video-thumb">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="assets/cinematic-reels.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p data-i18n="projectFourCategory">Brand Film</p>
+            <h3 data-i18n="projectFourTitle">Cinematic reels</h3>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb video-thumb">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="assets/cyber-punk-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p data-i18n="projectFiveCategory">Product Ad</p>
+            <h3 data-i18n="projectFiveTitle">Cyber punk video</h3>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-thumb video-thumb">
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="assets/action-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p data-i18n="projectSixCategory">Motion</p>
+            <h3 data-i18n="projectSixTitle">Action video</h3>
+          </article>
+        </div>
+      </section>
+
+      <section class="section process reveal">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="processEyebrow">Process</p>
+          <h2 data-i18n="processTitle">A clean production flow from first idea to launch.</h2>
+        </div>
+
+        <div class="process-list">
+          <article class="reveal"><strong>01</strong><span data-i18n="processOneTitle">Brief</span><p data-i18n="processOneText">We define the goal, audience, offer and visual direction.</p></article>
+          <article class="reveal"><strong>02</strong><span data-i18n="processTwoTitle">Concept</span><p data-i18n="processTwoText">We build the idea, script, storyboard and production plan.</p></article>
+          <article class="reveal"><strong>03</strong><span data-i18n="processThreeTitle">Production</span><p data-i18n="processThreeText">We shoot, generate, design and collect every visual layer.</p></article>
+          <article class="reveal"><strong>04</strong><span data-i18n="processFourTitle">Edit</span><p data-i18n="processFourText">We cut, sound-design, color and polish the final film.</p></article>
+          <article class="reveal"><strong>05</strong><span data-i18n="processFiveTitle">Launch</span><p data-i18n="processFiveText">We prepare formats for ads, reels, presentations and campaigns.</p></article>
+        </div>
+      </section>
+
+      <section class="section about reveal">
+        <div class="about-panel">
+          <p class="eyebrow" data-i18n="aboutEyebrow">About</p>
+          <h2 data-i18n="aboutTitle">HYPE PRODUCTION is a creative video studio focused on cinematic storytelling, modern editing, AI-powered visuals and strong brand identity.</h2>
+        </div>
+      </section>
+
+      <section class="section contact reveal" id="contact">
+        <div class="contact-copy">
+          <p class="eyebrow" data-i18n="contactEyebrow">Contact</p>
+          <h2 data-i18n="contactTitle">Let's create your next hype.</h2>
+          <p data-i18n="contactText">Tell us what you want to launch. We will shape the visual direction and production plan.</p>
+          <div class="contact-links" aria-label="Direct contacts">
+            <a href="https://www.instagram.com/HYPE_PROMOTION_UZ" target="_blank" rel="noreferrer">
+              <span data-i18n="instagramLabel">Instagram</span>
+              <strong>HYPE_PROMOTION_UZ</strong>
+            </a>
+            <a href="tel:+998935064200">
+              <span data-i18n="phoneLabel">Phone</span>
+              <strong>+998 93 506 42 00</strong>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form">
+          <label>
+            <span data-i18n="formName">Name</span>
+            <input type="text" name="name" placeholder="Your name" data-i18n-placeholder="formNamePlaceholder" />
+          </label>
+          <label>
+            <span data-i18n="formPhone">Phone</span>
+            <input type="tel" name="phone" placeholder="+998" data-i18n-placeholder="formPhonePlaceholder" />
+          </label>
+          <label>
+            <span data-i18n="formProject">Project description</span>
+            <textarea name="project" rows="5" placeholder="What do you want to create?" data-i18n-placeholder="formProjectPlaceholder"></textarea>
+          </label>
+          <button class="btn primary" type="submit" data-i18n="formSubmit">Send request</button>
+          <p class="form-status" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="script.js?v=sheets-connected-2"></script>
+  </body>
+</html>
