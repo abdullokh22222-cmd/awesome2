@@ -700,21 +700,59 @@ h3 {
 
 @media (max-width: 560px) {
   .site-header {
-    padding-inline: 14px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px 10px;
+    min-height: 0;
+    padding: 9px 12px 8px;
+  }
+
+  .brand {
+    min-width: 0;
   }
 
   .brand-logo {
-    height: 42px;
+    height: 34px;
+  }
+
+  .lang-switcher {
+    gap: 2px;
+    padding: 3px;
+    border-radius: 8px;
+  }
+
+  .lang-switcher button {
+    min-width: 31px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 11px;
   }
 
   .header-cta {
     min-height: 34px;
-    padding-inline: 12px;
+    padding-inline: 13px;
+    border-radius: 9px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   .header-actions {
+    width: auto;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+    order: initial;
     width: 100%;
     justify-content: space-between;
+    gap: 0;
+    padding: 6px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: visible;
+    font-size: 12px;
   }
 
   .hero {
