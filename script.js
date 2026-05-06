@@ -60,8 +60,8 @@ const translations = {
     aboutTitle:
       "HYPE PRODUCTION creates AI videos, reels and premium content for brands that need strong visuals.",
     contactEyebrow: "Request",
-    contactTitle: "Start the next hype.",
-    contactText: "Tell us what you want to launch. We will shape the visual direction and production plan.",
+    contactTitle: "Ready to launch?",
+    contactText: "Tell us your idea. We will build the visual concept and production plan.",
     instagramLabel: "Instagram",
     phoneLabel: "Phone",
     formName: "Name",
@@ -138,8 +138,8 @@ const translations = {
     aboutTitle:
       "HYPE PRODUCTION создает AI-видео, reels и премиальный контент для брендов, которым нужен сильный визуал.",
     contactEyebrow: "Заявка",
-    contactTitle: "Запустим ваш следующий хайп.",
-    contactText: "Расскажите, что хотите запустить. Мы соберем визуальное направление и план продакшена.",
+    contactTitle: "Готовы к запуску?",
+    contactText: "Расскажите идею. Мы соберем визуал, сценарий и план продакшена.",
     instagramLabel: "Instagram",
     phoneLabel: "Телефон",
     formName: "Имя",
@@ -216,8 +216,8 @@ const translations = {
     aboutTitle:
       "HYPE PRODUCTION - kuchli vizual g'oyalar, AI-kontent va premium brend videolari uchun ixcham kreativ studiya.",
     contactEyebrow: "Ariza",
-    contactTitle: "Keyingi hype'ni boshlaymiz.",
-    contactText: "Nimani launch qilmoqchisiz, ayting. Biz vizual yo'nalish va production rejasini shakllantiramiz.",
+    contactTitle: "Launchga tayyormisiz?",
+    contactText: "G'oyangizni ayting. Biz vizual konsept va production rejasini tuzamiz.",
     instagramLabel: "Instagram",
     phoneLabel: "Telefon",
     formName: "Ism",

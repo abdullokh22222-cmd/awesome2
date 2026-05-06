@@ -873,7 +873,22 @@ h3 {
   }
 
   .contact-copy h2 {
-    max-width: 10em;
+    max-width: 8.5em;
+    margin-bottom: 12px;
+    font-size: clamp(29px, 8.4vw, 36px);
+    line-height: 1.08;
+  }
+
+  .contact {
+    gap: 22px;
+    padding: 24px 20px;
+    margin-bottom: 54px;
+  }
+
+  .contact-copy p:not(.eyebrow) {
+    max-width: 30ch;
+    font-size: 15px;
+    line-height: 1.65;
   }
 
   .hero-stats {
