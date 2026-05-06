@@ -243,6 +243,9 @@ const formStatus = document.querySelector(".form-status");
 const languageButtons = document.querySelectorAll("[data-lang]");
 const translatedNodes = document.querySelectorAll("[data-i18n]");
 const placeholderNodes = document.querySelectorAll("[data-i18n-placeholder]");
+const siteHeader = document.querySelector(".site-header");
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelectorAll(".main-nav a");
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAuK7CweGDJmnj1w182FAfH5hSPo31q0XnkU2WcqqN3vz_8Dzswlyi4DSqTxrmXSZT7w/exec";
 let currentLanguage = localStorage.getItem("hype-production-lang") || "en";
 
@@ -284,6 +287,18 @@ function setLanguage(lang) {
 
 languageButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
+});
+
+menuToggle?.addEventListener("click", () => {
+  const isOpen = siteHeader?.classList.toggle("menu-open");
+  menuToggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+});
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    siteHeader?.classList.remove("menu-open");
+    menuToggle?.setAttribute("aria-expanded", "false");
+  });
 });
 
 videoToggle?.addEventListener("click", () => {
