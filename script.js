@@ -91,6 +91,7 @@ const translations = {
     formSuccess: "Request sent. We will contact you soon.",
     formNoEndpoint: "Google Sheets endpoint is not connected yet.",
     formError: "Could not send request. Please contact us by phone or Instagram.",
+    chatLauncher: "Choose a format",
   },
   ru: {
     navHome: "Главная",
@@ -184,6 +185,7 @@ const translations = {
     formSuccess: "Заявка отправлена. Мы скоро свяжемся с вами.",
     formNoEndpoint: "Google Sheets endpoint пока не подключен.",
     formError: "Не удалось отправить заявку. Напишите нам по телефону или в Instagram.",
+    chatLauncher: "Подобрать формат",
   },
   uz: {
     navHome: "Asosiy",
@@ -277,6 +279,247 @@ const translations = {
     formSuccess: "So'rov yuborildi. Tez orada siz bilan bog'lanamiz.",
     formNoEndpoint: "Google Sheets manzili hali ulanmagan.",
     formError: "So'rov yuborilmadi. Telefon yoki Instagram orqali bog'laning.",
+    chatLauncher: "Format tanlash",
+  },
+};
+
+const chatContent = {
+  en: {
+    title: "What do you want to create?",
+    intro: "Answer a few quick questions. We will suggest the direction and price range.",
+    steps: [
+      {
+        key: "goal",
+        question: "What do you want to promote?",
+        options: [
+          ["brand", "Brand"],
+          ["product", "Product"],
+          ["blog", "Blog"],
+          ["event", "Event"],
+        ],
+      },
+      {
+        key: "platform",
+        question: "Where will the video be used?",
+        options: [
+          ["instagram", "Instagram"],
+          ["tiktok", "TikTok"],
+          ["telegram", "Telegram"],
+          ["ads", "Website / ads"],
+        ],
+      },
+      {
+        key: "style",
+        question: "Which visual style feels closer?",
+        options: [
+          ["premium", "Premium"],
+          ["dynamic", "Dynamic"],
+          ["cyberpunk", "Cyberpunk"],
+          ["minimal", "Minimal"],
+          ["ugc", "UGC"],
+        ],
+      },
+      {
+        key: "format",
+        question: "Which format do you need?",
+        options: [
+          ["short", "1 short video"],
+          ["reels", "3 reels"],
+          ["promo", "AI promo"],
+          ["product", "Product ad"],
+          ["brand", "Brand film"],
+          ["unsure", "Not sure yet"],
+        ],
+      },
+      {
+        key: "deadline",
+        question: "When do you need the result?",
+        options: [
+          ["urgent", "1-2 days"],
+          ["soon", "3-5 days"],
+          ["normal", "1-2 weeks"],
+          ["discuss", "Just discussing"],
+        ],
+      },
+    ],
+    summaryTitle: "Direction selected",
+    priceLabel: "Price guide",
+    urgentNote: "Fast delivery needs a priority production slot. The closer the deadline, the higher the cost.",
+    normalNote: "This timing gives more room for concept, generation, editing and revisions.",
+    contactPrompt: "Leave your contact and we will confirm the exact production plan.",
+    namePlaceholder: "Name",
+    phonePlaceholder: "+998",
+    commentPlaceholder: "Comment",
+    send: "Send request",
+    sending: "Sending...",
+    success: "Request sent. We will contact you soon.",
+    error: "Could not send. Please contact us by phone or Instagram.",
+    priceConsult: "after brief",
+    prices: {
+      short: ["from 1 000 000 UZS", "from 1 250 000 UZS", "from 1 750 000 UZS"],
+      reels: ["from 3 000 000 UZS", "from 3 500 000 UZS", "from 4 500 000 UZS"],
+      promo: ["from 7 000 000 UZS", "from 8 000 000 UZS", "from 9 000 000 UZS"],
+      product: ["from 7 000 000 UZS", "from 8 000 000 UZS", "from 9 000 000 UZS"],
+      brand: ["from 7 000 000 UZS", "from 8 000 000 UZS", "from 9 000 000 UZS"],
+    },
+  },
+  ru: {
+    title: "Что хотите снять?",
+    intro: "Ответьте на пару вопросов. Мы подберем формат и ориентир по стоимости.",
+    steps: [
+      {
+        key: "goal",
+        question: "Что хотите продвинуть?",
+        options: [
+          ["brand", "Бренд"],
+          ["product", "Продукт"],
+          ["blog", "Блог"],
+          ["event", "Мероприятие"],
+        ],
+      },
+      {
+        key: "platform",
+        question: "Где будет использоваться видео?",
+        options: [
+          ["instagram", "Instagram"],
+          ["tiktok", "TikTok"],
+          ["telegram", "Telegram"],
+          ["ads", "Сайт / реклама"],
+        ],
+      },
+      {
+        key: "style",
+        question: "Какой визуальный стиль ближе?",
+        options: [
+          ["premium", "Премиум"],
+          ["dynamic", "Динамичный"],
+          ["cyberpunk", "Киберпанк"],
+          ["minimal", "Минимализм"],
+          ["ugc", "UGC"],
+        ],
+      },
+      {
+        key: "format",
+        question: "Какой формат нужен?",
+        options: [
+          ["short", "1 короткий ролик"],
+          ["reels", "3 reels"],
+          ["promo", "AI promo"],
+          ["product", "Product ad"],
+          ["brand", "Brand film"],
+          ["unsure", "Пока не знаю"],
+        ],
+      },
+      {
+        key: "deadline",
+        question: "Когда нужен результат?",
+        options: [
+          ["urgent", "1-2 дня"],
+          ["soon", "3-5 дней"],
+          ["normal", "1-2 недели"],
+          ["discuss", "Пока обсуждаем"],
+        ],
+      },
+    ],
+    summaryTitle: "Направление подобрано",
+    priceLabel: "Ориентир",
+    urgentNote: "Срочный запуск требует приоритетного production-слота. Чем ближе дедлайн, тем выше стоимость.",
+    normalNote: "Такой срок дает больше пространства для идеи, генерации, монтажа и правок.",
+    contactPrompt: "Оставьте контакт, и мы подтвердим точный план продакшена.",
+    namePlaceholder: "Имя",
+    phonePlaceholder: "+998",
+    commentPlaceholder: "Комментарий",
+    send: "Отправить заявку",
+    sending: "Отправляем...",
+    success: "Заявка отправлена. Мы скоро свяжемся с вами.",
+    error: "Не удалось отправить. Напишите нам по телефону или в Instagram.",
+    priceConsult: "после брифа",
+    prices: {
+      short: ["от 1 000 000 сум", "от 1 250 000 сум", "от 1 750 000 сум"],
+      reels: ["от 3 000 000 сум", "от 3 500 000 сум", "от 4 500 000 сум"],
+      promo: ["от 7 000 000 сум", "от 8 000 000 сум", "от 9 000 000 сум"],
+      product: ["от 7 000 000 сум", "от 8 000 000 сум", "от 9 000 000 сум"],
+      brand: ["от 7 000 000 сум", "от 8 000 000 сум", "от 9 000 000 сум"],
+    },
+  },
+  uz: {
+    title: "Nima suratga olamiz?",
+    intro: "Bir necha savolga javob bering. Biz format va taxminiy narxni tanlaymiz.",
+    steps: [
+      {
+        key: "goal",
+        question: "Nimani targ'ib qilmoqchisiz?",
+        options: [
+          ["brand", "Brend"],
+          ["product", "Mahsulot"],
+          ["blog", "Blog"],
+          ["event", "Tadbir"],
+        ],
+      },
+      {
+        key: "platform",
+        question: "Video qayerda ishlatiladi?",
+        options: [
+          ["instagram", "Instagram"],
+          ["tiktok", "TikTok"],
+          ["telegram", "Telegram"],
+          ["ads", "Sayt / reklama"],
+        ],
+      },
+      {
+        key: "style",
+        question: "Qaysi vizual uslub yaqinroq?",
+        options: [
+          ["premium", "Premium"],
+          ["dynamic", "Dinamik"],
+          ["cyberpunk", "Cyberpunk"],
+          ["minimal", "Minimal"],
+          ["ugc", "UGC"],
+        ],
+      },
+      {
+        key: "format",
+        question: "Qaysi format kerak?",
+        options: [
+          ["short", "1 ta qisqa rolik"],
+          ["reels", "3 ta reels"],
+          ["promo", "AI promo"],
+          ["product", "Mahsulot reklamasi"],
+          ["brand", "Brend filmi"],
+          ["unsure", "Hali bilmayman"],
+        ],
+      },
+      {
+        key: "deadline",
+        question: "Natija qachon kerak?",
+        options: [
+          ["urgent", "1-2 kun"],
+          ["soon", "3-5 kun"],
+          ["normal", "1-2 hafta"],
+          ["discuss", "Hozircha muhokama"],
+        ],
+      },
+    ],
+    summaryTitle: "Yo'nalish tanlandi",
+    priceLabel: "Taxminiy narx",
+    urgentNote: "Shoshilinch ish uchun alohida production slot ajratiladi. Muddat qancha yaqin bo'lsa, narx shuncha yuqori bo'ladi.",
+    normalNote: "Bu muddat g'oya, generatsiya, montaj va tuzatishlar uchun ko'proq imkon beradi.",
+    contactPrompt: "Kontakt qoldiring, biz aniq prodakshen rejasini tasdiqlaymiz.",
+    namePlaceholder: "Ism",
+    phonePlaceholder: "+998",
+    commentPlaceholder: "Izoh",
+    send: "Ariza yuborish",
+    sending: "Yuborilmoqda...",
+    success: "Ariza yuborildi. Tez orada bog'lanamiz.",
+    error: "Yuborilmadi. Telefon yoki Instagram orqali bog'laning.",
+    priceConsult: "brifdan keyin",
+    prices: {
+      short: ["1 000 000 so'mdan", "1 250 000 so'mdan", "1 750 000 so'mdan"],
+      reels: ["3 000 000 so'mdan", "3 500 000 so'mdan", "4 500 000 so'mdan"],
+      promo: ["7 000 000 so'mdan", "8 000 000 so'mdan", "9 000 000 so'mdan"],
+      product: ["7 000 000 so'mdan", "8 000 000 so'mdan", "9 000 000 so'mdan"],
+      brand: ["7 000 000 so'mdan", "8 000 000 so'mdan", "9 000 000 so'mdan"],
+    },
   },
 };
 
@@ -291,8 +534,16 @@ const placeholderNodes = document.querySelectorAll("[data-i18n-placeholder]");
 const siteHeader = document.querySelector(".site-header");
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelectorAll(".main-nav a");
+const chatWidget = document.querySelector(".chat-widget");
+const chatLauncher = document.querySelector(".chat-launcher");
+const chatPanel = document.querySelector(".chat-panel");
+const chatClose = document.querySelector(".chat-close");
+const chatBody = document.querySelector("[data-chat-body]");
+const chatTitle = document.querySelector("[data-chat-title]");
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAuK7CweGDJmnj1w182FAfH5hSPo31q0XnkU2WcqqN3vz_8Dzswlyi4DSqTxrmXSZT7w/exec";
 let currentLanguage = localStorage.getItem("hype-production-lang") || "en";
+let chatStepIndex = 0;
+let chatAnswers = {};
 
 function updateVideoToggleLabel() {
   if (!videoToggle || !heroVideo) {
@@ -328,10 +579,183 @@ function setLanguage(lang) {
   document.documentElement.lang = lang;
   localStorage.setItem("hype-production-lang", lang);
   updateVideoToggleLabel();
+  resetChat();
+}
+
+function getChatDictionary() {
+  return chatContent[currentLanguage] || chatContent.en;
+}
+
+function createChatMessage(text, accent = false) {
+  const message = document.createElement("div");
+  message.className = accent ? "chat-message accent" : "chat-message";
+  message.textContent = text;
+  return message;
+}
+
+function getChatPrice(format, deadline) {
+  const dictionary = getChatDictionary();
+  if (!format || format.id === "unsure" || deadline?.id === "discuss") {
+    return dictionary.priceConsult;
+  }
+
+  const priceSet = dictionary.prices[format.id] || dictionary.prices.short;
+  const priceIndex = deadline?.id === "urgent" ? 2 : deadline?.id === "soon" ? 1 : 0;
+  return priceSet[priceIndex];
+}
+
+function renderChatStep() {
+  if (!chatBody) {
+    return;
+  }
+
+  const dictionary = getChatDictionary();
+  const step = dictionary.steps[chatStepIndex];
+  if (!step) {
+    renderChatSummary();
+    return;
+  }
+
+  chatBody.appendChild(createChatMessage(step.question));
+
+  const options = document.createElement("div");
+  options.className = "chat-options";
+  step.options.forEach(([id, label]) => {
+    const button = document.createElement("button");
+    button.className = "chat-option";
+    button.type = "button";
+    button.textContent = label;
+    button.addEventListener("click", () => {
+      chatAnswers[step.key] = { id, label };
+      chatBody.appendChild(createChatMessage(label, true));
+      options.remove();
+      chatStepIndex += 1;
+      renderChatStep();
+      chatBody.scrollTop = chatBody.scrollHeight;
+    });
+    options.appendChild(button);
+  });
+
+  chatBody.appendChild(options);
+}
+
+function renderChatSummary() {
+  const dictionary = getChatDictionary();
+  const price = getChatPrice(chatAnswers.format, chatAnswers.deadline);
+  const deadlineNote = chatAnswers.deadline?.id === "urgent" || chatAnswers.deadline?.id === "soon"
+    ? dictionary.urgentNote
+    : dictionary.normalNote;
+
+  const summary = document.createElement("div");
+  summary.className = "chat-summary";
+  summary.innerHTML = `
+    <p><strong>${dictionary.summaryTitle}</strong></p>
+    <p>${chatAnswers.goal?.label || ""} / ${chatAnswers.platform?.label || ""} / ${chatAnswers.style?.label || ""}</p>
+    <p>${chatAnswers.format?.label || ""} / ${chatAnswers.deadline?.label || ""}</p>
+    <p><strong>${dictionary.priceLabel}: ${price}</strong></p>
+  `;
+
+  chatBody.appendChild(summary);
+  chatBody.appendChild(createChatMessage(deadlineNote));
+  chatBody.appendChild(createChatMessage(dictionary.contactPrompt));
+  renderChatLeadForm(price);
+}
+
+function renderChatLeadForm(price) {
+  const dictionary = getChatDictionary();
+  const form = document.createElement("form");
+  form.className = "chat-lead-form";
+  form.innerHTML = `
+    <input name="name" type="text" placeholder="${dictionary.namePlaceholder}" />
+    <input name="phone" type="tel" placeholder="${dictionary.phonePlaceholder}" required />
+    <textarea name="comment" placeholder="${dictionary.commentPlaceholder}"></textarea>
+    <button type="submit">${dictionary.send}</button>
+    <p class="chat-status" role="status"></p>
+  `;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const status = form.querySelector(".chat-status");
+    const formData = new FormData(form);
+    status.textContent = dictionary.sending;
+
+    const projectSummary = [
+      "Mini-chat request",
+      `Goal: ${chatAnswers.goal?.label || "-"}`,
+      `Platform: ${chatAnswers.platform?.label || "-"}`,
+      `Style: ${chatAnswers.style?.label || "-"}`,
+      `Format: ${chatAnswers.format?.label || "-"}`,
+      `Deadline: ${chatAnswers.deadline?.label || "-"}`,
+      `Price guide: ${price}`,
+      `Comment: ${formData.get("comment") || "-"}`,
+    ].join("\n");
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          phone: formData.get("phone"),
+          project: projectSummary,
+          language: currentLanguage,
+          page: window.location.href,
+          source: "mini-chat",
+        }),
+      });
+
+      form.reset();
+      status.textContent = dictionary.success;
+    } catch (error) {
+      status.textContent = dictionary.error;
+    }
+  });
+
+  chatBody.appendChild(form);
+}
+
+function resetChat() {
+  if (!chatBody) {
+    return;
+  }
+
+  const dictionary = getChatDictionary();
+  chatStepIndex = 0;
+  chatAnswers = {};
+  if (chatTitle) {
+    chatTitle.textContent = dictionary.title;
+  }
+  chatBody.innerHTML = "";
+  chatBody.appendChild(createChatMessage(dictionary.intro));
+  renderChatStep();
+}
+
+function setChatOpen(isOpen) {
+  if (!chatWidget || !chatPanel) {
+    return;
+  }
+
+  chatWidget.classList.toggle("is-open", isOpen);
+  chatPanel.setAttribute("aria-hidden", String(!isOpen));
+
+  if (isOpen && chatBody && !chatBody.children.length) {
+    resetChat();
+  }
 }
 
 languageButtons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
+});
+
+chatLauncher?.addEventListener("click", () => {
+  setChatOpen(!chatWidget?.classList.contains("is-open"));
+});
+
+chatClose?.addEventListener("click", () => {
+  setChatOpen(false);
 });
 
 menuToggle?.addEventListener("click", () => {
