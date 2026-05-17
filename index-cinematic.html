@@ -1,0 +1,1721 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HYPE PRODUCTION | Cinematic Video Studio</title>
+  <meta name="description" content="HYPE PRODUCTION — AI videos, reels, commercials, promo films and cinematic brand content." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #02040a;
+      --bg-soft: #080d16;
+      --panel: rgba(8, 13, 22, 0.78);
+      --text: #f8fbff;
+      --muted: #9aa8ba;
+      --line: rgba(167, 230, 255, 0.18);
+      --line-strong: rgba(167, 230, 255, 0.42);
+      --blue: #6ee7ff;
+      --violet: #9b8cff;
+      --champagne: #d9c8a9;
+      --radius: 8px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Manrope", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      content: "";
+      background:
+        linear-gradient(90deg, rgba(167, 230, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 72px 72px, 72px 72px;
+      opacity: 0.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    /* ============ SCROLL PROGRESS ============ */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+      width: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--violet));
+      box-shadow: 0 0 22px rgba(110, 231, 255, 0.5);
+    }
+
+    /* ============ HEADER ============ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 64px;
+      padding: 12px clamp(18px, 4vw, 56px);
+      backdrop-filter: blur(22px);
+      background: rgba(2, 4, 10, 0.6);
+      border-bottom: 1px solid var(--line);
+      transition: background 0.4s ease;
+    }
+    .site-header.scrolled { background: rgba(2, 4, 10, 0.88); }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Inter", sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .brand .dot { color: var(--blue); }
+    .main-nav {
+      display: flex;
+      gap: 26px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .main-nav a { transition: color 0.2s ease; }
+    .main-nav a:hover { color: var(--blue); }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .lang-switcher button {
+      min-width: 36px; height: 28px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: transparent;
+      cursor: pointer;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .lang-switcher button:hover { color: var(--text); }
+    .lang-switcher button.active {
+      color: #02040a;
+      background: var(--blue);
+    }
+    .header-cta {
+      padding: 9px 18px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      transition: background 0.2s ease;
+    }
+    .header-cta:hover { background: rgba(110, 231, 255, 0.1); }
+    @media (max-width: 720px) {
+      .main-nav { display: none; }
+      .header-cta { padding: 8px 12px; font-size: 11px; }
+    }
+
+    /* ============ COMMON ============ */
+    .stage {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+    .eyebrow {
+      color: var(--blue);
+      letter-spacing: 0.24em;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin: 0;
+    }
+    h1, h2, h3 { font-family: "Inter", sans-serif; letter-spacing: -0.02em; }
+    .gradient {
+      background: linear-gradient(90deg, var(--blue), var(--violet));
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.delay-1 { transition-delay: 0.08s; }
+    .reveal.delay-2 { transition-delay: 0.18s; }
+    .reveal.delay-3 { transition-delay: 0.28s; }
+    .reveal.delay-4 { transition-delay: 0.38s; }
+    .reveal.delay-5 { transition-delay: 0.48s; }
+    .reveal.delay-6 { transition-delay: 0.58s; }
+
+    /* ============ HERO ============ */
+    .hero {
+      min-height: 200vh;
+      position: relative;
+    }
+    .hero-sticky {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(0.6) brightness(0.45);
+      opacity: 0.6;
+    }
+    .hero-darken {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 90%, rgba(2, 4, 10, 0.85), transparent 60%),
+        linear-gradient(180deg, rgba(2, 4, 10, 0.4), transparent 30%, rgba(2, 4, 10, 0.9));
+    }
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 clamp(20px, 6vw, 80px);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .hero-content .eyebrow { margin-bottom: 14px; }
+    .hero-content h1 {
+      font-size: clamp(48px, 9vw, 140px);
+      line-height: 0.92;
+      margin: 0 0 22px;
+      font-weight: 900;
+    }
+    .hero-content .lead {
+      color: var(--text);
+      font-size: clamp(16px, 1.8vw, 22px);
+      max-width: 600px;
+      line-height: 1.4;
+      margin: 0 0 30px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: var(--radius);
+      font-family: "Inter", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn.primary {
+      background: var(--blue);
+      color: #02040a;
+      box-shadow: 0 8px 30px rgba(110, 231, 255, 0.28);
+    }
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(110, 231, 255, 0.45);
+    }
+    .btn.secondary {
+      border-color: var(--line-strong);
+      color: var(--text);
+      background: rgba(2, 4, 10, 0.4);
+      backdrop-filter: blur(8px);
+    }
+    .btn.secondary:hover { background: rgba(110, 231, 255, 0.08); }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 7vh;
+      left: clamp(20px, 6vw, 80px);
+      right: clamp(20px, 6vw, 80px);
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      z-index: 3;
+    }
+    .hero-stats > div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hero-stats strong {
+      font-family: "Inter", sans-serif;
+      font-weight: 900;
+      font-size: clamp(22px, 2.4vw, 30px);
+      color: var(--blue);
+      letter-spacing: -0.01em;
+    }
+    .hero-stats span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0.55;
+      animation: pulse 2.4s infinite;
+    }
+    .scroll-hint::before { content: ""; width: 28px; height: 1px; background: var(--blue); }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.95; } }
+
+    /* ============ SERVICES INTRO ============ */
+    .services-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 clamp(20px, 6vw, 80px);
+      max-width: 1400px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+    .services-intro h2 {
+      font-size: clamp(40px, 7vw, 110px);
+      line-height: 0.95;
+      margin: 18px 0 22px;
+      font-weight: 900;
+      max-width: 1100px;
+    }
+    .services-intro p.sub {
+      color: var(--muted);
+      max-width: 560px;
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.55;
+    }
+    .services-counter {
+      margin-top: 50px;
+      display: flex;
+      gap: 32px;
+      font-family: "Inter", sans-serif;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .services-counter span { color: var(--blue); font-weight: 900; font-size: 18px; }
+
+    /* ============ SPOTLIGHT (6 services) ============ */
+    .spotlight {
+      position: relative;
+    }
+    .spot-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+      filter: saturate(0.85) contrast(1.05);
+    }
+    .spot-darken {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(2, 4, 10, 0.9) 100%),
+        linear-gradient(0deg, rgba(2, 4, 10, 0.55), rgba(2, 4, 10, 0.55));
+    }
+    .spot-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px clamp(20px, 6vw, 80px) 100px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    .spot-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--blue);
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .spot-meta .pipe { color: var(--line-strong); }
+    .spot-meta .code {
+      padding: 4px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: rgba(110, 231, 255, 0.06);
+    }
+    .spot-title {
+      font-size: clamp(48px, 9vw, 140px);
+      font-weight: 900;
+      line-height: 0.92;
+      margin: 0;
+      max-width: 1200px;
+    }
+    .spot-desc {
+      color: var(--muted);
+      font-size: clamp(15px, 1.5vw, 20px);
+      line-height: 1.55;
+      max-width: 620px;
+      margin: 0;
+    }
+    .spot-cta {
+      align-self: flex-start;
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border: 1px solid var(--blue);
+      border-radius: var(--radius);
+      color: var(--blue);
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .spot-cta:hover { background: rgba(110, 231, 255, 0.12); }
+    .spot-cta::after { content: "→"; transition: transform 0.2s ease; }
+    .spot-cta:hover::after { transform: translateX(4px); }
+    .spot-vert {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: center;
+      z-index: 3;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .spot-ghost {
+      position: absolute;
+      right: -50px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      font-family: "Inter", sans-serif;
+      font-weight: 900;
+      font-size: clamp(180px, 28vw, 420px);
+      color: rgba(110, 231, 255, 0.04);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      line-height: 0.85;
+    }
+    @media (max-width: 720px) {
+      .spot-ghost { display: none; }
+      .spot-vert { display: none; }
+    }
+
+    /* ============ PRICING ============ */
+    .pricing {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px clamp(20px, 6vw, 80px);
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 60px;
+    }
+    .pricing-head h2 {
+      font-size: clamp(36px, 6vw, 84px);
+      font-weight: 900;
+      line-height: 0.95;
+      margin: 16px 0 0;
+      max-width: 900px;
+    }
+    .price-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
+    .price-card {
+      position: relative;
+      padding: 36px 28px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(8, 13, 22, 0.85), rgba(2, 4, 10, 0.65));
+      transition: transform 0.5s var(--ease-out), border-color 0.3s ease, box-shadow 0.4s ease;
+      cursor: default;
+      transform-style: preserve-3d;
+    }
+    .price-card::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 14px;
+      pointer-events: none;
+      background: radial-gradient(ellipse at top, rgba(110, 231, 255, 0.18), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .price-card:hover::after { opacity: 1; }
+    .price-card:hover {
+      border-color: var(--line-strong);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    }
+    .price-card.featured {
+      border-color: var(--line-strong);
+      background: linear-gradient(180deg, rgba(110, 231, 255, 0.08), rgba(8, 13, 22, 0.85));
+    }
+    .price-label {
+      font-family: "Inter", sans-serif;
+      color: var(--blue);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      font-weight: 800;
+      margin: 0 0 14px;
+    }
+    .price-card h3 {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 8px;
+    }
+    .price-card .price {
+      display: block;
+      font-family: "Inter", sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      margin: 18px 0 12px;
+      color: var(--text);
+    }
+    .price-card .text {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0 0 22px;
+    }
+    .price-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: "Inter", sans-serif;
+    }
+    .price-card a::after { content: "→"; transition: transform 0.2s ease; }
+    .price-card a:hover::after { transform: translateX(4px); }
+
+    /* ============ PORTFOLIO ============ */
+    .portfolio {
+      padding: 100px clamp(20px, 6vw, 80px);
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+    .portfolio-head h2 {
+      font-size: clamp(36px, 6vw, 84px);
+      font-weight: 900;
+      line-height: 0.95;
+      margin: 16px 0 0;
+      max-width: 1100px;
+    }
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+    .work-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      transition: transform 0.5s var(--ease-out), border-color 0.3s ease;
+      cursor: pointer;
+    }
+    .work-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--line-strong);
+    }
+    .work-thumb {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--bg-soft);
+    }
+    .work-thumb video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .work-meta {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 18px 20px;
+      background: linear-gradient(180deg, transparent, rgba(2, 4, 10, 0.92));
+      z-index: 2;
+    }
+    .work-meta p {
+      color: var(--blue);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin: 0 0 6px;
+    }
+    .work-meta h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    /* ============ PROCESS / FILMSTRIP ============ */
+    .process {
+      padding: 100px 0 100px clamp(20px, 6vw, 80px);
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+    .process-head h2 {
+      font-size: clamp(36px, 6vw, 84px);
+      font-weight: 900;
+      line-height: 0.95;
+      margin: 16px 0 0;
+      max-width: 800px;
+    }
+    .filmstrip {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding: 30px 0 36px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filmstrip::-webkit-scrollbar { height: 6px; }
+    .filmstrip::-webkit-scrollbar-track { background: transparent; }
+    .filmstrip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+    .frame {
+      position: relative;
+      flex: 0 0 auto;
+      width: min(420px, 80vw);
+      min-height: 280px;
+      padding: 30px 28px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(8, 13, 22, 0.7), rgba(2, 4, 10, 0.4));
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .frame::before, .frame::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      height: 14px;
+      background-image: radial-gradient(circle, rgba(167, 230, 255, 0.18) 30%, transparent 31%);
+      background-size: 24px 14px;
+      background-repeat: repeat-x;
+      background-position: 0 50%;
+    }
+    .frame::before { top: 0; }
+    .frame::after { bottom: 0; }
+    .frame-num {
+      font-family: "Inter", sans-serif;
+      font-weight: 900;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+    }
+    .frame strong {
+      font-family: "Inter", sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .frame p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* ============ ABOUT ============ */
+    .about {
+      padding: 120px clamp(20px, 6vw, 80px);
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+      position: relative;
+    }
+    .about::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(110, 231, 255, 0.08), transparent 50%),
+        radial-gradient(ellipse at 70% 50%, rgba(155, 140, 255, 0.08), transparent 50%);
+      pointer-events: none;
+    }
+    .about h2 {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 16px 0;
+      max-width: 1100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============ CONTACT ============ */
+    .contact {
+      padding: 100px clamp(20px, 6vw, 80px) 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .contact { grid-template-columns: 1fr; }
+    }
+    .contact-left h2 {
+      font-size: clamp(36px, 6vw, 84px);
+      font-weight: 900;
+      line-height: 0.95;
+      margin: 16px 0 18px;
+    }
+    .contact-left p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 480px;
+    }
+    .contact-links {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact-links a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(8, 13, 22, 0.55);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .contact-links a:hover {
+      border-color: var(--line-strong);
+      background: rgba(110, 231, 255, 0.06);
+    }
+    .contact-links span {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .contact-links strong {
+      font-family: "Inter", sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(8, 13, 22, 0.85), rgba(2, 4, 10, 0.55));
+    }
+    .contact-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(2, 4, 10, 0.6);
+      color: var(--text);
+      font-size: 15px;
+      font-family: "Manrope", sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: 0;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(110, 231, 255, 0.18);
+    }
+    .form-status {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ============ FOOTER ============ */
+    .site-footer {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ============ RESPONSIVE TWEAKS ============ */
+    @media (max-width: 720px) {
+      .hero-stats { gap: 22px; }
+      .hero-content h1 { font-size: clamp(40px, 12vw, 80px); }
+      .spot-title { font-size: clamp(36px, 11vw, 80px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#home"><span class="dot">▍</span> HYPE PRODUCTION</a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="#home" data-i18n="navHome">Home</a>
+      <a href="#services" data-i18n="navServices">Services</a>
+      <a href="#works" data-i18n="navWorks">Works</a>
+      <a href="#contact" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switcher" aria-label="Language switcher">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru" class="active">RU</button>
+        <button type="button" data-lang="uz">UZ</button>
+      </div>
+      <a class="header-cta" href="#contact" data-i18n="headerCta">Start project</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="stage hero" id="home">
+      <div class="hero-sticky">
+        <video
+          class="hero-bg"
+          autoplay muted loop playsinline preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="assets/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-darken"></div>
+        <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+
+        <div class="hero-content">
+          <p class="eyebrow reveal" data-i18n="heroEyebrow">Cinematic video production studio</p>
+          <h1 class="reveal delay-1" data-i18n="heroTitle">HYPE PRODUCTION</h1>
+          <p class="lead reveal delay-2" data-i18n="heroText">
+            Воплощаем любые идеи в кадре — от reels до cinematic-фильмов.
+          </p>
+          <div class="hero-actions reveal delay-3">
+            <a class="btn primary" href="#contact" data-i18n="heroPrimary">Start a project</a>
+            <a class="btn secondary" href="#works" data-i18n="heroSecondary">View works</a>
+          </div>
+        </div>
+
+        <div class="hero-stats" aria-label="Studio statistics">
+          <div class="reveal delay-4"><strong>1000+</strong><span data-i18n="statVideos">videos created</span></div>
+          <div class="reveal delay-5"><strong>7+</strong><span data-i18n="statCompanies">companies</span></div>
+          <div class="reveal delay-6"><strong>15</strong><span data-i18n="statBloggers">bloggers</span></div>
+        </div>
+
+        <div class="scroll-hint" data-i18n="scrollHint">Scroll</div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES INTRO ===================== -->
+    <section class="stage services-intro" id="services">
+      <p class="eyebrow reveal" data-i18n="servicesEyebrow">What we do</p>
+      <h2 class="reveal delay-1" data-i18n="servicesTitle">Видео, которые ловят внимание <span class="gradient">и продают.</span></h2>
+      <p class="sub reveal delay-2" data-i18n="servicesSub">Шесть направлений, одна студия. Каждое — отдельный жанр и собственный визуальный язык.</p>
+      <div class="services-counter reveal delay-3">
+        <div><span>06</span><br/>directions</div>
+        <div><span>07</span><br/>cinematic videos below</div>
+      </div>
+    </section>
+
+    <!-- ===================== SPOTLIGHTS x6 ===================== -->
+    <section class="stage spotlight">
+      <video class="spot-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/promo-video.mp4" type="video/mp4" />
+      </video>
+      <div class="spot-darken"></div>
+      <div class="spot-ghost" aria-hidden="true">CM</div>
+      <div class="spot-content">
+        <div class="spot-meta reveal">
+          <span class="code">CM</span>
+          <span class="pipe">/</span>
+          <span>01 / 06</span>
+        </div>
+        <h2 class="spot-title reveal delay-1" data-i18n="serviceCommercialTitle">Commercial Videos</h2>
+        <p class="spot-desc reveal delay-2" data-i18n="serviceCommercialText">High-impact videos for campaigns, launches and paid media.</p>
+        <a class="spot-cta reveal delay-3" href="#contact" data-i18n="spotCta">Discuss project</a>
+      </div>
+      <span class="spot-vert">SCROLL</span>
+    </section>
+
+    <section class="stage spotlight">
+      <video class="spot-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/cyber-punk-video.mp4" type="video/mp4" />
+      </video>
+      <div class="spot-darken"></div>
+      <div class="spot-ghost" aria-hidden="true">AI</div>
+      <div class="spot-content">
+        <div class="spot-meta reveal">
+          <span class="code">AI</span>
+          <span class="pipe">/</span>
+          <span>02 / 06</span>
+        </div>
+        <h2 class="spot-title reveal delay-1" data-i18n="serviceAiTitle">AI Generated Videos</h2>
+        <p class="spot-desc reveal delay-2" data-i18n="serviceAiText">Concept worlds, cinematic scenes and visual systems powered by AI.</p>
+        <a class="spot-cta reveal delay-3" href="#contact" data-i18n="spotCta">Discuss project</a>
+      </div>
+      <span class="spot-vert">SCROLL</span>
+    </section>
+
+    <section class="stage spotlight">
+      <video class="spot-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/ugc-blogger-content.mp4" type="video/mp4" />
+      </video>
+      <div class="spot-darken"></div>
+      <div class="spot-ghost" aria-hidden="true">RL</div>
+      <div class="spot-content">
+        <div class="spot-meta reveal">
+          <span class="code">RL</span>
+          <span class="pipe">/</span>
+          <span>03 / 06</span>
+        </div>
+        <h2 class="spot-title reveal delay-1" data-i18n="serviceReelsTitle">Social Media Reels</h2>
+        <p class="spot-desc reveal delay-2" data-i18n="serviceReelsText">Fast, sharp vertical edits built for retention and sharing.</p>
+        <a class="spot-cta reveal delay-3" href="#contact" data-i18n="spotCta">Discuss project</a>
+      </div>
+      <span class="spot-vert">SCROLL</span>
+    </section>
+
+    <section class="stage spotlight">
+      <video class="spot-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/cinematic-reels.mp4" type="video/mp4" />
+      </video>
+      <div class="spot-darken"></div>
+      <div class="spot-ghost" aria-hidden="true">BR</div>
+      <div class="spot-content">
+        <div class="spot-meta reveal">
+          <span class="code">BR</span>
+          <span class="pipe">/</span>
+          <span>04 / 06</span>
+        </div>
+        <h2 class="spot-title reveal delay-1" data-i18n="serviceBrandTitle">Brand Promo Films</h2>
+        <p class="spot-desc reveal delay-2" data-i18n="serviceBrandText">Premium storytelling that makes the brand feel bigger and stronger.</p>
+        <a class="spot-cta reveal delay-3" href="#contact" data-i18n="spotCta">Discuss project</a>
+      </div>
+      <span class="spot-vert">SCROLL</span>
+    </section>
+
+    <section class="stage spotlight">
+      <video class="spot-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/action-video.mp4" type="video/mp4" />
+      </video>
+      <div class="spot-darken"></div>
+      <div class="spot-ghost" aria-hidden="true">MD</div>
+      <div class="spot-content">
+        <div class="spot-meta reveal">
+          <span class="code">MD</span>
+          <span class="pipe">/</span>
+          <span>05 / 06</span>
+        </div>
+        <h2 class="spot-title reveal delay-1" data-i18n="serviceMotionTitle">Motion Design</h2>
+        <p class="spot-desc reveal delay-2" data-i18n="serviceMotionText">Titles, transitions, UI motion, kinetic typography and visual polish.</p>
+        <a class="spot-cta reveal delay-3" href="#contact" data-i18n="spotCta">Discuss project</a>
+      </div>
+      <span class="spot-vert">SCROLL</span>
+    </section>
+
+    <section class="stage spotlight">
+      <video class="spot-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="assets/hyper-motion-product-video.mp4" type="video/mp4" />
+      </video>
+      <div class="spot-darken"></div>
+      <div class="spot-ghost" aria-hidden="true">AD</div>
+      <div class="spot-content">
+        <div class="spot-meta reveal">
+          <span class="code">AD</span>
+          <span class="pipe">/</span>
+          <span>06 / 06</span>
+        </div>
+        <h2 class="spot-title reveal delay-1" data-i18n="serviceProductTitle">Product Ads</h2>
+        <p class="spot-desc reveal delay-2" data-i18n="serviceProductText">Clean product-focused videos for offers, funnels and launches.</p>
+        <a class="spot-cta reveal delay-3" href="#contact" data-i18n="spotCta">Discuss project</a>
+      </div>
+      <span class="spot-vert">SCROLL</span>
+    </section>
+
+    <!-- ===================== PRICING ===================== -->
+    <section class="stage pricing" id="pricing">
+      <div class="pricing-head">
+        <p class="eyebrow reveal" data-i18n="pricingEyebrow">Packages</p>
+        <h2 class="reveal delay-1" data-i18n="pricingTitle">Start simple. <span class="gradient">Scale when the content works.</span></h2>
+      </div>
+      <div class="price-cards">
+        <article class="price-card reveal delay-2">
+          <p class="price-label" data-i18n="priceStartLabel">START</p>
+          <h3 data-i18n="priceStartTitle">AI Reel</h3>
+          <strong class="price" data-i18n="priceStartPrice">from 1 000 000 UZS</strong>
+          <p class="text" data-i18n="priceStartText">1 short AI/reels video for a fast launch.</p>
+          <a href="#contact" data-i18n="priceCta">Request package</a>
+        </article>
+        <article class="price-card featured reveal delay-3">
+          <p class="price-label" data-i18n="priceGrowthLabel">GROWTH</p>
+          <h3 data-i18n="priceGrowthTitle">Reels Pack</h3>
+          <strong class="price" data-i18n="priceGrowthPrice">from 3 000 000 UZS</strong>
+          <p class="text" data-i18n="priceGrowthText">3 videos with hooks, editing and one visual direction.</p>
+          <a href="#contact" data-i18n="priceCta">Request package</a>
+        </article>
+        <article class="price-card reveal delay-4">
+          <p class="price-label" data-i18n="priceHypeLabel">HYPE</p>
+          <h3 data-i18n="priceHypeTitle">AI Promo / Brand Video</h3>
+          <strong class="price" data-i18n="priceHypePrice">from 7 000 000 UZS</strong>
+          <p class="text" data-i18n="priceHypeText">Premium promo, product ad or cinematic brand video.</p>
+          <a href="#contact" data-i18n="priceCta">Request package</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== PORTFOLIO ===================== -->
+    <section class="stage portfolio" id="works">
+      <div class="portfolio-head">
+        <p class="eyebrow reveal" data-i18n="portfolioEyebrow">Selected work</p>
+        <h2 class="reveal delay-1" data-i18n="portfolioTitle">AI, reels <span class="gradient">и cinematic-видео.</span></h2>
+      </div>
+      <div class="works-grid">
+        <article class="work-card reveal delay-2">
+          <div class="work-thumb">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/ugc-blogger-content.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="work-meta">
+            <p data-i18n="projectOneCategory">UGC</p>
+            <h3 data-i18n="projectOneTitle">UGC blogger content</h3>
+          </div>
+        </article>
+        <article class="work-card reveal delay-2">
+          <div class="work-thumb">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/hyper-motion-product-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="work-meta">
+            <p data-i18n="projectTwoCategory">AI Video</p>
+            <h3 data-i18n="projectTwoTitle">Hyper motion product video</h3>
+          </div>
+        </article>
+        <article class="work-card reveal delay-3">
+          <div class="work-thumb">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/promo-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="work-meta">
+            <p data-i18n="projectThreeCategory">Reels</p>
+            <h3 data-i18n="projectThreeTitle">Promo video</h3>
+          </div>
+        </article>
+        <article class="work-card reveal delay-3">
+          <div class="work-thumb">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/cinematic-reels.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="work-meta">
+            <p data-i18n="projectFourCategory">Brand Film</p>
+            <h3 data-i18n="projectFourTitle">Cinematic reels</h3>
+          </div>
+        </article>
+        <article class="work-card reveal delay-4">
+          <div class="work-thumb">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/cyber-punk-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="work-meta">
+            <p data-i18n="projectFiveCategory">Product Ad</p>
+            <h3 data-i18n="projectFiveTitle">Cyber punk video</h3>
+          </div>
+        </article>
+        <article class="work-card reveal delay-4">
+          <div class="work-thumb">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/action-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="work-meta">
+            <p data-i18n="projectSixCategory">Motion</p>
+            <h3 data-i18n="projectSixTitle">Action video</h3>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== PROCESS / FILMSTRIP ===================== -->
+    <section class="stage process">
+      <div class="process-head">
+        <p class="eyebrow reveal" data-i18n="processEyebrow">How we work</p>
+        <h2 class="reveal delay-1" data-i18n="processTitle">From idea <span class="gradient">to launch.</span></h2>
+      </div>
+      <div class="filmstrip">
+        <article class="frame reveal delay-1">
+          <span class="frame-num">01</span>
+          <strong data-i18n="processOneTitle">Brief</strong>
+          <p data-i18n="processOneText">We define the goal, audience, offer and visual direction.</p>
+        </article>
+        <article class="frame reveal delay-2">
+          <span class="frame-num">02</span>
+          <strong data-i18n="processTwoTitle">Concept</strong>
+          <p data-i18n="processTwoText">We build the idea, script, storyboard and production plan.</p>
+        </article>
+        <article class="frame reveal delay-3">
+          <span class="frame-num">03</span>
+          <strong data-i18n="processThreeTitle">Production</strong>
+          <p data-i18n="processThreeText">We shoot, generate, design and collect every visual layer.</p>
+        </article>
+        <article class="frame reveal delay-4">
+          <span class="frame-num">04</span>
+          <strong data-i18n="processFourTitle">Edit</strong>
+          <p data-i18n="processFourText">We cut, sound-design, color and polish the final film.</p>
+        </article>
+        <article class="frame reveal delay-5">
+          <span class="frame-num">05</span>
+          <strong data-i18n="processFiveTitle">Launch</strong>
+          <p data-i18n="processFiveText">We prepare formats for ads, reels, presentations and campaigns.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="stage about">
+      <p class="eyebrow reveal" data-i18n="aboutEyebrow">Studio</p>
+      <h2 class="reveal delay-1" data-i18n="aboutTitle">HYPE PRODUCTION creates AI videos, reels and premium content for brands that need strong visuals.</h2>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section class="stage contact" id="contact">
+      <div class="contact-left">
+        <p class="eyebrow reveal" data-i18n="contactEyebrow">Request</p>
+        <h2 class="reveal delay-1" data-i18n="contactTitle">Ready to launch?</h2>
+        <p class="reveal delay-2" data-i18n="contactText">Tell us your idea. We will build the visual concept and production plan.</p>
+        <div class="contact-links reveal delay-3">
+          <a href="https://www.instagram.com/HYPE_PROMOTION_UZ" target="_blank" rel="noreferrer">
+            <span data-i18n="instagramLabel">Instagram</span>
+            <strong>HYPE_PROMOTION_UZ</strong>
+          </a>
+          <a href="tel:+998935064200">
+            <span data-i18n="phoneLabel">Phone</span>
+            <strong>+998 93 506 42 00</strong>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal delay-2" id="contactForm">
+        <label>
+          <span data-i18n="formName">Name</span>
+          <input type="text" name="name" placeholder="Your name" data-i18n-placeholder="formNamePlaceholder" />
+        </label>
+        <label>
+          <span data-i18n="formPhone">Phone</span>
+          <input type="tel" name="phone" placeholder="+998" data-i18n-placeholder="formPhonePlaceholder" />
+        </label>
+        <label>
+          <span data-i18n="formProject">Project description</span>
+          <textarea name="project" rows="5" placeholder="What do you want to create?" data-i18n-placeholder="formProjectPlaceholder"></textarea>
+        </label>
+        <button class="btn primary" type="submit" data-i18n="formSubmit">Send request</button>
+        <p class="form-status" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    HYPE PRODUCTION © 2026 — Cinematic Video Production Studio
+  </footer>
+
+  <!-- ============ THREE.js for hero particles ============ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // ============================================
+    // i18n (расширенные переводы поверх существующих ключей)
+    // ============================================
+    const translations = {
+      en: {
+        navHome: "Home", navServices: "Services", navWorks: "Works", navContact: "Contact",
+        headerCta: "Start project", scrollHint: "Scroll",
+        heroEyebrow: "Cinematic video production studio",
+        heroTitle: "HYPE PRODUCTION",
+        heroText: "We turn any idea into a powerful video — from reels to cinematic films.",
+        heroPrimary: "Start a project", heroSecondary: "View works",
+        statVideos: "videos created", statCompanies: "companies", statBloggers: "bloggers",
+        servicesEyebrow: "What we do",
+        servicesTitle: "Videos that catch attention <span class='gradient'>and sell.</span>",
+        servicesSub: "Six directions, one studio. Each one is its own genre with its own visual language.",
+        serviceCommercialTitle: "Commercial Videos",
+        serviceCommercialText: "High-impact videos for campaigns, launches and paid media.",
+        serviceAiTitle: "AI Generated Videos",
+        serviceAiText: "Concept worlds, cinematic scenes and visual systems powered by AI.",
+        serviceReelsTitle: "Social Media Reels",
+        serviceReelsText: "Fast, sharp vertical edits built for retention and sharing.",
+        serviceBrandTitle: "Brand Promo Films",
+        serviceBrandText: "Premium storytelling that makes the brand feel bigger and stronger.",
+        serviceMotionTitle: "Motion Design",
+        serviceMotionText: "Titles, transitions, UI motion, kinetic typography and visual polish.",
+        serviceProductTitle: "Product Ads",
+        serviceProductText: "Clean product-focused videos for offers, funnels and launches.",
+        spotCta: "Discuss project",
+        pricingEyebrow: "Packages",
+        pricingTitle: "Start simple. <span class='gradient'>Scale when the content works.</span>",
+        priceStartLabel: "START", priceStartTitle: "AI Reel",
+        priceStartPrice: "from 1 000 000 UZS",
+        priceStartText: "1 short AI/reels video for a fast launch.",
+        priceGrowthLabel: "GROWTH", priceGrowthTitle: "Reels Pack",
+        priceGrowthPrice: "from 3 000 000 UZS",
+        priceGrowthText: "3 videos with hooks, editing and one visual direction.",
+        priceHypeLabel: "HYPE", priceHypeTitle: "AI Promo / Brand Video",
+        priceHypePrice: "from 7 000 000 UZS",
+        priceHypeText: "Premium promo, product ad or cinematic brand video.",
+        priceCta: "Request package",
+        portfolioEyebrow: "Selected work",
+        portfolioTitle: "AI, reels <span class='gradient'>and cinematic videos.</span>",
+        projectOneCategory: "UGC", projectOneTitle: "UGC blogger content",
+        projectTwoCategory: "AI Video", projectTwoTitle: "Hyper motion product video",
+        projectThreeCategory: "Reels", projectThreeTitle: "Promo video",
+        projectFourCategory: "Brand Film", projectFourTitle: "Cinematic reels",
+        projectFiveCategory: "Product Ad", projectFiveTitle: "Cyber punk video",
+        projectSixCategory: "Motion", projectSixTitle: "Action video",
+        processEyebrow: "How we work",
+        processTitle: "From idea <span class='gradient'>to launch.</span>",
+        processOneTitle: "Brief", processOneText: "We define the goal, audience, offer and visual direction.",
+        processTwoTitle: "Concept", processTwoText: "We build the idea, script, storyboard and production plan.",
+        processThreeTitle: "Production", processThreeText: "We shoot, generate, design and collect every visual layer.",
+        processFourTitle: "Edit", processFourText: "We cut, sound-design, color and polish the final film.",
+        processFiveTitle: "Launch", processFiveText: "We prepare formats for ads, reels, presentations and campaigns.",
+        aboutEyebrow: "Studio",
+        aboutTitle: "HYPE PRODUCTION creates AI videos, reels and premium content for brands that need strong visuals.",
+        contactEyebrow: "Request",
+        contactTitle: "Ready to launch?",
+        contactText: "Tell us your idea. We will build the visual concept and production plan.",
+        instagramLabel: "Instagram", phoneLabel: "Phone",
+        formName: "Name", formNamePlaceholder: "Your name",
+        formPhone: "Phone", formPhonePlaceholder: "+998",
+        formProject: "Project description", formProjectPlaceholder: "What do you want to create?",
+        formSubmit: "Send request",
+        formSuccess: "Thanks — we'll get back within 24h.",
+        formError: "Please fill in your name and contact."
+      },
+      ru: {
+        navHome: "Главная", navServices: "Услуги", navWorks: "Работы", navContact: "Контакты",
+        headerCta: "Начать проект", scrollHint: "Скроль",
+        heroEyebrow: "Cinematic-студия видеопродакшна",
+        heroTitle: "HYPE PRODUCTION",
+        heroText: "Воплощаем любые идеи в кадре — от reels до cinematic-фильмов.",
+        heroPrimary: "Начать проект", heroSecondary: "Смотреть работы",
+        statVideos: "созданных видео", statCompanies: "компаний", statBloggers: "блогеров",
+        servicesEyebrow: "Что мы делаем",
+        servicesTitle: "Видео, которые ловят внимание <span class='gradient'>и продают.</span>",
+        servicesSub: "Шесть направлений, одна студия. Каждое — отдельный жанр и собственный визуальный язык.",
+        serviceCommercialTitle: "Рекламные видео",
+        serviceCommercialText: "Видео высокого импакта для кампаний, запусков и платного трафика.",
+        serviceAiTitle: "AI-видео",
+        serviceAiText: "Концепты, cinematic-сцены и визуальные системы на основе нейросетей.",
+        serviceReelsTitle: "Reels для соцсетей",
+        serviceReelsText: "Быстрые, цепкие вертикальные монтажи для удержания и пересылок.",
+        serviceBrandTitle: "Brand-фильмы",
+        serviceBrandText: "Премиальный сторителлинг, который делает бренд больше и сильнее.",
+        serviceMotionTitle: "Motion-дизайн",
+        serviceMotionText: "Титры, переходы, UI-motion, кинетическая типографика и финальный полиш.",
+        serviceProductTitle: "Product-реклама",
+        serviceProductText: "Чистые продуктовые ролики для офферов, воронок и запусков.",
+        spotCta: "Обсудить проект",
+        pricingEyebrow: "Пакеты",
+        pricingTitle: "Начни просто. <span class='gradient'>Масштабируй, когда контент работает.</span>",
+        priceStartLabel: "START", priceStartTitle: "AI Reel",
+        priceStartPrice: "от 1 000 000 UZS",
+        priceStartText: "1 короткое AI/reels-видео для быстрого запуска.",
+        priceGrowthLabel: "GROWTH", priceGrowthTitle: "Reels Pack",
+        priceGrowthPrice: "от 3 000 000 UZS",
+        priceGrowthText: "3 видео с хуками, монтажом и единым визуальным направлением.",
+        priceHypeLabel: "HYPE", priceHypeTitle: "AI Promo / Brand Video",
+        priceHypePrice: "от 7 000 000 UZS",
+        priceHypeText: "Премиум-промо, продуктовая реклама или cinematic-бренд-видео.",
+        priceCta: "Заказать пакет",
+        portfolioEyebrow: "Избранные работы",
+        portfolioTitle: "AI, reels <span class='gradient'>и cinematic-видео.</span>",
+        projectOneCategory: "UGC", projectOneTitle: "UGC-контент с блогерами",
+        projectTwoCategory: "AI Video", projectTwoTitle: "Hyper-motion продуктовое видео",
+        projectThreeCategory: "Reels", projectThreeTitle: "Промо-видео",
+        projectFourCategory: "Brand Film", projectFourTitle: "Cinematic-reels",
+        projectFiveCategory: "Product Ad", projectFiveTitle: "Cyber-punk видео",
+        projectSixCategory: "Motion", projectSixTitle: "Action-видео",
+        processEyebrow: "Как мы работаем",
+        processTitle: "От идеи <span class='gradient'>до запуска.</span>",
+        processOneTitle: "Бриф", processOneText: "Определяем цель, аудиторию, оффер и визуальное направление.",
+        processTwoTitle: "Концепт", processTwoText: "Прорабатываем идею, сценарий, раскадровку и план съёмки.",
+        processThreeTitle: "Производство", processThreeText: "Снимаем, генерируем, дизайним и собираем все визуальные слои.",
+        processFourTitle: "Монтаж", processFourText: "Режем, делаем саунд-дизайн, цветокоррекцию и финальный полиш.",
+        processFiveTitle: "Запуск", processFiveText: "Готовим форматы для рекламы, reels, презентаций и кампаний.",
+        aboutEyebrow: "Студия",
+        aboutTitle: "HYPE PRODUCTION делает AI-видео, reels и премиум-контент для брендов, которым нужна сильная визуальная подача.",
+        contactEyebrow: "Заявка",
+        contactTitle: "Готовы запускать?",
+        contactText: "Расскажите свою идею. Мы соберём визуальную концепцию и план съёмки.",
+        instagramLabel: "Instagram", phoneLabel: "Телефон",
+        formName: "Имя", formNamePlaceholder: "Ваше имя",
+        formPhone: "Телефон", formPhonePlaceholder: "+998",
+        formProject: "Описание проекта", formProjectPlaceholder: "Что хотите создать?",
+        formSubmit: "Отправить заявку",
+        formSuccess: "Спасибо — ответим в течение 24 часов.",
+        formError: "Заполните имя и контакт."
+      },
+      uz: {
+        navHome: "Bosh sahifa", navServices: "Xizmatlar", navWorks: "Ishlar", navContact: "Aloqa",
+        headerCta: "Loyiha boshlash", scrollHint: "Pastga",
+        heroEyebrow: "Cinematic video prodakshn studiyasi",
+        heroTitle: "HYPE PRODUCTION",
+        heroText: "Har qanday g'oyani kuchli videoga aylantiramiz — reelsdan cinematic filmgacha.",
+        heroPrimary: "Loyiha boshlash", heroSecondary: "Ishlarni ko'rish",
+        statVideos: "yaratilgan video", statCompanies: "kompaniya", statBloggers: "bloger",
+        servicesEyebrow: "Biz nima qilamiz",
+        servicesTitle: "E'tiborni qaratib <span class='gradient'>sotadigan videolar.</span>",
+        servicesSub: "Olti yo'nalish, bitta studiya. Har biri o'z janri va o'z vizual tilida.",
+        serviceCommercialTitle: "Reklama videolari",
+        serviceCommercialText: "Kampaniyalar va to'lovli reklamalar uchun yuqori ta'sirli videolar.",
+        serviceAiTitle: "AI-videolar",
+        serviceAiText: "Konseptual olamlar va AI yordamida yaratilgan vizual tizimlar.",
+        serviceReelsTitle: "Ijtimoiy tarmoq Reels",
+        serviceReelsText: "Tezkor, qiziqarli vertikal montajlar — ko'rishlar va ulashishlar uchun.",
+        serviceBrandTitle: "Brend-filmlar",
+        serviceBrandText: "Brendni kattaroq va kuchliroq qiladigan premium storytelling.",
+        serviceMotionTitle: "Motion-dizayn",
+        serviceMotionText: "Titrlar, o'tishlar, UI-motion, kinetik tipografika va yakuniy polish.",
+        serviceProductTitle: "Mahsulot reklamasi",
+        serviceProductText: "Offer va voronkalar uchun toza mahsulotga yo'naltirilgan videolar.",
+        spotCta: "Loyihani muhokama qilish",
+        pricingEyebrow: "Paketlar",
+        pricingTitle: "Sodda boshlang. <span class='gradient'>Kontent ishlasa — kengaytiring.</span>",
+        priceStartLabel: "START", priceStartTitle: "AI Reel",
+        priceStartPrice: "1 000 000 UZSdan",
+        priceStartText: "Tez ishga tushirish uchun 1 ta qisqa AI/reels video.",
+        priceGrowthLabel: "GROWTH", priceGrowthTitle: "Reels Pack",
+        priceGrowthPrice: "3 000 000 UZSdan",
+        priceGrowthText: "Xuk va bir xil vizual yo'nalishdagi 3 ta video.",
+        priceHypeLabel: "HYPE", priceHypeTitle: "AI Promo / Brand Video",
+        priceHypePrice: "7 000 000 UZSdan",
+        priceHypeText: "Premium promo, mahsulot reklamasi yoki cinematic brend videosi.",
+        priceCta: "Paketni buyurtma qilish",
+        portfolioEyebrow: "Tanlangan ishlar",
+        portfolioTitle: "AI, reels <span class='gradient'>va cinematic videolar.</span>",
+        projectOneCategory: "UGC", projectOneTitle: "Blogerlar bilan UGC kontent",
+        projectTwoCategory: "AI Video", projectTwoTitle: "Hyper-motion mahsulot videosi",
+        projectThreeCategory: "Reels", projectThreeTitle: "Promo video",
+        projectFourCategory: "Brand Film", projectFourTitle: "Cinematic reels",
+        projectFiveCategory: "Product Ad", projectFiveTitle: "Cyber-punk video",
+        projectSixCategory: "Motion", projectSixTitle: "Action video",
+        processEyebrow: "Qanday ishlaymiz",
+        processTitle: "G'oyadan <span class='gradient'>ishga tushirishgacha.</span>",
+        processOneTitle: "Brif", processOneText: "Maqsad, auditoriya, taklif va vizual yo'nalishni belgilaymiz.",
+        processTwoTitle: "Konsept", processTwoText: "G'oya, ssenariy, raskadrovka va prodakshn rejasini quramiz.",
+        processThreeTitle: "Prodakshn", processThreeText: "Suratga olamiz, generatsiya qilamiz, dizayn qilamiz va vizual qatlamlarni yig'amiz.",
+        processFourTitle: "Montaj", processFourText: "Kesib, ovoz dizayn, ranglar va yakuniy polish qilamiz.",
+        processFiveTitle: "Ishga tushirish", processFiveText: "Reklamalar, reels va kampaniyalar uchun formatlarni tayyorlaymiz.",
+        aboutEyebrow: "Studiya",
+        aboutTitle: "HYPE PRODUCTION kuchli vizual yechim kerak bo'lgan brendlar uchun AI-video, reels va premium kontent yaratadi.",
+        contactEyebrow: "Buyurtma",
+        contactTitle: "Boshlashga tayyormisiz?",
+        contactText: "G'oyangizni ayting. Biz vizual konsepsiya va prodakshn rejasini quramiz.",
+        instagramLabel: "Instagram", phoneLabel: "Telefon",
+        formName: "Ism", formNamePlaceholder: "Sizning ismingiz",
+        formPhone: "Telefon", formPhonePlaceholder: "+998",
+        formProject: "Loyiha tavsifi", formProjectPlaceholder: "Nimani yaratmoqchisiz?",
+        formSubmit: "Yuborish",
+        formSuccess: "Rahmat — 24 soat ichida javob beramiz.",
+        formError: "Ism va aloqa ma'lumotlarini to'ldiring."
+      }
+    };
+
+    let currentLang = 'ru';
+
+    function applyLang(lang) {
+      if (!translations[lang]) return;
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+      });
+      document.querySelectorAll('.lang-switcher button').forEach((b) => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+    }
+
+    document.querySelectorAll('.lang-switcher button').forEach((b) => {
+      b.addEventListener('click', () => applyLang(b.dataset.lang));
+    });
+    applyLang('ru');
+
+    // ============================================
+    // Reveal on intersection
+    // ============================================
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.reveal').forEach((n) => revealObserver.observe(n));
+
+    // ============================================
+    // Scroll progress bar + header tint
+    // ============================================
+    const progressBar = document.querySelector('.scroll-progress');
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const p = scrollable > 0 ? window.scrollY / scrollable : 0;
+      progressBar.style.width = `${p * 100}%`;
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ============================================
+    // Pause videos that aren't in viewport
+    // (saves CPU when scrolling fast through 13 videos)
+    // ============================================
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const v = e.target;
+        if (e.isIntersecting) {
+          const playPromise = v.play();
+          if (playPromise && playPromise.catch) playPromise.catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('video').forEach((v) => videoObserver.observe(v));
+
+    // ============================================
+    // Smooth scroll for anchor links (manual fallback)
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ============================================
+    // Contact form submit (заглушка)
+    // ============================================
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const status = form.querySelector('.form-status');
+      const data = new FormData(form);
+      const name = (data.get('name') || '').trim();
+      const phone = (data.get('phone') || '').trim();
+      if (!name || !phone) {
+        status.textContent = translations[currentLang].formError;
+        status.style.color = '#ff8c8c';
+        return;
+      }
+      status.textContent = translations[currentLang].formSuccess;
+      status.style.color = '#6ee7ff';
+      form.reset();
+    });
+
+    // ============================================
+    // HERO: Three.js particles that form "HYPE"
+    // ============================================
+    (function initHero() {
+      const canvas = document.getElementById('heroCanvas');
+      const heroSection = document.querySelector('.hero');
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.set(0, 0, 6);
+
+      function resize() {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener('resize', resize);
+
+      // Sample "HYPE" into points
+      function sampleText(text, fontSize, density) {
+        const c = document.createElement('canvas');
+        c.width = 1024;
+        c.height = 256;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = '#fff';
+        ctx.font = `900 ${fontSize}px Inter, "Arial Black", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, c.width / 2, c.height / 2);
+        const data = ctx.getImageData(0, 0, c.width, c.height).data;
+        const points = [];
+        for (let y = 0; y < c.height; y += density) {
+          for (let x = 0; x < c.width; x += density) {
+            const idx = (y * c.width + x) * 4;
+            if (data[idx] > 128) {
+              // scale: text height ~ 1.6 in world units
+              const nx = (x - c.width / 2) / (c.height * 0.6) * 1.6;
+              const ny = -(y - c.height / 2) / (c.height * 0.6) * 1.6;
+              points.push(nx, ny, 0);
+            }
+          }
+        }
+        return points;
+      }
+
+      function buildParticles() {
+        const sampled = sampleText('HYPE', 200, 4);
+        const N = Math.floor(sampled.length / 3);
+        const positions = new Float32Array(N * 3);
+        const targets = new Float32Array(N * 3);
+        const origins = new Float32Array(N * 3);
+        for (let i = 0; i < N; i++) {
+          // text target
+          targets[i * 3] = sampled[i * 3];
+          targets[i * 3 + 1] = sampled[i * 3 + 1];
+          targets[i * 3 + 2] = sampled[i * 3 + 2];
+          // random origin (scattered cloud)
+          const r = 4 + Math.random() * 4;
+          const ang = Math.random() * Math.PI * 2;
+          const phi = (Math.random() - 0.5) * Math.PI;
+          origins[i * 3] = Math.cos(ang) * Math.cos(phi) * r;
+          origins[i * 3 + 1] = Math.sin(phi) * r;
+          origins[i * 3 + 2] = Math.sin(ang) * Math.cos(phi) * r - 1;
+          positions[i * 3] = origins[i * 3];
+          positions[i * 3 + 1] = origins[i * 3 + 1];
+          positions[i * 3 + 2] = origins[i * 3 + 2];
+        }
+        const geom = new THREE.BufferGeometry();
+        geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const mat = new THREE.PointsMaterial({
+          color: 0x6ee7ff,
+          size: 0.022,
+          transparent: true,
+          opacity: 0.9,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          sizeAttenuation: true
+        });
+        const points = new THREE.Points(geom, mat);
+        scene.add(points);
+        return { points, positions, targets, origins, N, mat };
+      }
+
+      let particleData = null;
+      // Wait for font to load (so sampling uses Inter, not fallback)
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          particleData = buildParticles();
+        });
+      } else {
+        particleData = buildParticles();
+      }
+      // Safety fallback (in case fonts.ready never resolves in some env)
+      setTimeout(() => {
+        if (!particleData) particleData = buildParticles();
+      }, 1200);
+
+      // Violet accent points (background depth)
+      const dustGeom = new THREE.BufferGeometry();
+      const dustN = 600;
+      const dustPos = new Float32Array(dustN * 3);
+      for (let i = 0; i < dustN; i++) {
+        dustPos[i * 3] = (Math.random() - 0.5) * 20;
+        dustPos[i * 3 + 1] = (Math.random() - 0.5) * 14;
+        dustPos[i * 3 + 2] = (Math.random() - 0.5) * 10 - 4;
+      }
+      dustGeom.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+      const dustMat = new THREE.PointsMaterial({
+        color: 0x9b8cff,
+        size: 0.018,
+        transparent: true,
+        opacity: 0.45,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const dust = new THREE.Points(dustGeom, dustMat);
+      scene.add(dust);
+
+      function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+      function smoothstep(e0, e1, x) {
+        const t = clamp((x - e0) / (e1 - e0), 0, 1);
+        return t * t * (3 - 2 * t);
+      }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      let heroProgress = 0;
+      function updateProgress() {
+        const rect = heroSection.getBoundingClientRect();
+        const total = heroSection.offsetHeight - window.innerHeight;
+        heroProgress = clamp(-rect.top / total, 0, 1);
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
+      let t0 = performance.now();
+      function loop() {
+        requestAnimationFrame(loop);
+        const t = (performance.now() - t0) * 0.001;
+
+        // Particle morph based on progress
+        if (particleData) {
+          const { positions, targets, origins, N, mat } = particleData;
+          // 0 → 0.25: converge from cloud to text
+          // 0.25 → 0.55: hold text shape
+          // 0.55 → 1.0: disperse outward
+          const converge = smoothstep(0.0, 0.25, heroProgress);
+          const disperse = smoothstep(0.55, 1.0, heroProgress);
+          for (let i = 0; i < N; i++) {
+            const j = i * 3;
+            const wobble = Math.sin(t * 1.2 + i * 0.1) * 0.012;
+            const wobble2 = Math.cos(t * 1.0 + i * 0.07) * 0.012;
+            // Original target with small wobble
+            const tx = targets[j] + wobble;
+            const ty = targets[j + 1] + wobble2;
+            const tz = targets[j + 2];
+            // Position interpolation
+            const px = lerp(origins[j], tx, converge);
+            const py = lerp(origins[j + 1], ty, converge);
+            const pz = lerp(origins[j + 2], tz, converge);
+            // Disperse: push outward from text
+            const dx = lerp(px, origins[j] * 1.6, disperse);
+            const dy = lerp(py, origins[j + 1] * 1.6, disperse);
+            const dz = lerp(pz, origins[j + 2] * 1.6 - 2, disperse);
+            positions[j] = dx;
+            positions[j + 1] = dy;
+            positions[j + 2] = dz;
+          }
+          particleData.points.geometry.attributes.position.needsUpdate = true;
+          particleData.points.rotation.y = Math.sin(t * 0.15) * 0.05 + heroProgress * 0.3;
+          // Fade out as we disperse
+          mat.opacity = lerp(0.9, 0.0, smoothstep(0.7, 1.0, heroProgress));
+        }
+
+        // Dust drift
+        dust.rotation.y = t * 0.02;
+        dust.rotation.x = Math.sin(t * 0.05) * 0.05;
+
+        // Camera subtle drift
+        camera.position.x = Math.sin(t * 0.1) * 0.15;
+        camera.position.y = Math.cos(t * 0.08) * 0.1;
+        camera.lookAt(0, 0, 0);
+
+        renderer.render(scene, camera);
+      }
+      resize();
+      loop();
+    })();
+  </script>
+</body>
+</html>
