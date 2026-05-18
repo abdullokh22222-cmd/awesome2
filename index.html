@@ -83,6 +83,28 @@
     .contact-form input, .contact-form textarea { padding: 13px 14px; border: 1px solid var(--line); border-radius: 8px; background: rgba(2, 4, 10, 0.6); color: var(--text); font-size: 14px; font-family: "Manrope", sans-serif; transition: border-color 0.2s, box-shadow 0.2s; }
     .contact-form input:focus, .contact-form textarea:focus { outline: 0; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(110, 231, 255, 0.18); }
     .form-status { font-size: 12px; color: var(--muted); margin: 0; }
+    .chat-widget { position: fixed; right: 18px; bottom: 18px; z-index: 100; pointer-events: auto; }
+    .chat-launcher { min-height: 48px; padding: 0 18px; border: 1px solid rgba(110, 231, 255, 0.42); border-radius: 999px; color: #03131d; font: inherit; font-size: 13px; font-weight: 800; background: linear-gradient(135deg, #dff8ff, #7feaff 42%, #9b8cff 100%); box-shadow: 0 0 32px rgba(110, 231, 255, 0.25), 0 18px 44px rgba(0, 0, 0, 0.38); cursor: pointer; }
+    .chat-panel { position: absolute; right: 0; bottom: 62px; display: none; width: min(390px, calc(100vw - 28px)); overflow: hidden; border: 1px solid var(--line-strong); border-radius: 16px; background: radial-gradient(circle at 20% 0%, rgba(110, 231, 255, 0.12), transparent 36%), rgba(5, 8, 15, 0.94); box-shadow: 0 0 44px rgba(110, 231, 255, 0.14), 0 24px 70px rgba(0, 0, 0, 0.55); backdrop-filter: blur(22px); }
+    .chat-widget.is-open .chat-panel { display: block; }
+    .chat-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 18px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .chat-header p { margin: 0 0 5px; color: var(--blue); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .chat-header strong { display: block; font-size: 18px; line-height: 1.2; }
+    .chat-close { width: 32px; height: 32px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 9px; color: var(--text); font-size: 22px; line-height: 1; background: rgba(255, 255, 255, 0.04); cursor: pointer; }
+    .chat-body { display: grid; gap: 12px; max-height: min(620px, calc(100vh - 128px)); padding: 16px; overflow-y: auto; }
+    .chat-message { max-width: 92%; padding: 12px 13px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; color: #d8e2ef; font-size: 14px; line-height: 1.55; background: rgba(255, 255, 255, 0.045); }
+    .chat-message.accent { justify-self: end; border-color: rgba(110, 231, 255, 0.2); color: var(--text); background: rgba(110, 231, 255, 0.07); }
+    .chat-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chat-option { min-height: 36px; padding: 0 12px; border: 1px solid rgba(110, 231, 255, 0.16); border-radius: 999px; color: var(--text); font: inherit; font-size: 13px; font-weight: 700; background: rgba(255, 255, 255, 0.045); cursor: pointer; }
+    .chat-option:hover { border-color: rgba(110, 231, 255, 0.44); background: rgba(110, 231, 255, 0.08); }
+    .chat-summary { display: grid; gap: 7px; padding: 13px; border: 1px solid rgba(110, 231, 255, 0.16); border-radius: 14px; background: rgba(110, 231, 255, 0.045); }
+    .chat-summary p { margin: 0; color: var(--muted); font-size: 13px; }
+    .chat-lead-form { display: grid; gap: 10px; }
+    .chat-lead-form input, .chat-lead-form textarea { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; background: rgba(255, 255, 255, 0.045); }
+    .chat-lead-form textarea { min-height: 74px; padding-block: 11px; resize: vertical; }
+    .chat-lead-form button { min-height: 42px; border: 0; border-radius: 10px; color: #03131d; font: inherit; font-size: 13px; font-weight: 800; background: linear-gradient(135deg, #dff8ff, #7feaff 42%, #9b8cff 100%); cursor: pointer; }
+    .chat-status { min-height: 18px; margin: 0; color: var(--blue); font-size: 12px; }
+    @media (max-width: 560px) { .chat-widget { right: 12px; bottom: 12px; left: 12px; } .chat-launcher { width: 100%; min-height: 46px; } .chat-panel { right: 0; bottom: 58px; width: 100%; border-radius: 14px; } }
     .loading { position: fixed; inset: 0; z-index: 200; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 18px; transition: opacity 0.6s ease; }
     .loading.gone { opacity: 0; pointer-events: none; }
     .loading .l-brand { font-family: "Inter", sans-serif; font-weight: 900; letter-spacing: 0.3em; font-size: 14px; }
@@ -290,6 +312,22 @@
     </div></section>
   </main>
 
+  <aside class="chat-widget" aria-label="HYPE Assistant">
+    <button class="chat-launcher" type="button">
+      <span data-chat-launcher>Подобрать формат</span>
+    </button>
+    <section class="chat-panel" aria-hidden="true">
+      <header class="chat-header">
+        <div>
+          <p>HYPE Assistant</p>
+          <strong data-chat-title>Что хотите снять?</strong>
+        </div>
+        <button class="chat-close" type="button" aria-label="Close chat">×</button>
+      </header>
+      <div class="chat-body" data-chat-body></div>
+    </section>
+  </aside>
+
   <div class="scroll-hint" id="scrollHint" data-i18n="scrollHint">Scroll</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -303,6 +341,91 @@
     function applyLang(L){if(!i18n[L])return;curLang=L;document.documentElement.lang=L;const t=i18n[L];document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(t[k]!==undefined)e.innerHTML=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>{const k=e.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)e.setAttribute('placeholder',t[k])});document.querySelectorAll('.lang-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===L))}
     document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
     applyLang('ru');
+
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAuK7CweGDJmnj1w182FAfH5hSPo31q0XnkU2WcqqN3vz_8Dzswlyi4DSqTxrmXSZT7w/exec';
+    const chatContent = {
+      en: {
+        launcher: 'Choose a format',
+        title: 'What do you want to create?',
+        intro: 'Answer a few quick questions. We will suggest the direction and price range.',
+        steps: [
+          {key:'goal', question:'What do you want to promote?', options:[['brand','Brand'],['product','Product'],['blog','Blog'],['event','Event']]},
+          {key:'platform', question:'Where will the video be used?', options:[['instagram','Instagram'],['tiktok','TikTok'],['telegram','Telegram'],['ads','Website / ads']]},
+          {key:'style', question:'Which visual style feels closer?', options:[['premium','Premium'],['dynamic','Dynamic'],['cyberpunk','Cyberpunk'],['minimal','Minimal'],['ugc','UGC']]},
+          {key:'format', question:'Which format do you need?', options:[['short','1 short video'],['reels','3 reels'],['promo','AI promo'],['product','Product ad'],['brand','Brand film'],['unsure','Not sure yet']]},
+          {key:'deadline', question:'When do you need the result?', options:[['urgent','1-2 days'],['soon','3-5 days'],['normal','1-2 weeks'],['discuss','Just discussing']]}
+        ],
+        summaryTitle:'Direction selected', priceLabel:'Price guide',
+        urgentNote:'Fast delivery needs a priority production slot. The closer the deadline, the higher the cost.',
+        normalNote:'This timing gives more room for concept, generation, editing and revisions.',
+        contactPrompt:'Leave your contact and we will confirm the exact production plan.',
+        namePlaceholder:'Name', phonePlaceholder:'+998', commentPlaceholder:'Comment',
+        send:'Send request', sending:'Sending...', success:'Request sent. We will contact you soon.',
+        error:'Could not send. Please contact us by phone or Instagram.', priceConsult:'after brief',
+        prices:{short:['from 1 000 000 UZS','from 1 250 000 UZS','from 1 750 000 UZS'],reels:['from 3 000 000 UZS','from 3 500 000 UZS','from 4 500 000 UZS'],promo:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS'],product:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS'],brand:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS']}
+      },
+      ru: {
+        launcher: 'Подобрать формат',
+        title: 'Что хотите снять?',
+        intro: 'Ответьте на пару вопросов. Мы подберем формат и ориентир по стоимости.',
+        steps: [
+          {key:'goal', question:'Что хотите продвинуть?', options:[['brand','Бренд'],['product','Продукт'],['blog','Блог'],['event','Мероприятие']]},
+          {key:'platform', question:'Где будет использоваться видео?', options:[['instagram','Instagram'],['tiktok','TikTok'],['telegram','Telegram'],['ads','Сайт / реклама']]},
+          {key:'style', question:'Какой визуальный стиль ближе?', options:[['premium','Премиум'],['dynamic','Динамичный'],['cyberpunk','Киберпанк'],['minimal','Минимализм'],['ugc','UGC']]},
+          {key:'format', question:'Какой формат нужен?', options:[['short','1 короткий ролик'],['reels','3 reels'],['promo','AI promo'],['product','Product ad'],['brand','Brand film'],['unsure','Пока не знаю']]},
+          {key:'deadline', question:'Когда нужен результат?', options:[['urgent','1-2 дня'],['soon','3-5 дней'],['normal','1-2 недели'],['discuss','Пока обсуждаем']]}
+        ],
+        summaryTitle:'Направление подобрано', priceLabel:'Ориентир',
+        urgentNote:'Срочный запуск требует приоритетного production-слота. Чем ближе дедлайн, тем выше стоимость.',
+        normalNote:'Такой срок дает больше пространства для идеи, генерации, монтажа и правок.',
+        contactPrompt:'Оставьте контакт, и мы подтвердим точный план продакшена.',
+        namePlaceholder:'Имя', phonePlaceholder:'+998', commentPlaceholder:'Комментарий',
+        send:'Отправить заявку', sending:'Отправляем...', success:'Заявка отправлена. Мы скоро свяжемся с вами.',
+        error:'Не удалось отправить. Напишите нам по телефону или в Instagram.', priceConsult:'после брифа',
+        prices:{short:['от 1 000 000 UZS','от 1 250 000 UZS','от 1 750 000 UZS'],reels:['от 3 000 000 UZS','от 3 500 000 UZS','от 4 500 000 UZS'],promo:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS'],product:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS'],brand:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS']}
+      },
+      uz: {
+        launcher: 'Format tanlash',
+        title: 'Nima suratga olamiz?',
+        intro: 'Bir necha savolga javob bering. Biz format va taxminiy narxni tanlaymiz.',
+        steps: [
+          {key:'goal', question:'Nimani targib qilmoqchisiz?', options:[['brand','Brend'],['product','Mahsulot'],['blog','Blog'],['event','Tadbir']]},
+          {key:'platform', question:'Video qayerda ishlatiladi?', options:[['instagram','Instagram'],['tiktok','TikTok'],['telegram','Telegram'],['ads','Sayt / reklama']]},
+          {key:'style', question:'Qaysi vizual uslub yaqinroq?', options:[['premium','Premium'],['dynamic','Dinamik'],['cyberpunk','Cyberpunk'],['minimal','Minimal'],['ugc','UGC']]},
+          {key:'format', question:'Qaysi format kerak?', options:[['short','1 ta qisqa rolik'],['reels','3 ta reels'],['promo','AI promo'],['product','Mahsulot reklamasi'],['brand','Brend filmi'],['unsure','Hali bilmayman']]},
+          {key:'deadline', question:'Natija qachon kerak?', options:[['urgent','1-2 kun'],['soon','3-5 kun'],['normal','1-2 hafta'],['discuss','Hozircha muhokama']]}
+        ],
+        summaryTitle:'Yonalish tanlandi', priceLabel:'Taxminiy narx',
+        urgentNote:'Shoshilinch ish uchun alohida production slot ajratiladi. Muddat qancha yaqin bolsa, narx shuncha yuqori boladi.',
+        normalNote:'Bu muddat goya, generatsiya, montaj va tuzatishlar uchun koproq imkon beradi.',
+        contactPrompt:'Kontakt qoldiring, biz aniq prodakshen rejasini tasdiqlaymiz.',
+        namePlaceholder:'Ism', phonePlaceholder:'+998', commentPlaceholder:'Izoh',
+        send:'Ariza yuborish', sending:'Yuborilmoqda...', success:'Ariza yuborildi. Tez orada boglanamiz.',
+        error:'Yuborilmadi. Telefon yoki Instagram orqali boglaning.', priceConsult:'brifdan keyin',
+        prices:{short:['1 000 000 UZSdan','1 250 000 UZSdan','1 750 000 UZSdan'],reels:['3 000 000 UZSdan','3 500 000 UZSdan','4 500 000 UZSdan'],promo:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan'],product:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan'],brand:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan']}
+      }
+    };
+    const chatWidget = document.querySelector('.chat-widget');
+    const chatLauncher = document.querySelector('.chat-launcher');
+    const chatLauncherText = document.querySelector('[data-chat-launcher]');
+    const chatPanel = document.querySelector('.chat-panel');
+    const chatClose = document.querySelector('.chat-close');
+    const chatBody = document.querySelector('[data-chat-body]');
+    const chatTitle = document.querySelector('[data-chat-title]');
+    let chatStepIndex = 0;
+    let chatAnswers = {};
+    function getChatDictionary(){return chatContent[curLang] || chatContent.ru}
+    function createChatMessage(text,accent=false){const m=document.createElement('div');m.className=accent?'chat-message accent':'chat-message';m.textContent=text;return m}
+    function getChatPrice(format,deadline){const d=getChatDictionary();if(!format||format.id==='unsure'||deadline?.id==='discuss')return d.priceConsult;const set=d.prices[format.id]||d.prices.short;const idx=deadline?.id==='urgent'?2:deadline?.id==='soon'?1:0;return set[idx]}
+    function renderChatStep(){if(!chatBody)return;const d=getChatDictionary();const step=d.steps[chatStepIndex];if(!step){renderChatSummary();return}chatBody.appendChild(createChatMessage(step.question));const options=document.createElement('div');options.className='chat-options';step.options.forEach(([id,label])=>{const b=document.createElement('button');b.className='chat-option';b.type='button';b.textContent=label;b.addEventListener('click',()=>{chatAnswers[step.key]={id,label};chatBody.appendChild(createChatMessage(label,true));options.remove();chatStepIndex+=1;renderChatStep();chatBody.scrollTop=chatBody.scrollHeight});options.appendChild(b)});chatBody.appendChild(options)}
+    function renderChatSummary(){const d=getChatDictionary();const price=getChatPrice(chatAnswers.format,chatAnswers.deadline);const note=chatAnswers.deadline?.id==='urgent'||chatAnswers.deadline?.id==='soon'?d.urgentNote:d.normalNote;const summary=document.createElement('div');summary.className='chat-summary';summary.innerHTML=`<p><strong>${d.summaryTitle}</strong></p><p>${chatAnswers.goal?.label||''} / ${chatAnswers.platform?.label||''} / ${chatAnswers.style?.label||''}</p><p>${chatAnswers.format?.label||''} / ${chatAnswers.deadline?.label||''}</p><p><strong>${d.priceLabel}: ${price}</strong></p>`;chatBody.appendChild(summary);chatBody.appendChild(createChatMessage(note));chatBody.appendChild(createChatMessage(d.contactPrompt));renderChatLeadForm(price)}
+    function renderChatLeadForm(price){const d=getChatDictionary();const leadForm=document.createElement('form');leadForm.className='chat-lead-form';leadForm.innerHTML=`<input name="name" type="text" placeholder="${d.namePlaceholder}" /><input name="phone" type="tel" placeholder="${d.phonePlaceholder}" required /><textarea name="comment" placeholder="${d.commentPlaceholder}"></textarea><button type="submit">${d.send}</button><p class="chat-status" role="status"></p>`;leadForm.addEventListener('submit',async e=>{e.preventDefault();const st=leadForm.querySelector('.chat-status');const fd=new FormData(leadForm);st.textContent=d.sending;const project=['Mini-chat request',`Goal: ${chatAnswers.goal?.label||'-'}`,`Platform: ${chatAnswers.platform?.label||'-'}`,`Style: ${chatAnswers.style?.label||'-'}`,`Format: ${chatAnswers.format?.label||'-'}`,`Deadline: ${chatAnswers.deadline?.label||'-'}`,`Price guide: ${price}`,`Comment: ${fd.get('comment')||'-'}`].join('\n');try{await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({name:fd.get('name'),phone:fd.get('phone'),project,language:curLang,page:window.location.href,source:'mini-chat'})});leadForm.reset();st.textContent=d.success}catch(err){st.textContent=d.error}});chatBody.appendChild(leadForm)}
+    function resetChat(){if(!chatBody)return;const d=getChatDictionary();chatStepIndex=0;chatAnswers={};if(chatTitle)chatTitle.textContent=d.title;if(chatLauncherText)chatLauncherText.textContent=d.launcher;chatBody.innerHTML='';chatBody.appendChild(createChatMessage(d.intro));renderChatStep()}
+    function setChatOpen(open){if(!chatWidget||!chatPanel)return;chatWidget.classList.toggle('is-open',open);chatPanel.setAttribute('aria-hidden',String(!open));if(open&&!chatBody.children.length)resetChat()}
+    chatLauncher?.addEventListener('click',()=>setChatOpen(!chatWidget?.classList.contains('is-open')));
+    chatClose?.addEventListener('click',()=>setChatOpen(false));
+    document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>setTimeout(resetChat,0)));
+    resetChat();
 
     const canvas = document.getElementById('three-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
