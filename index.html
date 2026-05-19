@@ -47,6 +47,9 @@
     .stage.right .stage-inner { text-align: right; }
     .stage.center .stage-inner { text-align: center; }
     .stage.bottom { align-items: flex-end; padding-bottom: 12vh; }
+    .stage.top { align-items: flex-start; padding-top: 14vh; }
+    .stage-inner.narrow { max-width: 520px; }
+    .stage-inner.tight { max-width: 380px; }
     .hero-stats { margin-top: 36px; display: flex; gap: 36px; flex-wrap: wrap; }
     .hero-stats > div { display: flex; flex-direction: column; gap: 4px; }
     .hero-stats strong { font-family: "Inter", sans-serif; font-weight: 900; font-size: clamp(22px, 2.2vw, 28px); color: var(--blue); }
@@ -112,6 +115,33 @@
     .loading .l-bar { width: 220px; height: 1px; background: rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; }
     .loading .l-bar::after { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 40%; background: var(--blue); animation: loadingBar 1.4s infinite ease-in-out; }
     @keyframes loadingBar { 0%, 100% { transform: translateX(-100%); } 50% { transform: translateX(250%); } }
+
+    /* === MOBILE (<=900px): reels-формат вместо 3D-полёта === */
+    @media (max-width: 900px) {
+      .scene-canvas-wrap, .portal-flash, .scroll-progress, .scroll-hint { display: none !important; }
+      .scene-counter { display: none !important; }
+      html, body { scroll-snap-type: y mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+      .stage { min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; padding: 18vh 5vw 10vh !important; align-items: center !important; position: relative; overflow: hidden; }
+      .stage.bottom { padding-bottom: 18vh !important; align-items: center !important; }
+      .stage-inner { text-align: center !important; max-width: 100% !important; padding: 0 !important; z-index: 2; position: relative; opacity: 1 !important; transform: none !important; }
+      .stage-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.4; }
+      .stage::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(2,4,10,0.5) 0%, rgba(2,4,10,0.88) 100%); pointer-events: none; }
+      .stage h2 { font-size: clamp(32px, 9vw, 60px) !important; line-height: 1 !important; }
+      .stage h2.med { font-size: clamp(28px, 7vw, 48px) !important; }
+      .stage p.lead { font-size: 16px !important; max-width: 100% !important; margin: 0 auto 22px !important; }
+      .stage-eyebrow { justify-content: center !important; flex-wrap: wrap; }
+      .pricing-labels { grid-template-columns: 1fr !important; gap: 12px !important; max-width: 100% !important; }
+      .site-header { padding: 10px 14px; }
+      .header-cta { font-size: 10px; padding: 6px 12px; }
+      .brand { font-size: 11px; letter-spacing: 0.14em; }
+      .chat-widget { bottom: 88px; right: 12px; left: 12px; }
+      .chat-launcher { width: 100%; }
+      .hero-actions { justify-content: center; }
+      .btn { font-size: 13px; padding: 14px 26px; }
+      .hero-stats { justify-content: center !important; gap: 22px !important; }
+      .contact-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      .loading .l-bar { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -148,7 +178,7 @@
 
   <header class="site-header">
     <a class="brand" href="#"><span class="dot">▍</span> HYPE PRODUCTION</a>
-    <div class="scene-counter"><span class="now" id="sceneNow">00</span> / <span id="sceneTotal">16</span><span style="margin-left:14px" id="sceneLabel">LAPTOP</span></div>
+    <div class="scene-counter"><span class="now" id="sceneNow">00</span> / <span id="sceneTotal">11</span><span style="margin-left:14px" id="sceneLabel">LAPTOP</span></div>
     <div class="header-actions">
       <div class="lang-switcher">
         <button type="button" data-lang="en">EN</button>
@@ -177,9 +207,9 @@
       </div>
     </div></section>
 
-    <section class="stage center" data-stage="1"><div class="stage-inner">
+    <section class="stage top center" data-stage="1"><div class="stage-inner">
       <p class="stage-eyebrow" style="justify-content:center"><span class="num">01</span> <span data-i18n="s1Eyebrow">Enter the studio</span></p>
-      <h2 data-i18n="s1Title">8 <span class="gradient">directions.</span> One studio.</h2>
+      <h2 data-i18n="s1Title">6 <span class="gradient">directions.</span> One studio.</h2>
       <p class="lead" style="margin:0 auto" data-i18n="s1Lead">Каждое направление — собственная сцена. Скролль дальше.</p>
     </div></section>
 
@@ -190,14 +220,14 @@
       <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
     </div></section>
 
-    <section class="stage right" data-stage="3"><div class="stage-inner">
+    <section class="stage top right" data-stage="3"><div class="stage-inner">
       <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">03 / AI</span> <span data-i18n="s3Eyebrow">AI Generated</span></p>
       <h2 class="med" data-i18n="s3Title">Concept worlds <span class="gradient">by AI.</span></h2>
       <p class="lead" style="margin-left:auto" data-i18n="s3Lead">Концепты, сцены и визуальные системы на основе AI.</p>
       <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
     </div></section>
 
-    <section class="stage left" data-stage="4"><div class="stage-inner">
+    <section class="stage top left" data-stage="4"><div class="stage-inner">
       <p class="stage-eyebrow"><span class="num">04 / RL</span> <span data-i18n="s4Eyebrow">Social Media Reels</span></p>
       <h2 class="med" data-i18n="s4Title">Built for <span class="gradient">the thumb.</span></h2>
       <p class="lead" data-i18n="s4Lead">Вертикальные монтажи. Хук, удержание, пересылки.</p>
@@ -210,76 +240,39 @@
       <p class="lead" style="margin:0 auto" data-i18n="s5Lead">Cinematic-съёмка, саунд-дизайн, цветокоррекция.</p>
     </div></section>
 
-    <section class="stage right" data-stage="6"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">06 / MD</span> <span data-i18n="s6Eyebrow">Motion Design</span></p>
-      <h2 class="med" data-i18n="s6Title">Kinetic <span class="gradient">typography.</span></h2>
-      <p class="lead" style="margin-left:auto" data-i18n="s6Lead">Титры, переходы, UI-motion, типографика в движении.</p>
+    <section class="stage top center" data-stage="6"><div class="stage-inner">
+      <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">06 / VP</span> <span data-i18n="s6Eyebrow">Visual Polish</span></p>
+      <h2 class="med" data-i18n="s6Title">Polish <span class="gradient">that sells.</span></h2>
+      <p class="lead" style="margin-left:auto" data-i18n="s6Lead">Motion + product. Финальный полиш и продуктовая съёмка — то что превращает хорошее видео в продающее.</p>
       <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
     </div></section>
-
-    <section class="stage left" data-stage="7"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">07 / AD</span> <span data-i18n="s7Eyebrow">Product Ads</span></p>
-      <h2 class="med" data-i18n="s7Title">Clean. Focused. <span class="gradient">Converts.</span></h2>
-      <p class="lead" data-i18n="s7Lead">Продуктовая реклама для воронок и запусков.</p>
-      <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
+    <section class="stage top center" data-stage="7"><div class="stage-inner">
+      <p class="stage-eyebrow" style="justify-content:center"><span class="num">07 / WB</span> <span data-i18n="s8Eyebrow">New service</span></p>
+      <h2 data-i18n="s8Title">Sites in <span class="gradient">three formats.</span></h2>
+      <p class="lead" style="margin:0 auto" data-i18n="s8Lead">Лендинг, brand-сайт или cinematic. От промпта до запуска — за дни.</p>
     </div></section>
-
     <section class="stage center" data-stage="8"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">08 / WB</span> <span data-i18n="s8Eyebrow">New service</span></p>
-      <h2 data-i18n="s8Title">We build <span class="gradient">sites too.</span></h2>
-      <p class="lead" style="margin:0 auto" data-i18n="s8Lead">От промпта до запущенного сайта — за дни.</p>
-    </div></section>
-
-    <section class="stage left" data-stage="9"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">08a</span> <span data-i18n="s9Eyebrow">Landing pages</span></p>
-      <h2 class="med" data-i18n="s9Title">One page. <span class="gradient">One goal.</span></h2>
-      <p class="lead" data-i18n="s9Lead">3–5 секций, форма, мобильная версия — за дни.</p>
-      <div class="panel"><p data-i18n="s9Price"><strong style="color:var(--blue)">от 4 000 000 UZS</strong> · 5–7 дней</p></div>
-    </div></section>
-
-    <section class="stage right" data-stage="10"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">08b</span> <span data-i18n="s10Eyebrow">Brand sites</span></p>
-      <h2 class="med" data-i18n="s10Title">Full <span class="gradient">brand experience.</span></h2>
-      <p class="lead" style="margin-left:auto" data-i18n="s10Lead">Многостраничный сайт со скролл-анимациями и блогом.</p>
-      <div class="panel" style="margin-left:auto"><p data-i18n="s10Price"><strong style="color:var(--violet)">от 9 000 000 UZS</strong> · 2–3 недели</p></div>
-    </div></section>
-
-    <section class="stage center" data-stage="11"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">08c</span> <span data-i18n="s11Eyebrow">Cinematic sites</span></p>
-      <h2 class="med" data-i18n="s11Title">Like the one <span class="gradient">you're in.</span></h2>
-      <p class="lead" style="margin:0 auto" data-i18n="s11Lead">3D-сцены, scroll-driven анимации, кастомная графика.</p>
-      <div class="panel" style="margin:22px auto 0"><p data-i18n="s11Price"><strong style="color:var(--gold)">от 18 000 000 UZS</strong> · 4–6 недель</p></div>
-    </div></section>
-
-    <section class="stage center" data-stage="12"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">09</span> <span data-i18n="s12Eyebrow">Video packages</span></p>
+      <p class="stage-eyebrow" style="justify-content:center"><span class="num">08</span> <span data-i18n="s12Eyebrow">Video packages</span></p>
       <h2 class="med" data-i18n="s12Title">Start simple. <span class="gradient">Scale when it works.</span></h2>
       <div class="pricing-labels">
-        <div class="pl-card start"><p class="pl-tier" data-i18n="priceStartLabel">START</p><p class="pl-name" data-i18n="priceStartTitle">AI Reel</p><p class="pl-price" data-i18n="priceStartPrice">from 1 000 000 UZS</p></div>
-        <div class="pl-card growth"><p class="pl-tier" data-i18n="priceGrowthLabel">GROWTH</p><p class="pl-name" data-i18n="priceGrowthTitle">Reels Pack</p><p class="pl-price" data-i18n="priceGrowthPrice">from 3 000 000 UZS</p></div>
-        <div class="pl-card hype"><p class="pl-tier" data-i18n="priceHypeLabel">HYPE</p><p class="pl-name" data-i18n="priceHypeTitle">AI Promo</p><p class="pl-price" data-i18n="priceHypePrice">from 7 000 000 UZS</p></div>
+        <div class="pl-card start"><p class="pl-tier" data-i18n="priceStartLabel">START</p><p class="pl-name" data-i18n="priceStartTitle">AI Reel</p><p class="pl-price" data-i18n="priceStartPrice">Discuss at meeting</p></div>
+        <div class="pl-card growth"><p class="pl-tier" data-i18n="priceGrowthLabel">GROWTH</p><p class="pl-name" data-i18n="priceGrowthTitle">Reels Pack</p><p class="pl-price" data-i18n="priceGrowthPrice">Discuss at meeting</p></div>
+        <div class="pl-card hype"><p class="pl-tier" data-i18n="priceHypeLabel">HYPE</p><p class="pl-name" data-i18n="priceHypeTitle">AI Promo</p><p class="pl-price" data-i18n="priceHypePrice">Discuss at meeting</p></div>
       </div>
     </div></section>
 
-    <section class="stage left bottom" data-stage="13" id="works"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">10</span> <span data-i18n="s13Eyebrow">Selected work</span></p>
+    <section class="stage top left" data-stage="9" id="works"><div class="stage-inner">
+      <p class="stage-eyebrow"><span class="num">09</span> <span data-i18n="s13Eyebrow">Selected work</span></p>
       <h2 class="med" data-i18n="s13Title">AI, reels <span class="gradient">и cinematic.</span></h2>
-      <p class="lead" data-i18n="s13Lead">Камера проезжает мимо стены экранов.</p>
     </div></section>
 
-    <section class="stage left bottom" data-stage="14"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">11</span> <span data-i18n="s14Eyebrow">How we work</span></p>
+    <section class="stage top left" data-stage="10"><div class="stage-inner">
+      <p class="stage-eyebrow"><span class="num">10</span> <span data-i18n="s14Eyebrow">How we work</span></p>
       <h2 class="med" data-i18n="s14Title">From idea <span class="gradient">to launch.</span></h2>
-      <p class="lead" data-i18n="s14Lead">5 этапов от встречи до публикации.</p>
+      <p class="lead" data-i18n="s14Lead">5 этапов от встречи до публикации. Делаем AI-видео, reels и премиум-контент для брендов с сильной визуальной подачей.</p>
     </div></section>
-
-    <section class="stage center" data-stage="15"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">12</span> <span data-i18n="s15Eyebrow">Studio</span></p>
-      <h2 class="med" data-i18n="s15Title">HYPE PRODUCTION делает <span class="gradient">AI-видео, reels и премиум-контент</span> для брендов.</h2>
-    </div></section>
-
-    <section class="stage left" data-stage="16" id="contact"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">13</span> <span data-i18n="s16Eyebrow">Request</span></p>
+    <section class="stage left" data-stage="11" id="contact"><div class="stage-inner">
+      <p class="stage-eyebrow"><span class="num">11</span> <span data-i18n="s16Eyebrow">Request</span></p>
       <h2 class="med" data-i18n="s16Title">Ready to <span class="gradient">launch?</span></h2>
       <div class="contact-grid">
         <div>
@@ -320,16 +313,27 @@
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
   <script>
     const i18n = {
-      en: { headerCta:"Start project",scrollHint:"Scroll",ctaStart:"Start a project",ctaWorks:"View works",ctaDiscuss:"Discuss project",statVideos:"videos created",statCompanies:"companies",statBloggers:"bloggers",s0Eyebrow:"Cinematic Video Studio",s0Title:"HYPE PRODUCTION",s0Lead:"We turn any idea into a powerful video.",s1Eyebrow:"Enter the studio",s1Title:"8 <span class='gradient'>directions.</span> One studio.",s1Lead:"Each direction has its own room. Keep scrolling.",s2Eyebrow:"Commercial Videos",s2Title:"Built for <span class='gradient'>paid media.</span>",s2Lead:"High-impact videos for ad campaigns and launches.",s3Eyebrow:"AI Generated",s3Title:"Concept worlds <span class='gradient'>by AI.</span>",s3Lead:"Concepts and visual systems powered by AI.",s4Eyebrow:"Social Media Reels",s4Title:"Built for <span class='gradient'>the thumb.</span>",s4Lead:"Vertical edits. Hook, retention, DM shares.",s5Eyebrow:"Brand Promo Films",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic shooting, sound design, color.",s6Eyebrow:"Motion Design",s6Title:"Kinetic <span class='gradient'>typography.</span>",s6Lead:"Titles, transitions, UI motion, kinetic typography.",s7Eyebrow:"Product Ads",s7Title:"Clean. Focused. <span class='gradient'>Converts.</span>",s7Lead:"Product ads for funnels and launches.",s8Eyebrow:"New service",s8Title:"We build <span class='gradient'>sites too.</span>",s8Lead:"From prompt to launched site — in days.",s9Eyebrow:"Landing pages",s9Title:"One page. <span class='gradient'>One goal.</span>",s9Lead:"3–5 sections, form, mobile — in days.",s9Price:"<strong style='color:var(--blue)'>from 4 000 000 UZS</strong> · 5–7 days",s10Eyebrow:"Brand sites",s10Title:"Full <span class='gradient'>brand experience.</span>",s10Lead:"Multi-page site with animations and blog.",s10Price:"<strong style='color:var(--violet)'>from 9 000 000 UZS</strong> · 2–3 weeks",s11Eyebrow:"Cinematic sites",s11Title:"Like the one <span class='gradient'>you're in.</span>",s11Lead:"3D scenes, scroll-driven animations, custom graphics.",s11Price:"<strong style='color:var(--gold)'>from 18 000 000 UZS</strong> · 4–6 weeks",s12Eyebrow:"Video packages",s12Title:"Start simple. <span class='gradient'>Scale when it works.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"from 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"from 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"from 7 000 000 UZS",s13Eyebrow:"Selected work",s13Title:"AI, reels <span class='gradient'>and cinematic.</span>",s13Lead:"Camera drifts past a wall of screens.",s14Eyebrow:"How we work",s14Title:"From idea <span class='gradient'>to launch.</span>",s14Lead:"5 steps from first meeting to publication.",s15Eyebrow:"Studio",s15Title:"HYPE PRODUCTION creates <span class='gradient'>AI videos, reels and premium content</span> for brands.",s16Eyebrow:"Request",s16Title:"Ready to <span class='gradient'>launch?</span>",s16Lead:"Tell us your idea. We'll respond within 24h.",instagramLabel:"Instagram",phoneLabel:"Phone",formName:"Name",formNamePlaceholder:"Your name",formPhone:"Phone",formPhonePlaceholder:"+998",formProject:"Project",formProjectPlaceholder:"What do you want to create?",formSubmit:"Send request",formSuccess:"Thanks — we'll be in touch within 24h.",formError:"Please fill in name and phone." },
-      ru: { headerCta:"Начать проект",scrollHint:"Скроль",ctaStart:"Начать проект",ctaWorks:"Смотреть работы",ctaDiscuss:"Обсудить проект",statVideos:"созданных видео",statCompanies:"компаний",statBloggers:"блогеров",s0Eyebrow:"Cinematic-студия видеопродакшна",s0Title:"HYPE PRODUCTION",s0Lead:"Воплощаем любые идеи в кадре.",s1Eyebrow:"Войди в студию",s1Title:"8 <span class='gradient'>направлений.</span> Одна студия.",s1Lead:"Каждое направление — собственная сцена. Камера проведёт через все.",s2Eyebrow:"Рекламные видео",s2Title:"Сделано для <span class='gradient'>рекламы.</span>",s2Lead:"Видео высокого импакта для рекламных кампаний.",s3Eyebrow:"AI-видео",s3Title:"Концепт-миры <span class='gradient'>с помощью AI.</span>",s3Lead:"Концепты и визуальные системы на основе AI.",s4Eyebrow:"Reels для соцсетей",s4Title:"Сделано <span class='gradient'>для большого пальца.</span>",s4Lead:"Вертикальные монтажи. Хук, удержание, пересылки.",s5Eyebrow:"Brand-фильмы",s5Title:"Премиальный <span class='gradient'>сторителлинг.</span>",s5Lead:"Cinematic-съёмка, саунд-дизайн, цветокоррекция.",s6Eyebrow:"Motion-дизайн",s6Title:"Кинетическая <span class='gradient'>типографика.</span>",s6Lead:"Титры, переходы, UI-motion, типографика в движении.",s7Eyebrow:"Product-реклама",s7Title:"Чисто. Сфокусированно. <span class='gradient'>Продаёт.</span>",s7Lead:"Продуктовая реклама для воронок и запусков.",s8Eyebrow:"Новая услуга",s8Title:"Мы делаем <span class='gradient'>и сайты.</span>",s8Lead:"От промпта до запущенного сайта — за дни.",s9Eyebrow:"Лендинги",s9Title:"Одна страница. <span class='gradient'>Одна цель.</span>",s9Lead:"3–5 секций, форма, мобильная версия — за дни.",s9Price:"<strong style='color:var(--blue)'>от 4 000 000 UZS</strong> · 5–7 дней",s10Eyebrow:"Brand-сайты",s10Title:"Полный <span class='gradient'>brand-опыт.</span>",s10Lead:"Многостраничный сайт со скролл-анимациями и блогом.",s10Price:"<strong style='color:var(--violet)'>от 9 000 000 UZS</strong> · 2–3 недели",s11Eyebrow:"Cinematic-сайты",s11Title:"Как тот, <span class='gradient'>в котором ты сейчас.</span>",s11Lead:"3D-сцены, scroll-driven анимации, кастомная графика.",s11Price:"<strong style='color:var(--gold)'>от 18 000 000 UZS</strong> · 4–6 недель",s12Eyebrow:"Видео-пакеты",s12Title:"Начни просто. <span class='gradient'>Масштабируй, когда контент работает.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"от 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"от 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"от 7 000 000 UZS",s13Eyebrow:"Избранные работы",s13Title:"AI, reels <span class='gradient'>и cinematic.</span>",s13Lead:"Камера медленно проезжает мимо стены экранов.",s14Eyebrow:"Как мы работаем",s14Title:"От идеи <span class='gradient'>до запуска.</span>",s14Lead:"5 этапов от первой встречи до публикации.",s15Eyebrow:"Студия",s15Title:"HYPE PRODUCTION делает <span class='gradient'>AI-видео, reels и премиум-контент</span> для брендов.",s16Eyebrow:"Заявка",s16Title:"Готовы <span class='gradient'>запускать?</span>",s16Lead:"Расскажи идею. Ответим в течение 24 часов.",instagramLabel:"Instagram",phoneLabel:"Телефон",formName:"Имя",formNamePlaceholder:"Ваше имя",formPhone:"Телефон",formPhonePlaceholder:"+998",formProject:"Проект",formProjectPlaceholder:"Что хотите создать?",formSubmit:"Отправить заявку",formSuccess:"Спасибо — ответим в течение 24 часов.",formError:"Заполните имя и телефон." },
-      uz: { headerCta:"Loyiha boshlash",scrollHint:"Pastga",ctaStart:"Loyiha boshlash",ctaWorks:"Ishlarni ko'rish",ctaDiscuss:"Muhokama",statVideos:"yaratilgan video",statCompanies:"kompaniya",statBloggers:"bloger",s0Eyebrow:"Cinematic video studio",s0Title:"HYPE PRODUCTION",s0Lead:"Har qanday g'oyani videoga aylantiramiz.",s1Eyebrow:"Studiyaga kirish",s1Title:"8 <span class='gradient'>yo'nalish.</span> Bir studiya.",s1Lead:"Har biri o'z sahnasi. Kamera olib o'tadi.",s2Eyebrow:"Reklama videolari",s2Title:"Reklama uchun <span class='gradient'>yaratilgan.</span>",s2Lead:"Yuqori ta'sirli reklama videolari.",s3Eyebrow:"AI-videolar",s3Title:"AI yordamida <span class='gradient'>konsept dunyolar.</span>",s3Lead:"AI asosidagi konsept va vizual tizimlar.",s4Eyebrow:"Reels",s4Title:"Bosh barmoq uchun <span class='gradient'>yaratilgan.</span>",s4Lead:"Vertikal montajlar.",s5Eyebrow:"Brend-filmlar",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic suratga olish, ovoz dizayn.",s6Eyebrow:"Motion-dizayn",s6Title:"Kinetik <span class='gradient'>tipografika.</span>",s6Lead:"Titrlar, o'tishlar, UI-motion.",s7Eyebrow:"Mahsulot reklamasi",s7Title:"Toza. Aniq. <span class='gradient'>Sotadi.</span>",s7Lead:"Mahsulotga yo'naltirilgan reklama.",s8Eyebrow:"Yangi xizmat",s8Title:"Biz <span class='gradient'>saytlar ham qilamiz.</span>",s8Lead:"Promptdan ishga tushgan saytgacha — kunlarda.",s9Eyebrow:"Lending",s9Title:"Bir sahifa. <span class='gradient'>Bir maqsad.</span>",s9Lead:"Bir maqsad uchun lending. Kunlarda.",s9Price:"<strong style='color:var(--blue)'>4 000 000 UZSdan</strong> · 5–7 kun",s10Eyebrow:"Brend saytlar",s10Title:"To'liq <span class='gradient'>brend tajriba.</span>",s10Lead:"Ko'p sahifali sayt.",s10Price:"<strong style='color:var(--violet)'>9 000 000 UZSdan</strong> · 2–3 hafta",s11Eyebrow:"Cinematic saytlar",s11Title:"Siz <span class='gradient'>turgan saytga o'xshash.</span>",s11Lead:"3D sahnalar va maxsus grafika.",s11Price:"<strong style='color:var(--gold)'>18 000 000 UZSdan</strong> · 4–6 hafta",s12Eyebrow:"Video paketlar",s12Title:"Sodda boshlang. <span class='gradient'>Ishlasa — kengaytiring.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"1 000 000 UZSdan",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"3 000 000 UZSdan",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"7 000 000 UZSdan",s13Eyebrow:"Tanlangan ishlar",s13Title:"AI, reels <span class='gradient'>va cinematic.</span>",s13Lead:"Kamera ekranlar devori bo'ylab harakatlanadi.",s14Eyebrow:"Qanday ishlaymiz",s14Title:"G'oyadan <span class='gradient'>ishga tushirishgacha.</span>",s14Lead:"5 bosqich.",s15Eyebrow:"Studiya",s15Title:"HYPE PRODUCTION <span class='gradient'>AI-video, reels va premium kontent</span> yaratadi.",s16Eyebrow:"Buyurtma",s16Title:"Boshlashga <span class='gradient'>tayyormisiz?</span>",s16Lead:"G'oyangizni ayting. 24 soat ichida javob beramiz.",instagramLabel:"Instagram",phoneLabel:"Telefon",formName:"Ism",formNamePlaceholder:"Sizning ismingiz",formPhone:"Telefon",formPhonePlaceholder:"+998",formProject:"Loyiha",formProjectPlaceholder:"Nimani yaratmoqchisiz?",formSubmit:"Yuborish",formSuccess:"Rahmat — 24 soat ichida javob beramiz.",formError:"Ism va telefonni to'ldiring." }
+      en: { headerCta:"Start project",scrollHint:"Scroll",ctaStart:"Start a project",ctaWorks:"View works",ctaDiscuss:"Discuss project",statVideos:"videos created",statCompanies:"companies",statBloggers:"bloggers",s0Eyebrow:"Cinematic Video Studio",s0Title:"HYPE PRODUCTION",s0Lead:"We turn any idea into a powerful video.",s1Eyebrow:"Enter the studio",s1Title:"6 <span class='gradient'>directions.</span> One studio.",s1Lead:"Each direction has its own room. Keep scrolling.",s2Eyebrow:"Commercial Videos",s2Title:"Built for <span class='gradient'>paid media.</span>",s2Lead:"High-impact videos for ad campaigns and launches.",s3Eyebrow:"AI Generated",s3Title:"Concept worlds <span class='gradient'>by AI.</span>",s3Lead:"Concepts and visual systems powered by AI.",s4Eyebrow:"Social Media Reels",s4Title:"Built for <span class='gradient'>the thumb.</span>",s4Lead:"Vertical edits. Hook, retention, DM shares.",s5Eyebrow:"Brand Promo Films",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic shooting, sound design, color.",s6Eyebrow:"Visual Polish",s6Title:"Polish <span class='gradient'>that sells.</span>",s6Lead:"Motion + product. Final polish and product spotlight — what turns good video into a selling one.",s7Eyebrow:"Product Ads",s7Title:"Clean. Focused. <span class='gradient'>Converts.</span>",s7Lead:"Product ads for funnels and launches.",s8Eyebrow:"New service",s8Title:"Sites in <span class='gradient'>three formats.</span>",s8Lead:"Landing, brand site or cinematic. From prompt to launch — in days.",s9Eyebrow:"Landing pages",s9Title:"One page. <span class='gradient'>One goal.</span>",s9Lead:"3–5 sections, form, mobile — in days.",s9Price:"<strong style='color:var(--blue)'>from 4 000 000 UZS</strong> · 5–7 days",s10Eyebrow:"Brand sites",s10Title:"Full <span class='gradient'>brand experience.</span>",s10Lead:"Multi-page site with animations and blog.",s10Price:"<strong style='color:var(--violet)'>from 9 000 000 UZS</strong> · 2–3 weeks",s11Eyebrow:"Cinematic sites",s11Title:"Like the one <span class='gradient'>you're in.</span>",s11Lead:"3D scenes, scroll-driven animations, custom graphics.",s11Price:"<strong style='color:var(--gold)'>from 18 000 000 UZS</strong> · 4–6 weeks",s12Eyebrow:"Video packages",s12Title:"Start simple. <span class='gradient'>Scale when it works.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"Discuss at meeting",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"Discuss at meeting",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"Discuss at meeting",s13Eyebrow:"Selected work",s13Title:"AI, reels <span class='gradient'>and cinematic.</span>",s13Lead:"Camera drifts past a wall of screens.",s14Eyebrow:"How we work",s14Title:"From idea <span class='gradient'>to launch.</span>",s14Lead:"5 steps from first meeting to publication. We make AI videos, reels and premium content for brands.",s15Eyebrow:"Studio",s15Title:"HYPE PRODUCTION creates <span class='gradient'>AI videos, reels and premium content</span> for brands.",s16Eyebrow:"Request",s16Title:"Ready to <span class='gradient'>launch?</span>",s16Lead:"Tell us your idea. We'll respond within 24h.",instagramLabel:"Instagram",phoneLabel:"Phone",formName:"Name",formNamePlaceholder:"Your name",formPhone:"Phone",formPhonePlaceholder:"+998",formProject:"Project",formProjectPlaceholder:"What do you want to create?",formSubmit:"Send request",formSuccess:"Thanks — we'll be in touch within 24h.",formError:"Please fill in name and phone." },
+      ru: { headerCta:"Начать проект",scrollHint:"Скроль",ctaStart:"Начать проект",ctaWorks:"Смотреть работы",ctaDiscuss:"Обсудить проект",statVideos:"созданных видео",statCompanies:"компаний",statBloggers:"блогеров",s0Eyebrow:"Cinematic-студия видеопродакшна",s0Title:"HYPE PRODUCTION",s0Lead:"Воплощаем любые идеи в кадре.",s1Eyebrow:"Войди в студию",s1Title:"6 <span class='gradient'>направлений.</span> Одна студия.",s1Lead:"Каждое направление — собственная сцена. Камера проведёт через все.",s2Eyebrow:"Рекламные видео",s2Title:"Сделано для <span class='gradient'>рекламы.</span>",s2Lead:"Видео высокого импакта для рекламных кампаний.",s3Eyebrow:"AI-видео",s3Title:"Концепт-миры <span class='gradient'>с помощью AI.</span>",s3Lead:"Концепты и визуальные системы на основе AI.",s4Eyebrow:"Reels для соцсетей",s4Title:"Сделано <span class='gradient'>для большого пальца.</span>",s4Lead:"Вертикальные монтажи. Хук, удержание, пересылки.",s5Eyebrow:"Brand-фильмы",s5Title:"Премиальный <span class='gradient'>сторителлинг.</span>",s5Lead:"Cinematic-съёмка, саунд-дизайн, цветокоррекция.",s6Eyebrow:"Visual Polish",s6Title:"Полиш <span class='gradient'>который продаёт.</span>",s6Lead:"Motion + product. Финальный полиш и продуктовая съёмка — то что делает видео продающим.",s7Eyebrow:"Product-реклама",s7Title:"Чисто. Сфокусированно. <span class='gradient'>Продаёт.</span>",s7Lead:"Продуктовая реклама для воронок и запусков.",s8Eyebrow:"Новая услуга",s8Title:"Сайты в <span class='gradient'>трёх форматах.</span>",s8Lead:"Лендинг, brand-сайт или cinematic. От промпта до запуска — за дни.",s9Eyebrow:"Лендинги",s9Title:"Одна страница. <span class='gradient'>Одна цель.</span>",s9Lead:"3–5 секций, форма, мобильная версия — за дни.",s9Price:"<strong style='color:var(--blue)'>от 4 000 000 UZS</strong> · 5–7 дней",s10Eyebrow:"Brand-сайты",s10Title:"Полный <span class='gradient'>brand-опыт.</span>",s10Lead:"Многостраничный сайт со скролл-анимациями и блогом.",s10Price:"<strong style='color:var(--violet)'>от 9 000 000 UZS</strong> · 2–3 недели",s11Eyebrow:"Cinematic-сайты",s11Title:"Как тот, <span class='gradient'>в котором ты сейчас.</span>",s11Lead:"3D-сцены, scroll-driven анимации, кастомная графика.",s11Price:"<strong style='color:var(--gold)'>от 18 000 000 UZS</strong> · 4–6 недель",s12Eyebrow:"Видео-пакеты",s12Title:"Начни просто. <span class='gradient'>Масштабируй, когда контент работает.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"Обсудим на встрече",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"Обсудим на встрече",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"Обсудим на встрече",s13Eyebrow:"Избранные работы",s13Title:"AI, reels <span class='gradient'>и cinematic.</span>",s13Lead:"Камера медленно проезжает мимо стены экранов.",s14Eyebrow:"Как мы работаем",s14Title:"От идеи <span class='gradient'>до запуска.</span>",s14Lead:"5 этапов от встречи до публикации. Делаем AI-видео, reels и премиум-контент для брендов.",s15Eyebrow:"Студия",s15Title:"HYPE PRODUCTION делает <span class='gradient'>AI-видео, reels и премиум-контент</span> для брендов.",s16Eyebrow:"Заявка",s16Title:"Готовы <span class='gradient'>запускать?</span>",s16Lead:"Расскажи идею. Ответим в течение 24 часов.",instagramLabel:"Instagram",phoneLabel:"Телефон",formName:"Имя",formNamePlaceholder:"Ваше имя",formPhone:"Телефон",formPhonePlaceholder:"+998",formProject:"Проект",formProjectPlaceholder:"Что хотите создать?",formSubmit:"Отправить заявку",formSuccess:"Спасибо — ответим в течение 24 часов.",formError:"Заполните имя и телефон." },
+      uz: { headerCta:"Loyiha boshlash",scrollHint:"Pastga",ctaStart:"Loyiha boshlash",ctaWorks:"Ishlarni ko'rish",ctaDiscuss:"Muhokama",statVideos:"yaratilgan video",statCompanies:"kompaniya",statBloggers:"bloger",s0Eyebrow:"Cinematic video studio",s0Title:"HYPE PRODUCTION",s0Lead:"Har qanday g'oyani videoga aylantiramiz.",s1Eyebrow:"Studiyaga kirish",s1Title:"6 <span class='gradient'>yo'nalish.</span> Bir studiya.",s1Lead:"Har biri o'z sahnasi. Kamera olib o'tadi.",s2Eyebrow:"Reklama videolari",s2Title:"Reklama uchun <span class='gradient'>yaratilgan.</span>",s2Lead:"Yuqori ta'sirli reklama videolari.",s3Eyebrow:"AI-videolar",s3Title:"AI yordamida <span class='gradient'>konsept dunyolar.</span>",s3Lead:"AI asosidagi konsept va vizual tizimlar.",s4Eyebrow:"Reels",s4Title:"Bosh barmoq uchun <span class='gradient'>yaratilgan.</span>",s4Lead:"Vertikal montajlar.",s5Eyebrow:"Brend-filmlar",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic suratga olish, ovoz dizayn.",s6Eyebrow:"Visual Polish",s6Title:"<span class='gradient'>Sotadigan polish.</span>",s6Lead:"Motion + product. Yakuniy polish va mahsulot suratga olish.",s7Eyebrow:"Mahsulot reklamasi",s7Title:"Toza. Aniq. <span class='gradient'>Sotadi.</span>",s7Lead:"Mahsulotga yo'naltirilgan reklama.",s8Eyebrow:"Yangi xizmat",s8Title:"Saytlar <span class='gradient'>uchta formatda.</span>",s8Lead:"Lending, brend-sayt yoki cinematic. Kunlarda.",s9Eyebrow:"Lending",s9Title:"Bir sahifa. <span class='gradient'>Bir maqsad.</span>",s9Lead:"Bir maqsad uchun lending. Kunlarda.",s9Price:"<strong style='color:var(--blue)'>4 000 000 UZSdan</strong> · 5–7 kun",s10Eyebrow:"Brend saytlar",s10Title:"To'liq <span class='gradient'>brend tajriba.</span>",s10Lead:"Ko'p sahifali sayt.",s10Price:"<strong style='color:var(--violet)'>9 000 000 UZSdan</strong> · 2–3 hafta",s11Eyebrow:"Cinematic saytlar",s11Title:"Siz <span class='gradient'>turgan saytga o'xshash.</span>",s11Lead:"3D sahnalar va maxsus grafika.",s11Price:"<strong style='color:var(--gold)'>18 000 000 UZSdan</strong> · 4–6 hafta",s12Eyebrow:"Video paketlar",s12Title:"Sodda boshlang. <span class='gradient'>Ishlasa — kengaytiring.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"Uchrashuvda muhokama",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"Uchrashuvda muhokama",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"Uchrashuvda muhokama",s13Eyebrow:"Tanlangan ishlar",s13Title:"AI, reels <span class='gradient'>va cinematic.</span>",s13Lead:"Kamera ekranlar devori bo'ylab harakatlanadi.",s14Eyebrow:"Qanday ishlaymiz",s14Title:"G'oyadan <span class='gradient'>ishga tushirishgacha.</span>",s14Lead:"5 bosqich birinchi uchrashuvdan nashr qilishgacha. Brendlar uchun AI-video va premium kontent.",s15Eyebrow:"Studiya",s15Title:"HYPE PRODUCTION <span class='gradient'>AI-video, reels va premium kontent</span> yaratadi.",s16Eyebrow:"Buyurtma",s16Title:"Boshlashga <span class='gradient'>tayyormisiz?</span>",s16Lead:"G'oyangizni ayting. 24 soat ichida javob beramiz.",instagramLabel:"Instagram",phoneLabel:"Telefon",formName:"Ism",formNamePlaceholder:"Sizning ismingiz",formPhone:"Telefon",formPhonePlaceholder:"+998",formProject:"Loyiha",formProjectPlaceholder:"Nimani yaratmoqchisiz?",formSubmit:"Yuborish",formSuccess:"Rahmat — 24 soat ichida javob beramiz.",formError:"Ism va telefonni to'ldiring." }
     };
     let curLang = 'ru';
     function applyLang(L){if(!i18n[L])return;curLang=L;document.documentElement.lang=L;const t=i18n[L];document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(t[k]!==undefined)e.innerHTML=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>{const k=e.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)e.setAttribute('placeholder',t[k])});document.querySelectorAll('.lang-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===L))}
     document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
     applyLang('ru');
+
+    // === Mobile detection: на <=900px НЕ запускаем Three.js ===
+    const IS_MOBILE = window.innerWidth <= 900;
+    if (IS_MOBILE) document.body.classList.add('is-mobile');
+
 
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAuK7CweGDJmnj1w182FAfH5hSPo31q0XnkU2WcqqN3vz_8Dzswlyi4DSqTxrmXSZT7w/exec';
     const chatContent = {
@@ -350,8 +354,8 @@
         contactPrompt:'Leave your contact and we will confirm the exact production plan.',
         namePlaceholder:'Name', phonePlaceholder:'+998', commentPlaceholder:'Comment',
         send:'Send request', sending:'Sending...', success:'Request sent. We will contact you soon.',
-        error:'Could not send. Please contact us by phone or Instagram.', priceConsult:'after brief',
-        prices:{short:['from 1 000 000 UZS','from 1 250 000 UZS','from 1 750 000 UZS'],reels:['from 3 000 000 UZS','from 3 500 000 UZS','from 4 500 000 UZS'],promo:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS'],product:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS'],brand:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS']}
+        error:'Could not send. Please contact us by phone or Instagram.', priceConsult:'Discuss at meeting',
+        prices:{short:['—','—','—'],reels:['—','—','—'],promo:['—','—','—'],product:['—','—','—'],brand:['—','—','—']}
       },
       ru: {
         launcher: 'Подобрать формат',
@@ -370,8 +374,8 @@
         contactPrompt:'Оставьте контакт, и мы подтвердим точный план продакшена.',
         namePlaceholder:'Имя', phonePlaceholder:'+998', commentPlaceholder:'Комментарий',
         send:'Отправить заявку', sending:'Отправляем...', success:'Заявка отправлена. Мы скоро свяжемся с вами.',
-        error:'Не удалось отправить. Напишите нам по телефону или в Instagram.', priceConsult:'после брифа',
-        prices:{short:['от 1 000 000 UZS','от 1 250 000 UZS','от 1 750 000 UZS'],reels:['от 3 000 000 UZS','от 3 500 000 UZS','от 4 500 000 UZS'],promo:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS'],product:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS'],brand:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS']}
+        error:'Не удалось отправить. Напишите нам по телефону или в Instagram.', priceConsult:'Обсудим на встрече',
+        prices:{short:['—','—','—'],reels:['—','—','—'],promo:['—','—','—'],product:['—','—','—'],brand:['—','—','—']}
       },
       uz: {
         launcher: 'Format tanlash',
@@ -390,8 +394,8 @@
         contactPrompt:'Kontakt qoldiring, biz aniq prodakshen rejasini tasdiqlaymiz.',
         namePlaceholder:'Ism', phonePlaceholder:'+998', commentPlaceholder:'Izoh',
         send:'Ariza yuborish', sending:'Yuborilmoqda...', success:'Ariza yuborildi. Tez orada boglanamiz.',
-        error:'Yuborilmadi. Telefon yoki Instagram orqali boglaning.', priceConsult:'brifdan keyin',
-        prices:{short:['1 000 000 UZSdan','1 250 000 UZSdan','1 750 000 UZSdan'],reels:['3 000 000 UZSdan','3 500 000 UZSdan','4 500 000 UZSdan'],promo:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan'],product:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan'],brand:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan']}
+        error:'Yuborilmadi. Telefon yoki Instagram orqali boglaning.', priceConsult:'Uchrashuvda muhokama qilamiz',
+        prices:{short:['—','—','—'],reels:['—','—','—'],promo:['—','—','—'],product:['—','—','—'],brand:['—','—','—']}
       }
     };
     const chatWidget = document.querySelector('.chat-widget');
@@ -405,7 +409,7 @@
     let chatAnswers = {};
     function getChatDictionary(){return chatContent[curLang] || chatContent.ru}
     function createChatMessage(text,accent=false){const m=document.createElement('div');m.className=accent?'chat-message accent':'chat-message';m.textContent=text;return m}
-    function getChatPrice(format,deadline){const d=getChatDictionary();if(!format||format.id==='unsure'||deadline?.id==='discuss')return d.priceConsult;const set=d.prices[format.id]||d.prices.short;const idx=deadline?.id==='urgent'?2:deadline?.id==='soon'?1:0;return set[idx]}
+    function getChatPrice(format,deadline){const d=getChatDictionary();return d.priceConsult}
     function renderChatStep(){if(!chatBody)return;const d=getChatDictionary();const step=d.steps[chatStepIndex];if(!step){renderChatSummary();return}chatBody.appendChild(createChatMessage(step.question));const options=document.createElement('div');options.className='chat-options';step.options.forEach(([id,label])=>{const b=document.createElement('button');b.className='chat-option';b.type='button';b.textContent=label;b.addEventListener('click',()=>{chatAnswers[step.key]={id,label};chatBody.appendChild(createChatMessage(label,true));options.remove();chatStepIndex+=1;renderChatStep();chatBody.scrollTop=chatBody.scrollHeight});options.appendChild(b)});chatBody.appendChild(options)}
     function renderChatSummary(){const d=getChatDictionary();const price=getChatPrice(chatAnswers.format,chatAnswers.deadline);const note=chatAnswers.deadline?.id==='urgent'||chatAnswers.deadline?.id==='soon'?d.urgentNote:d.normalNote;const summary=document.createElement('div');summary.className='chat-summary';summary.innerHTML=`<p><strong>${d.summaryTitle}</strong></p><p>${chatAnswers.goal?.label||''} / ${chatAnswers.platform?.label||''} / ${chatAnswers.style?.label||''}</p><p>${chatAnswers.format?.label||''} / ${chatAnswers.deadline?.label||''}</p><p><strong>${d.priceLabel}: ${price}</strong></p>`;chatBody.appendChild(summary);chatBody.appendChild(createChatMessage(note));chatBody.appendChild(createChatMessage(d.contactPrompt));renderChatLeadForm(price)}
     function renderChatLeadForm(price){const d=getChatDictionary();const leadForm=document.createElement('form');leadForm.className='chat-lead-form';leadForm.innerHTML=`<input name="name" type="text" placeholder="${d.namePlaceholder}" /><input name="phone" type="tel" placeholder="${d.phonePlaceholder}" required /><textarea name="comment" placeholder="${d.commentPlaceholder}"></textarea><button type="submit">${d.send}</button><p class="chat-status" role="status"></p>`;leadForm.addEventListener('submit',async e=>{e.preventDefault();const st=leadForm.querySelector('.chat-status');const fd=new FormData(leadForm);st.textContent=d.sending;const project=['Mini-chat request',`Goal: ${chatAnswers.goal?.label||'-'}`,`Platform: ${chatAnswers.platform?.label||'-'}`,`Style: ${chatAnswers.style?.label||'-'}`,`Format: ${chatAnswers.format?.label||'-'}`,`Deadline: ${chatAnswers.deadline?.label||'-'}`,`Price guide: ${price}`,`Comment: ${fd.get('comment')||'-'}`].join('\n');try{await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({name:fd.get('name'),phone:fd.get('phone'),project,language:curLang,page:window.location.href,source:'mini-chat'})});leadForm.reset();st.textContent=d.success}catch(err){st.textContent=d.error}});chatBody.appendChild(leadForm)}
@@ -416,6 +420,7 @@
     document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>setTimeout(resetChat,0)));
     resetChat();
 
+    if (!IS_MOBILE) {
     const canvas = document.getElementById('three-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -423,11 +428,41 @@
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
     const maxAniso = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
+
+    // === Bloom postprocessing ===
+    let composer = null, bloomPass = null;
+    if (typeof THREE.EffectComposer === 'function' && typeof THREE.UnrealBloomPass === 'function') {
+      composer = new THREE.EffectComposer(renderer);
+      composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      composer.setSize(canvas.clientWidth || window.innerWidth, canvas.clientHeight || window.innerHeight);
+      const renderPass = new THREE.RenderPass(null, null); // scene/camera выставим ниже
+      composer.addPass(renderPass);
+      bloomPass = new THREE.UnrealBloomPass(
+        new THREE.Vector2(canvas.clientWidth || window.innerWidth, canvas.clientHeight || window.innerHeight),
+        0.55, 0.40, 0.85
+      );
+      composer.addPass(bloomPass);
+      composer.renderPass = renderPass; // сохраним ссылку для последующего обновления scene/camera
+    }
+
     const scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0x02040a, 8, 60);
     const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 600);
     camera.position.set(0, 0.8, 9);
-    function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+
+    // Связываем renderPass со scene/camera (создан раньше них)
+    if (composer && composer.renderPass) {
+      composer.renderPass.scene = scene;
+      composer.renderPass.camera = camera;
+    }
+    function resize(){
+      const w=canvas.clientWidth, h=canvas.clientHeight;
+      renderer.setSize(w,h,false);
+      camera.aspect=w/h;
+      camera.updateProjectionMatrix();
+      if (composer) composer.setSize(w, h);
+      if (bloomPass) bloomPass.setSize(w, h);
+    }
     window.addEventListener('resize',resize);
     scene.add(new THREE.AmbientLight(0xffffff,0.18));
     const kL=new THREE.DirectionalLight(0x6ee7ff,0.55);kL.position.set(4,6,5);scene.add(kL);
@@ -502,24 +537,125 @@
     }
     function textTex(text,o={}){const w=o.w||1024,h=o.h||256;const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle=o.bg||'rgba(0,0,0,0)';x.fillRect(0,0,w,h);x.fillStyle=o.color||'#f8fbff';x.font=`${o.weight||900} ${o.size||140}px Inter, "Arial Black", sans-serif`;x.textAlign='center';x.textBaseline='middle';x.fillText(text,w/2,h/2);const t=new M.CanvasTexture(c);t.minFilter=M.LinearFilter;return t}
 
-    const scenes = [];
-    function addScene(z,label,builder){const g=new M.Group();g.position.z=z;scene.add(g);const prev=buildingVideoIds;buildingVideoIds=new Set();const meta=builder(g,z)||{};const videoIds=[...buildingVideoIds];buildingVideoIds=prev;scenes.push({z,label,group:g,videoIds,...meta});return g}
+    // === Atmosphere per scene (fog цвет + цвет пола) ===
+    const sceneAtmospheres = {
+      LAPTOP:      {fog:0x000000, floor:0x000000},  // чёрная пустота
+      LOBBY:       {fog:0x080d18, floor:0x080d18},  // тёмная глубина с пылью
+      COMMERCIAL:  {fog:0x180b08, floor:0x1a0d08},  // мокрый бетон ночного города
+      AI_VIDEO:    {fog:0x0a1430, floor:0x0a0e1a},  // холодный лунный свет
+      REELS:       {fog:0x1a0820, floor:0x150818},  // розовый instagram-вайб
+      BRAND_FILMS: {fog:0x180c05, floor:0x2a1808},  // кинотеатр, бордо/коричневый
+      MOTION:      {fog:0x101010, floor:0x080808},  // чёрно-белая фотостудия
+      AI_SITES:    {fog:0x051408, floor:0x040805},  // matrix-зелёный терминал
+      PRICING:     {fog:0x180e08, floor:0x100805},  // ювелирный showroom champagne
+      PORTFOLIO:   {fog:0x1c1c1e, floor:0x303034},  // светлая галерея
+      PROCESS:     {fog:0x0a0e18, floor:0x080a10},  // коридор уходящей перспективы
+      CONTACT:     {fog:0x05080f, floor:0x080a10}   // минимализм, лёгкая туманность
+    };
+    function makeFloor(color){
+      const m = new M.Mesh(
+        new M.PlaneGeometry(22, 22),
+        new M.MeshStandardMaterial({color:color, metalness:0.3, roughness:0.75})
+      );
+      m.rotation.x = -Math.PI/2;
+      m.position.y = -3;
+      return m;
+    }
 
-    // 00 LAPTOP
+    const scenes = [];
+    function addScene(z,label,builder){
+      const g=new M.Group();
+      g.position.z=z;
+      scene.add(g);
+      // Per-scene атмосферный пол (кроме LAPTOP который имеет свою тень)
+      const atm = sceneAtmospheres[label];
+      if(atm && label !== 'LAPTOP') g.add(makeFloor(atm.floor));
+      const prev=buildingVideoIds;
+      buildingVideoIds=new Set();
+      const meta=builder(g,z)||{};
+      const videoIds=[...buildingVideoIds];
+      buildingVideoIds=prev;
+      scenes.push({z,label,group:g,videoIds,...meta});
+      return g;
+    }
+
+    // 00 LAPTOP — реалистичный портал (space-gray, реальные клавиши, бэзел, логотип, тень)
     let laptopMeta = null;
     addScene(0, 'LAPTOP', g => {
-      const solidMat = new M.MeshStandardMaterial({color:0x141a26,metalness:0.75,roughness:0.3,transparent:true,opacity:0});
+      // === Материалы ===
+      const solidMat = new M.MeshStandardMaterial({color:0x2a2a2c,metalness:0.85,roughness:0.30,transparent:true,opacity:0});
+      const matteBlackMat = new M.MeshStandardMaterial({color:0x080808,metalness:0.2,roughness:0.85,transparent:true,opacity:0});
+      const glassMat = new M.MeshStandardMaterial({color:0x1a1a1c,metalness:0.65,roughness:0.12,transparent:true,opacity:0});
+      const bezelMat = new M.MeshBasicMaterial({color:0x040405,transparent:true,opacity:0,side:M.DoubleSide});
+
+      // === База ===
       const baseGeom = new M.BoxGeometry(3.0,0.1,2.0);
       const base = new M.Mesh(baseGeom,solidMat); g.add(base);
       const baseW = addEdges(base,0x6ee7ff,1);
-      const kb = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(2.4,0.02,1.2)),wireMat(0x6ee7ff,0.4));
-      kb.position.set(0,0.052,0.25); base.add(kb);
-      const tp = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.2,0.005,0.6)),wireMat(0x6ee7ff,0.35));
-      tp.position.set(0,0.053,-0.55); base.add(tp);
-      const lidPivot = new M.Group(); lidPivot.position.set(0,0.05,-1.0); g.add(lidPivot);
+
+      // === Клавиатура из реальных клавиш (InstancedMesh) ===
+      const KEY_ROWS=5, KEY_COLS=14;
+      const KEY_W=0.155, KEY_H=0.028, KEY_D=0.155;
+      const KEY_GAP=0.022;
+      const totalKeyW = KEY_COLS*(KEY_W+KEY_GAP)-KEY_GAP;
+      const totalKeyD = KEY_ROWS*(KEY_D+KEY_GAP)-KEY_GAP;
+      const keyGeom = new M.BoxGeometry(KEY_W,KEY_H,KEY_D);
+      const keysIM = new M.InstancedMesh(keyGeom,matteBlackMat,KEY_ROWS*KEY_COLS);
+      const tmpMat = new M.Matrix4();
+      let idx=0;
+      for(let r=0;r<KEY_ROWS;r++){
+        for(let c=0;c<KEY_COLS;c++){
+          const kx = -totalKeyW/2 + c*(KEY_W+KEY_GAP) + KEY_W/2;
+          const kz = -totalKeyD/2 + r*(KEY_D+KEY_GAP) + KEY_D/2 + 0.20;
+          tmpMat.makeTranslation(kx,0.064,kz);
+          keysIM.setMatrixAt(idx++,tmpMat);
+        }
+      }
+      keysIM.instanceMatrix.needsUpdate = true;
+      base.add(keysIM);
+
+      // Подсветка под клавиатурой (тонкая cyan-плашка)
+      const kbGlow = new M.Mesh(
+        new M.PlaneGeometry(totalKeyW+0.06,totalKeyD+0.06),
+        new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0,blending:M.AdditiveBlending,depthWrite:false})
+      );
+      kbGlow.rotation.x = -Math.PI/2;
+      kbGlow.position.set(0,0.052,0.20);
+      base.add(kbGlow);
+
+      // === Трекпад (стекло) ===
+      const tpGeom = new M.BoxGeometry(1.0,0.012,0.55);
+      const trackpad = new M.Mesh(tpGeom,glassMat);
+      trackpad.position.set(0,0.058,-0.55);
+      base.add(trackpad);
+      const tpEdge = addEdges(trackpad,0x6ee7ff,0.7);
+
+      // === Лид (крышка) ===
+      const lidPivot = new M.Group();
+      lidPivot.position.set(0,0.05,-1.0);
+      g.add(lidPivot);
       const lidGeom = new M.BoxGeometry(3.0,0.08,1.9);
-      const lid = new M.Mesh(lidGeom,solidMat); lid.position.set(0,0.04,0.95); lidPivot.add(lid);
+      const lid = new M.Mesh(lidGeom,solidMat);
+      lid.position.set(0,0.04,0.95);
+      lidPivot.add(lid);
       const lidW = addEdges(lid,0x6ee7ff,1);
+
+      // === Логотип HYPE на задней стороне крышки ===
+      const logoTex = textTex('▍ HYPE',{size:90,color:'#6ee7ff',w:512,h:128,weight:900});
+      const logoMat = new M.MeshBasicMaterial({map:logoTex,transparent:true,opacity:0,side:M.DoubleSide});
+      const logoMesh = new M.Mesh(new M.PlaneGeometry(0.8,0.2),logoMat);
+      logoMesh.position.set(0,0.083,0.95);
+      logoMesh.rotation.x = -Math.PI/2;
+      lidPivot.add(logoMesh);
+
+      // === Бэзел вокруг экрана (чёрная рамка) ===
+      const bezelGeom = new M.PlaneGeometry(2.9,1.82);
+      const bezel = new M.Mesh(bezelGeom,bezelMat);
+      bezel.rotation.x = Math.PI/2;
+      bezel.position.set(0,-0.041,0.95);
+      lidPivot.add(bezel);
+
+      // === Экран (canvas mockup, чуть меньше бэзела) ===
       const sc = document.createElement('canvas'); sc.width=1280; sc.height=800;
       const x = sc.getContext('2d');
       x.fillStyle='#02040a'; x.fillRect(0,0,sc.width,sc.height);
@@ -539,10 +675,36 @@
       x.fillStyle='#02040a'; x.font='800 14px Inter'; x.fillText('START PROJECT',92,532);
       const screenTex = new M.CanvasTexture(sc); screenTex.minFilter = M.LinearFilter;
       const screenMat = new M.MeshBasicMaterial({map:screenTex,transparent:true,opacity:0,side:M.DoubleSide});
-      const screenPlane = new M.Mesh(new M.PlaneGeometry(2.78,1.7),screenMat);
+      const screenPlane = new M.Mesh(new M.PlaneGeometry(2.74,1.68),screenMat);
       screenPlane.rotation.x = Math.PI/2;
-      screenPlane.position.set(0,-0.043,0.95);
+      screenPlane.position.set(0,-0.039,0.95);
       lidPivot.add(screenPlane);
+
+      // === Мягкая тень под ноутбуком (canvas с радиальным градиентом) ===
+      const shCanvas = document.createElement('canvas'); shCanvas.width=512; shCanvas.height=512;
+      const shCtx = shCanvas.getContext('2d');
+      const shGrad = shCtx.createRadialGradient(256,256,40, 256,256,256);
+      shGrad.addColorStop(0,'rgba(0,0,0,0.75)');
+      shGrad.addColorStop(0.5,'rgba(0,0,0,0.35)');
+      shGrad.addColorStop(1,'rgba(0,0,0,0)');
+      shCtx.fillStyle = shGrad;
+      shCtx.fillRect(0,0,512,512);
+      const shadowMat = new M.MeshBasicMaterial({
+        map: new M.CanvasTexture(shCanvas),
+        transparent:true, opacity:0, depthWrite:false
+      });
+      const shadow = new M.Mesh(new M.PlaneGeometry(4.5,4.5), shadowMat);
+      shadow.rotation.x = -Math.PI/2;
+      shadow.position.y = -0.06;
+      g.add(shadow);
+
+      // === Тёплый bounce light снизу (как от стола) ===
+      const bounce = new M.DirectionalLight(0xd9c8a9,0);
+      bounce.position.set(0,-3,0);
+      bounce.target.position.set(0,0,0);
+      g.add(bounce); g.add(bounce.target);
+
+      // === Частицы из экрана ===
       const PC=1200; const partGeom = new M.BufferGeometry();
       const pp=new Float32Array(PC*3),po=new Float32Array(PC*3),pt=new Float32Array(PC*3);
       for(let i=0;i<PC;i++){
@@ -557,7 +719,13 @@
       const particles = new M.Points(partGeom,partMat);
       particles.rotation.x = Math.PI/2; particles.position.set(0,-0.04,0.95);
       lidPivot.add(particles);
-      laptopMeta = { solidMat, baseW, lidW, lidPivot, screenMat, partMat, partGeom, po, pt, PC };
+
+      laptopMeta = {
+        solidMat, matteBlackMat, glassMat, bezelMat, logoMat,
+        baseW, lidW, tpEdge, lidPivot, screenMat,
+        partMat, partGeom, po, pt, PC,
+        kbGlow, shadow, bounce
+      };
     });
 
     // 01 LOBBY — 8 порталов с видео + hero-video задник
@@ -572,8 +740,8 @@
       const sub = new M.Mesh(new M.PlaneGeometry(5,0.45),new M.MeshBasicMaterial({map:subTex,transparent:true}));
       sub.position.y = 0.2; g.add(sub);
       const portCfg = [
-        {lbl:'CM',vid:'v-user01'},{lbl:'AI',vid:'v-user05'},{lbl:'RL',vid:'v-user14'},{lbl:'BR',vid:'v-user04'},
-        {lbl:'MD',vid:'v-user02'},{lbl:'AD',vid:'v-user18'},{lbl:'WB',vid:null},{lbl:'$',vid:'v-user03'}
+        {lbl:'CM',vid:'v-user01'},{lbl:'AI',vid:'v-user05'},{lbl:'RL',vid:'v-user14'},
+        {lbl:'BR',vid:'v-user04'},{lbl:'VP',vid:'v-user02'},{lbl:'WB',vid:null}
       ];
       const portals = [];
       portCfg.forEach((p,i)=>{
@@ -596,50 +764,73 @@
       lobbyMeta = { portals };
     });
 
-    // 02 COMMERCIAL
+    // 02 COMMERCIAL — биллборд опускается с неба, небоскрёбы вырастают из-под земли
     addScene(-50,'COMMERCIAL',g=>{
       const bw=9,bh=5.2;
-      const bb = new M.Mesh(new M.PlaneGeometry(bw,bh), new M.MeshBasicMaterial({map:vidTex('v-user16'),side:M.DoubleSide}));
-      bb.position.y=1.2; g.add(bb);
-      const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(bw+0.4,bh+0.4,0.08)),wireMat(0x6ee7ff,0.9));
-      fr.position.y=1.2; g.add(fr);
+      const bb = new M.Mesh(new M.PlaneGeometry(bw,bh), new M.MeshBasicMaterial({map:vidTex('v-user16'),side:M.DoubleSide,transparent:true,opacity:0}));
+      bb.position.set(0,8,0); // высоко в начале
+      g.add(bb);
+      const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(bw+0.4,bh+0.4,0.08)),wireMat(0x6ee7ff,0));
+      fr.position.set(0,8,0);
+      g.add(fr);
+      const towers = [];
       for(let i=0;i<18;i++){
         const h=2+Math.random()*5, w=0.4+Math.random()*0.6;
         const a=(i/18)*Math.PI*2, r=9+Math.random()*6;
-        const s = new M.Mesh(new M.BoxGeometry(w,h,w), new M.MeshStandardMaterial({color:0x0a0e16,metalness:0.6,roughness:0.7}));
-        s.position.set(Math.cos(a)*r, h/2-2, Math.sin(a)*r*0.6-4);
+        const tx=Math.cos(a)*r, tz=Math.sin(a)*r*0.6-4;
+        const finalY = h/2-2;
+        const s = new M.Mesh(new M.BoxGeometry(w,h,w), new M.MeshStandardMaterial({color:0x0a0e16,metalness:0.6,roughness:0.7,transparent:true,opacity:0}));
+        s.position.set(tx, finalY - 8, tz); // стартует на 8 единиц ниже
         g.add(s);
-        const eM = new M.MeshBasicMaterial({color:i%3?0x6ee7ff:0x9b8cff,transparent:true,opacity:0.75});
-        [-0.5,0.5].forEach(d=>{const e=new M.Mesh(new M.BoxGeometry(w*0.05,h,w*0.05),eM);e.position.set(s.position.x+w*d,s.position.y,s.position.z+w*0.5);g.add(e)});
+        const eM = new M.MeshBasicMaterial({color:i%3?0x6ee7ff:0x9b8cff,transparent:true,opacity:0});
+        const edges = [];
+        [-0.5,0.5].forEach(d=>{
+          const e=new M.Mesh(new M.BoxGeometry(w*0.05,h,w*0.05),eM.clone());
+          e.position.set(s.position.x+w*d, s.position.y, s.position.z+w*0.5);
+          g.add(e);
+          edges.push({mesh:e, dx:w*d, dz:w*0.5});
+        });
+        towers.push({mesh:s, x:tx, z:tz, finalY, edges});
       }
       const ground = new M.Mesh(new M.PlaneGeometry(40,40), new M.MeshStandardMaterial({color:0x05080f,metalness:0.8,roughness:0.4}));
       ground.rotation.x=-Math.PI/2; ground.position.y=-2.2; g.add(ground);
+      g.userData.anim = {billboard:bb, frame:fr, towers};
     });
 
-    // 03 AI VIDEO
+    // 03 AI VIDEO — сфера собирается из разлетевшихся узлов
     addScene(-75,'AI_VIDEO',g=>{
       const sphereGeom = new M.IcosahedronGeometry(5,2);
-      const wf = new M.LineSegments(new M.EdgesGeometry(sphereGeom),wireMat(0x6ee7ff,0.5));
+      const wf = new M.LineSegments(new M.EdgesGeometry(sphereGeom),wireMat(0x6ee7ff,0));
       g.add(wf);
-      const nodeMat = new M.MeshBasicMaterial({color:0x9b8cff,transparent:true,opacity:0.85});
+      const nodeMat = new M.MeshBasicMaterial({color:0x9b8cff,transparent:true,opacity:0});
       const nodeGeom = new M.SphereGeometry(0.06,8,8);
       const pos = sphereGeom.attributes.position;
       const used = new Set();
+      const nodes = [];
       for(let i=0;i<pos.count;i+=2){
         const k=`${pos.getX(i).toFixed(2)},${pos.getY(i).toFixed(2)},${pos.getZ(i).toFixed(2)}`;
         if(used.has(k))continue; used.add(k);
-        const n = new M.Mesh(nodeGeom,nodeMat);
-        n.position.set(pos.getX(i),pos.getY(i),pos.getZ(i));
+        const tx=pos.getX(i), ty=pos.getY(i), tz=pos.getZ(i);
+        const n = new M.Mesh(nodeGeom,nodeMat.clone());
+        // Стартовая позиция — разлетевшаяся в случайной точке снаружи
+        const r = 12 + Math.random()*8;
+        const a = Math.random()*Math.PI*2;
+        const b = (Math.random()-0.5)*Math.PI;
+        n.userData.target = {x:tx,y:ty,z:tz};
+        n.userData.start = {x:Math.cos(a)*Math.cos(b)*r, y:Math.sin(b)*r, z:Math.sin(a)*Math.cos(b)*r};
+        n.position.set(n.userData.start.x,n.userData.start.y,n.userData.start.z);
         g.add(n);
+        nodes.push(n);
       }
-      const vp = new M.Mesh(new M.PlaneGeometry(2.8,1.6), new M.MeshBasicMaterial({map:vidTex('v-user17'),side:M.DoubleSide}));
+      const vp = new M.Mesh(new M.PlaneGeometry(2.8,1.6), new M.MeshBasicMaterial({map:vidTex('v-user17'),side:M.DoubleSide,transparent:true,opacity:0}));
       g.add(vp);
-      const vf = new M.Mesh(new M.PlaneGeometry(3.2,2.0), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.15,blending:M.AdditiveBlending}));
+      const vf = new M.Mesh(new M.PlaneGeometry(3.2,2.0), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0,blending:M.AdditiveBlending}));
       vf.position.z=-0.01; g.add(vf);
       g.userData.sphere = wf;
+      g.userData.anim = {wf, nodes, vp, vf};
     });
 
-    // 04 REELS — 5 разных видео
+    // 04 REELS — телефоны прилетают со сторон со staggered задержкой
     addScene(-100,'REELS',g=>{
       const cfg = [
         {x:-3.0,y:0.5,z:1,rotY:0.3,scale:1.2,vid:'v-user14'},
@@ -648,15 +839,22 @@
         {x:4.5,y:-0.3,z:-1,rotY:-0.6,scale:0.9,vid:'v-user15'},
         {x:-4.5,y:0.0,z:-1.5,rotY:0.5,scale:1.0,vid:'v-user19'}
       ];
-      cfg.forEach(c=>{
+      const phones = [];
+      cfg.forEach((c, idx)=>{
         const p = new M.Group();
-        const pl = new M.Mesh(new M.PlaneGeometry(1.0,1.8), new M.MeshBasicMaterial({map:vidTex(c.vid),side:M.DoubleSide}));
+        const pl = new M.Mesh(new M.PlaneGeometry(1.0,1.8), new M.MeshBasicMaterial({map:vidTex(c.vid),side:M.DoubleSide,transparent:true,opacity:0}));
         p.add(pl);
-        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.1,1.9,0.04)),wireMat(0x6ee7ff,0.7));
+        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.1,1.9,0.04)),wireMat(0x6ee7ff,0));
         p.add(fr);
-        p.position.set(c.x,c.y,c.z); p.rotation.y=c.rotY; p.scale.setScalar(c.scale);
+        // Стартовая позиция — за пределами кадра по горизонтали + scale 0
+        const offDir = c.x >= 0 ? 1 : -1;
+        p.position.set(c.x + offDir*12, c.y, c.z);
+        p.rotation.y = c.rotY;
+        p.scale.setScalar(0);
         g.add(p);
+        phones.push({phone:p, target:c, idx, plane:pl, frame:fr});
       });
+      g.userData.anim = {phones};
     });
 
     // 05 BRAND FILMS
@@ -671,40 +869,39 @@
       for(const s of [-1,1]){const st=new M.Mesh(new M.BoxGeometry(0.1,4,0.1),new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.7}));st.position.set(s*7.5,1,0);g.add(st)}
     });
 
-    // 06 MOTION DESIGN
+    // 06 MOTION + PRODUCT (Visual Polish)
     addScene(-150,'MOTION',g=>{
-      const bg = new M.Mesh(new M.PlaneGeometry(14,8), new M.MeshBasicMaterial({map:vidTex('v-user02'),side:M.DoubleSide,transparent:true,opacity:0.45}));
+      const bg = new M.Mesh(new M.PlaneGeometry(14,8), new M.MeshBasicMaterial({map:vidTex('v-user02'),side:M.DoubleSide,transparent:true,opacity:0.35}));
       bg.position.z=-5; g.add(bg);
+      // ЛЕВАЯ ПОЛОВИНА: motion-типографика (плашки HYPE)
       const tex = textTex('HYPE',{size:180,color:'#f8fbff',w:1024,h:256});
-      const cfg = [{x:-3,y:1.5,z:0,rotY:-0.5,scale:1.4},{x:2,y:0.5,z:1,rotY:0.4,scale:1.7},{x:-1,y:-1.5,z:-1,rotY:-0.2,scale:1.1},{x:4,y:1.8,z:-0.5,rotY:0.8,scale:1.0},{x:-4,y:-0.2,z:0.5,rotY:0.7,scale:1.2}];
+      const cfg = [{x:-4.5,y:1.5,z:0,rotY:-0.5,scale:1.2},{x:-2.5,y:0.5,z:1,rotY:0.4,scale:1.4},{x:-3.5,y:-1.5,z:-1,rotY:-0.2,scale:1.0},{x:-5.0,y:-0.2,z:0.5,rotY:0.7,scale:1.1}];
       const planes = [];
       cfg.forEach(c=>{
-        const m = new M.Mesh(new M.PlaneGeometry(2.4,0.6), new M.MeshBasicMaterial({map:tex,transparent:true,side:M.DoubleSide,opacity:0.7+Math.random()*0.3}));
+        const m = new M.Mesh(new M.PlaneGeometry(2.2,0.55), new M.MeshBasicMaterial({map:tex,transparent:true,side:M.DoubleSide,opacity:0.7+Math.random()*0.3}));
         m.position.set(c.x,c.y,c.z); m.rotation.y=c.rotY; m.scale.setScalar(c.scale);
         g.add(m); planes.push(m);
       });
       g.userData.planes = planes;
-    });
-
-    // 07 PRODUCT ADS
-    addScene(-175,'PRODUCT_ADS',g=>{
-      const pod = new M.Mesh(new M.CylinderGeometry(3.2,3.8,0.3,48), new M.MeshStandardMaterial({color:0x0a0e18,metalness:0.8,roughness:0.3}));
-      pod.position.y=-1.5; g.add(pod);
+      // ПРАВАЯ ПОЛОВИНА: product spotlight с подиумом и продуктовым видео
+      const pod = new M.Mesh(new M.CylinderGeometry(2.2,2.6,0.25,40), new M.MeshStandardMaterial({color:0x0a0e18,metalness:0.8,roughness:0.3}));
+      pod.position.set(3.5,-1.5,0); g.add(pod);
       pod.add(new M.LineSegments(new M.EdgesGeometry(pod.geometry),wireMat(0x6ee7ff,0.5)));
-      const prod = new M.Mesh(new M.PlaneGeometry(2.4,3.3), new M.MeshBasicMaterial({map:vidTex('v-user19'),side:M.DoubleSide}));
-      prod.position.set(0,1,0); g.add(prod);
-      for(let i=0;i<8;i++){
-        const a=(i/8)*Math.PI*2;
-        const cn = new M.Mesh(new M.ConeGeometry(0.9,5,24,1,true), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.08,side:M.DoubleSide,blending:M.AdditiveBlending,depthWrite:false}));
-        cn.position.set(Math.cos(a)*3,3.5,Math.sin(a)*3); cn.rotation.x=Math.PI;
-        cn.lookAt(new M.Vector3(0,-1,0)); cn.rotateX(-Math.PI/2);
+      const prod = new M.Mesh(new M.PlaneGeometry(1.8,2.5), new M.MeshBasicMaterial({map:vidTex('v-user19'),side:M.DoubleSide}));
+      prod.position.set(3.5,0.6,0); g.add(prod);
+      g.userData.product = prod;
+      // Спотлайт-конусы над подиумом
+      for(let i=0;i<6;i++){
+        const a=(i/6)*Math.PI*2;
+        const cn = new M.Mesh(new M.ConeGeometry(0.7,4,20,1,true), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.07,side:M.DoubleSide,blending:M.AdditiveBlending,depthWrite:false}));
+        cn.position.set(3.5+Math.cos(a)*2.2,3,Math.sin(a)*2.2); cn.rotation.x=Math.PI;
+        cn.lookAt(new M.Vector3(3.5,-1,0)); cn.rotateX(-Math.PI/2);
         g.add(cn);
       }
-      g.userData.product = prod;
     });
 
     // 08 AI SITES intro — 3 портала с видео
-    addScene(-200,'AI_SITES',g=>{
+    addScene(-175,'AI_SITES',g=>{
       const t1 = textTex('AI SITES',{size:180,color:'#f8fbff',w:1024,h:256});
       const m1 = new M.Mesh(new M.PlaneGeometry(8,2), new M.MeshBasicMaterial({map:t1,transparent:true}));
       m1.position.y=1.5; g.add(m1);
@@ -725,91 +922,54 @@
         g.add(f);
       });
     });
-
-    // 09 LANDING
-    addScene(-225,'LANDING',g=>{
-      const vp = new M.Mesh(new M.PlaneGeometry(3,4.5), emptyFrameMat());
-      g.add(vp);
-      const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(3.2,4.7,0.1)),wireMat(0x6ee7ff,0.7));
-      g.add(fr);
-      const pG = new M.BufferGeometry(); const pN=300, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){pP[i*3]=(Math.random()-0.5)*8;pP[i*3+1]=(Math.random()-0.5)*6;pP[i*3+2]=(Math.random()-0.5)*4-2}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0x6ee7ff,size:0.03,transparent:true,opacity:0.5,blending:M.AdditiveBlending,depthWrite:false})));
-    });
-
-    // 10 BRAND SITES — кольцо из 5 видео
-    addScene(-250,'BRAND_SITES',g=>{
-      const vids = [null,null,null,null,null];
-      const cols = [0x6ee7ff,0x9b8cff,0xd9c8a9,0x6ee7ff,0x9b8cff];
-      for(let i=0;i<5;i++){
-        const a=(i/5)*Math.PI*2, r=3.8;
-        const pg = new M.Group();
-        pg.position.set(Math.cos(a)*r, Math.sin(a)*0.4, Math.sin(a)*r*0.4);
-        const vp = new M.Mesh(new M.PlaneGeometry(1.8,2.7), videoFrameMat(vids[i]));
-        pg.add(vp);
-        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.9,2.8,0.05)),wireMat(cols[i],0.6));
-        pg.add(fr);
-        pg.lookAt(0,0,0); g.add(pg);
-      }
-    });
-
-    // 11 CINEMATIC SITES — torus + video backdrop
-    addScene(-275,'CINEMATIC_SITES',g=>{
-      const tT = textTex('LIKE THIS ONE',{size:100,color:'#ffcd6e',w:1024,h:192,weight:900});
-      const tM = new M.Mesh(new M.PlaneGeometry(7,1.3), new M.MeshBasicMaterial({map:tT,transparent:true}));
-      tM.position.y=2; g.add(tM);
-      const bg = new M.Mesh(new M.PlaneGeometry(14,8), emptyFrameMat());
-      bg.position.z=-5; g.add(bg);
-      const torus = new M.Mesh(new M.TorusKnotGeometry(1.2,0.35,80,16), new M.MeshStandardMaterial({color:0xffcd6e,metalness:0.9,roughness:0.15,emissive:0xffcd6e,emissiveIntensity:0.18}));
-      torus.position.set(0,0.2,0); g.add(torus);
-      const pG = new M.BufferGeometry(); const pN=600, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){const r=2.5+Math.random()*3,a=Math.random()*Math.PI*2,b=(Math.random()-0.5)*Math.PI;pP[i*3]=Math.cos(a)*Math.cos(b)*r;pP[i*3+1]=Math.sin(b)*r;pP[i*3+2]=Math.sin(a)*Math.cos(b)*r}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0xffcd6e,size:0.02,transparent:true,opacity:0.6,blending:M.AdditiveBlending,depthWrite:false})));
-      g.userData.torus = torus;
-    });
-
-    // 12 PRICING
-    addScene(-300,'PRICING',g=>{
-      const cfg = [{x:-3.2,color:0x6ee7ff,label:'START',price:'1M'},{x:0,color:0x9b8cff,label:'GROWTH',price:'3M',big:true},{x:3.2,color:0xffcd6e,label:'HYPE',price:'7M'}];
+    // 12 PRICING — капсулы вырастают из пола с задержкой друг от друга
+    addScene(-200,'PRICING',g=>{
+      const cfg = [{x:-3.2,color:0x6ee7ff,label:'START',price:'Discuss'},{x:0,color:0x9b8cff,label:'GROWTH',price:'Discuss',big:true},{x:3.2,color:0xffcd6e,label:'HYPE',price:'Discuss'}];
+      const caps = [];
       cfg.forEach(c=>{
         const r=c.big?1.0:0.85, h=c.big?4.2:3.6;
-        const cap = new M.Mesh(new M.CylinderGeometry(r,r,h,32,1,true), new M.MeshStandardMaterial({color:c.color,metalness:0.6,roughness:0.2,transparent:true,opacity:0.18,emissive:c.color,emissiveIntensity:0.5,side:M.DoubleSide}));
-        cap.position.set(c.x,0,0); g.add(cap);
-        const rt = new M.Mesh(new M.RingGeometry(r*0.95,r*1.05,32), new M.MeshBasicMaterial({color:c.color,transparent:true,opacity:0.9,blending:M.AdditiveBlending,side:M.DoubleSide}));
+        const cap = new M.Mesh(new M.CylinderGeometry(r,r,h,32,1,true), new M.MeshStandardMaterial({color:c.color,metalness:0.6,roughness:0.2,transparent:true,opacity:0,emissive:c.color,emissiveIntensity:0.5,side:M.DoubleSide}));
+        cap.position.set(c.x,0,0); cap.scale.y=0.001; g.add(cap);
+        const rt = new M.Mesh(new M.RingGeometry(r*0.95,r*1.05,32), new M.MeshBasicMaterial({color:c.color,transparent:true,opacity:0,blending:M.AdditiveBlending,side:M.DoubleSide}));
         rt.position.set(c.x,h/2,0); rt.rotation.x=Math.PI/2; g.add(rt);
         const rb = rt.clone(); rb.position.y=-h/2; g.add(rb);
         const lT = textTex(c.label,{size:96,color:'#f8fbff',w:512,h:128,weight:800});
-        const lM = new M.Mesh(new M.PlaneGeometry(1.5,0.35), new M.MeshBasicMaterial({map:lT,transparent:true}));
+        const lM = new M.Mesh(new M.PlaneGeometry(1.5,0.35), new M.MeshBasicMaterial({map:lT,transparent:true,opacity:0}));
         lM.position.set(c.x,h/2+0.6,0); g.add(lM);
-        const pT = textTex(c.price+' UZS',{size:64,color:'#9aa8ba',w:512,h:128,weight:700});
-        const pM = new M.Mesh(new M.PlaneGeometry(1.5,0.3), new M.MeshBasicMaterial({map:pT,transparent:true}));
+        const pT = textTex(c.price,{size:54,color:'#9aa8ba',w:512,h:128,weight:700});
+        const pM = new M.Mesh(new M.PlaneGeometry(1.5,0.3), new M.MeshBasicMaterial({map:pT,transparent:true,opacity:0}));
         pM.position.set(c.x,-h/2-0.5,0); g.add(pM);
+        caps.push({cap, rt, rb, lM, pM, h, r, color:c.color});
       });
+      g.userData.anim = {capsules: caps};
     });
 
-    // 13 PORTFOLIO — стена 2x3 видео
-    addScene(-325,'PORTFOLIO',g=>{
+    // 13 PORTFOLIO — экраны включаются по очереди в шахматке (как камеры наблюдения)
+    addScene(-225,'PORTFOLIO',g=>{
       const vids = ['v-user06','v-user07','v-user08','v-user09','v-user10','v-user12'];
       const labels = ['UGC','PRODUCT','PROMO','BRAND','CYBER','ACTION'];
       const cols=3,rows=2,w=2.8,h=1.7,gap=0.4;
       const tw=cols*(w+gap)-gap, th=rows*(h+gap)-gap;
+      // Порядок включения — шахматка (диагональ)
+      const order = [0, 4, 2, 3, 1, 5];
+      const screens = [];
       for(let i=0;i<vids.length;i++){
         const col=i%cols, row=Math.floor(i/cols);
         const x=-tw/2+col*(w+gap)+w/2, y=th/2-row*(h+gap)-h/2;
-        const sc = new M.Mesh(new M.PlaneGeometry(w,h), new M.MeshBasicMaterial({map:vidTex(vids[i]),side:M.DoubleSide}));
+        const sc = new M.Mesh(new M.PlaneGeometry(w,h), new M.MeshBasicMaterial({map:vidTex(vids[i]),side:M.DoubleSide,transparent:true,opacity:0}));
         sc.position.set(x,y,0); g.add(sc);
-        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(w+0.1,h+0.1,0.04)),wireMat(0x6ee7ff,0.5));
+        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(w+0.1,h+0.1,0.04)),wireMat(0x6ee7ff,0));
         fr.position.set(x,y,0); g.add(fr);
         const lT = textTex(labels[i],{size:44,color:'#6ee7ff',w:512,h:96,weight:800});
-        const lM = new M.Mesh(new M.PlaneGeometry(1,0.18), new M.MeshBasicMaterial({map:lT,transparent:true}));
+        const lM = new M.Mesh(new M.PlaneGeometry(1,0.18), new M.MeshBasicMaterial({map:lT,transparent:true,opacity:0}));
         lM.position.set(x,y-h/2-0.18,0.02); g.add(lM);
+        screens.push({sc, fr, lM, orderIdx: order[i]});
       }
+      g.userData.anim = {screens};
     });
 
     // 14 PROCESS — киноплёнка
-    addScene(-350,'PROCESS',g=>{
+    addScene(-250,'PROCESS',g=>{
       const fw=2.6,fh=1.9,gap=0.15;
       for(let i=0;i<5;i++){
         const x=(i-2)*(fw+gap);
@@ -824,18 +984,8 @@
       }
     });
 
-    // 15 ABOUT
-    addScene(-375,'ABOUT',g=>{
-      const pG = new M.BufferGeometry(); const pN=800, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){pP[i*3]=(Math.random()-0.5)*16;pP[i*3+1]=(Math.random()-0.5)*10;pP[i*3+2]=(Math.random()-0.5)*8-2}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0xa7e6ff,size:0.025,transparent:true,opacity:0.4,blending:M.AdditiveBlending,depthWrite:false})));
-      const ring = new M.Mesh(new M.RingGeometry(4,4.2,64), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.18,side:M.DoubleSide,blending:M.AdditiveBlending}));
-      ring.rotation.x=Math.PI/2; ring.position.y=-1.5; g.add(ring);
-    });
-
     // 16 CONTACT
-    addScene(-400,'CONTACT',g=>{
+    addScene(-275,'CONTACT',g=>{
       const pn = new M.Mesh(new M.PlaneGeometry(6,4), new M.MeshStandardMaterial({color:0x6ee7ff,metalness:0.6,roughness:0.1,transparent:true,opacity:0.18,side:M.DoubleSide}));
       pn.position.set(0,0.3,0); g.add(pn);
       const pe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(6.2,4.2,0.04)),wireMat(0x6ee7ff,0.9));
@@ -849,7 +999,7 @@
       g.add(new M.Points(pG,new M.PointsMaterial({color:0x9b8cff,size:0.02,transparent:true,opacity:0.4,blending:M.AdditiveBlending,depthWrite:false})));
     });
 
-    const sceneNames = ['00 LAPTOP','01 LOBBY','02 COMMERCIAL','03 AI VIDEO','04 REELS','05 BRAND FILMS','06 MOTION','07 PRODUCT ADS','08 AI SITES','08a LANDING','08b BRAND SITES','08c CINEMATIC','09 PRICING','10 PORTFOLIO','11 PROCESS','12 STUDIO','13 CONTACT'];
+    const sceneNames = ['00 LAPTOP','01 LOBBY','02 COMMERCIAL','03 AI VIDEO','04 REELS','05 BRAND FILMS','06 POLISH','07 AI SITES','08 PRICING','09 PORTFOLIO','10 PROCESS','11 CONTACT'];
     document.getElementById('sceneTotal').textContent = String(sceneNames.length);
 
     const stages = document.querySelectorAll('.stage');
@@ -909,32 +1059,86 @@
         lookY = lerp(0.3,0.9,smoothstep(0.0,0.7,t));
         if(t>0.7){const zoom=smoothstep(0.7,1.0,t);camOffset=lerp(camOffset,0.4,zoom);camY=lerp(camY,0.9,zoom);camX=lerp(camX,0,zoom)}
       }
-      const tilt = {LOBBY:{y:0,x:0},COMMERCIAL:{y:1,x:0},AI_VIDEO:{y:0,x:0},REELS:{y:0,x:0},BRAND_FILMS:{y:-0.3,x:0},MOTION:{y:0,x:0},PRODUCT_ADS:{y:-0.6,x:0},AI_SITES:{y:0,x:0},LANDING:{y:0,x:0},BRAND_SITES:{y:0,x:0},CINEMATIC_SITES:{y:0,x:0},PRICING:{y:0,x:0},PORTFOLIO:{y:0,x:0},PROCESS:{y:0,x:0},ABOUT:{y:0,x:0},CONTACT:{y:0.2,x:0}};
+      const tilt = {LOBBY:{y:0,x:0},COMMERCIAL:{y:1,x:0},AI_VIDEO:{y:0,x:0},REELS:{y:0,x:0},BRAND_FILMS:{y:-0.3,x:0},MOTION:{y:0,x:0},AI_SITES:{y:0,x:0},PRICING:{y:0,x:0},PORTFOLIO:{y:0,x:0},PROCESS:{y:0,x:0},CONTACT:{y:0.2,x:0}};
       if(tilt[cur]){lookY=tilt[cur].y; lookX=tilt[cur].x}
       if(cur==='REELS') camX = lerp(-2,2,t);
       if(cur==='PORTFOLIO') camX = lerp(-3,3,t);
       if(cur==='BRAND_FILMS'){camY=lerp(0,0.3,t); camOffset=lerp(9,7,t)}
       if(cur==='AI_VIDEO') camOffset = lerp(8,5.5,t);
-      if(cur==='CINEMATIC_SITES'){const orb=lerp(0,0.5,t);camX=Math.sin(orb)*7;camOffset=Math.cos(orb)*7}
+      
       camera.position.set(camX,camY,sceneZ+camOffset);
       camera.lookAt(lookX,lookY,sceneZ);
       if(laptopMeta){
         const lp = i===0 ? t : (i>0 ? 1 : 0);
-        laptopMeta.lidPivot.rotation.x = lerp(0,-Math.PI*0.58,smoothstep(0.08,0.42,lp));
-        const sa = smoothstep(0.20,0.48,lp);
-        laptopMeta.solidMat.opacity = sa;
-        laptopMeta.baseW.material.opacity = lerp(1,0.18,sa);
-        laptopMeta.lidW.material.opacity = lerp(1,0.18,sa);
-        laptopMeta.screenMat.opacity = smoothstep(0.55,0.68,lp);
-        const pa = smoothstep(0.48,0.58,lp)*(1-smoothstep(0.7,0.8,lp));
+        // === Build-фазы с дыханием ===
+        // 0-0.15: только wireframe-силуэт
+        // 0.15-0.28: тень + bounce light появляются
+        // 0.18-0.38: детали (клавиши, бэзел, трекпад) материализуются
+        // 0.25-0.45: solid металл корпуса материализуется
+        // 0.20-0.40: логотип HYPE на крышке
+        // 0.35-0.55: подсветка под клавиатурой загорается
+        // 0.48-0.65: лид открывается
+        // 0.65-0.78: экран загорается
+        // 0.55-0.85: частицы взрываются
+        // 0.78-1.00: камера в экран + fog растворяется
+        const wireFade = lerp(1,0.10,smoothstep(0.12,0.45,lp));
+        laptopMeta.baseW.material.opacity = wireFade;
+        laptopMeta.lidW.material.opacity = wireFade;
+        if(laptopMeta.tpEdge) laptopMeta.tpEdge.material.opacity = wireFade*0.7;
+        const solidAmt = smoothstep(0.25,0.45,lp);
+        laptopMeta.solidMat.opacity = solidAmt;
+        const detailsAmt = smoothstep(0.18,0.38,lp);
+        laptopMeta.matteBlackMat.opacity = detailsAmt;
+        laptopMeta.glassMat.opacity = detailsAmt;
+        laptopMeta.bezelMat.opacity = detailsAmt;
+        laptopMeta.kbGlow.material.opacity = smoothstep(0.35,0.55,lp)*0.18;
+        laptopMeta.logoMat.opacity = smoothstep(0.20,0.40,lp);
+        laptopMeta.shadow.material.opacity = smoothstep(0.05,0.32,lp)*0.55;
+        laptopMeta.bounce.intensity = smoothstep(0.20,0.50,lp)*0.35;
+        laptopMeta.lidPivot.rotation.x = lerp(0,-Math.PI*0.58,smoothstep(0.48,0.65,lp));
+        laptopMeta.screenMat.opacity = smoothstep(0.65,0.78,lp);
+        const pa = smoothstep(0.55,0.65,lp)*(1-smoothstep(0.78,0.88,lp));
         laptopMeta.partMat.opacity = pa*0.9;
-        const ba = smoothstep(0.48,0.62,lp)-smoothstep(0.62,0.78,lp);
+        const ba = smoothstep(0.55,0.70,lp)-smoothstep(0.70,0.85,lp);
         const ar = laptopMeta.partGeom.attributes.position.array;
         for(let k=0;k<laptopMeta.PC;k++){ar[k*3]=lerp(laptopMeta.po[k*3],laptopMeta.pt[k*3],ba);ar[k*3+1]=lerp(laptopMeta.po[k*3+1],laptopMeta.pt[k*3+1],ba);ar[k*3+2]=lerp(laptopMeta.po[k*3+2],laptopMeta.pt[k*3+2],ba)}
         laptopMeta.partGeom.attributes.position.needsUpdate = true;
+        // === FOG: зажат во время laptop-стадии, отпускается на zoom-in ===
+        if(i===0){
+          const fogRelax = smoothstep(0.78,1.0,lp);
+          scene.fog.near = lerp(3,8,fogRelax);
+          scene.fog.far = lerp(11,60,fogRelax);
+        } else if(i===1 && t<0.15){
+          const fogReturn = smoothstep(0,0.15,t);
+          scene.fog.near = lerp(3,8,fogReturn);
+          scene.fog.far = lerp(11,60,fogReturn);
+        } else {
+          scene.fog.near = 8;
+          scene.fog.far = 60;
+        }
+        // === Portal flash ===
         if(i===0 && t>0.92){portalFlash.style.opacity=(smoothstep(0.92,1.0,t)*0.7).toFixed(3)}
         else if(i===1 && t<0.05){portalFlash.style.opacity=((1-smoothstep(0,0.05,t))*0.6).toFixed(3)}
         else{portalFlash.style.opacity='0'}
+      }
+      // === Atmosphere transitions (fog color между сценами) ===
+      // Пропускаем во время laptop-стадии — там свой fog control
+      if(i > 0){
+        const aLabel = scenes[i].label;
+        const bLabel = scenes[Math.min(i+1, scenes.length-1)].label;
+        const aAtm = sceneAtmospheres[aLabel];
+        const bAtm = sceneAtmospheres[bLabel] || aAtm;
+        if(aAtm && bAtm){
+          const cA = new M.Color(aAtm.fog);
+          const cB = new M.Color(bAtm.fog);
+          scene.fog.color.copy(cA).lerp(cB, easedT);
+        }
+      } else if(i === 0){
+        // Во время LAPTOP fog тёмный; на zoom-in (lp>0.78) переход к LOBBY-цвету
+        const lp = t;
+        const fogRelax = smoothstep(0.78,1.0,lp);
+        const lobbyColor = new M.Color(sceneAtmospheres.LOBBY.fog);
+        scene.fog.color.setHex(0x000000).lerp(lobbyColor, fogRelax);
       }
     }
 
@@ -952,23 +1156,110 @@
         touchMultiplier: 1.4
       });
     }
+    function applyBuildAnims(){
+      // Для каждой сцены, в зависимости от camera position относительно её центра,
+      // вычисляем buildProgress 0→1 и применяем сценарий
+      const N = scenes.length;
+      const idx = globalProgress*(N-1);
+      const curIdx = Math.min(Math.floor(idx), N-2);
+      const localT = idx - curIdx;
+      const buildT = smoothstep(0, 0.55, localT);
+      const curLabel = scenes[curIdx].label;
+      const curGroup = scenes[curIdx].group;
+      const ud = curGroup.userData.anim;
+      if(!ud) return;
+      // === PRICING — капсулы вырастают snizu вверх ===
+      if(curLabel === 'PRICING' && ud.capsules){
+        ud.capsules.forEach((d, i)=>{
+          const start = i*0.15;
+          const sT = smoothstep(start, start+0.5, buildT);
+          d.cap.scale.y = Math.max(0.001, sT);
+          d.cap.material.opacity = sT * 0.5;
+          d.rt.material.opacity = sT * 0.9;
+          d.rb.material.opacity = sT * 0.9;
+          d.lM.material.opacity = smoothstep(0.3,0.7,sT);
+          d.pM.material.opacity = smoothstep(0.5,0.9,sT);
+        });
+      }
+      // === AI VIDEO — узлы летят в позицию, сфера материализуется ===
+      else if(curLabel === 'AI_VIDEO' && ud.nodes){
+        const sphereAmt = smoothstep(0.0, 0.7, buildT);
+        ud.wf.material.opacity = sphereAmt * 0.5;
+        ud.nodes.forEach((n, i)=>{
+          const stagger = (i%8)*0.04;
+          const sT = smoothstep(stagger, stagger+0.55, buildT);
+          n.position.x = lerp(n.userData.start.x, n.userData.target.x, sT);
+          n.position.y = lerp(n.userData.start.y, n.userData.target.y, sT);
+          n.position.z = lerp(n.userData.start.z, n.userData.target.z, sT);
+          n.material.opacity = sT * 0.85;
+        });
+        ud.vp.material.opacity = smoothstep(0.5, 0.9, buildT);
+        ud.vf.material.opacity = smoothstep(0.5, 0.9, buildT) * 0.15;
+      }
+      // === REELS — телефоны прилетают со сторон ===
+      else if(curLabel === 'REELS' && ud.phones){
+        ud.phones.forEach(({phone, target, idx, plane, frame})=>{
+          const start = idx*0.10;
+          const sT = smoothstep(start, start+0.4, buildT);
+          const offDir = target.x >= 0 ? 1 : -1;
+          const startX = target.x + offDir*12;
+          phone.position.x = lerp(startX, target.x, sT);
+          phone.scale.setScalar(sT * target.scale);
+          plane.material.opacity = smoothstep(0.4, 0.8, sT);
+          frame.material.opacity = sT * 0.7;
+        });
+      }
+      // === PORTFOLIO — экраны включаются в шахматке ===
+      else if(curLabel === 'PORTFOLIO' && ud.screens){
+        ud.screens.forEach(({sc, fr, lM, orderIdx})=>{
+          const start = orderIdx*0.08;
+          const sT = smoothstep(start, start+0.25, buildT);
+          sc.material.opacity = sT;
+          fr.material.opacity = sT * 0.5;
+          lM.material.opacity = sT;
+        });
+      }
+      // === COMMERCIAL — биллборд опускается, небоскрёбы вырастают ===
+      else if(curLabel === 'COMMERCIAL' && ud.towers){
+        const billT = smoothstep(0.0, 0.45, buildT);
+        ud.billboard.position.y = lerp(8, 1.2, billT);
+        ud.billboard.material.opacity = billT;
+        ud.frame.position.y = lerp(8, 1.2, billT);
+        ud.frame.material.opacity = billT * 0.9;
+        ud.towers.forEach((tower, i)=>{
+          const start = 0.15 + (i%6)*0.04;
+          const sT = smoothstep(start, start+0.35, buildT);
+          tower.mesh.position.y = lerp(tower.finalY - 8, tower.finalY, sT);
+          tower.mesh.material.opacity = sT;
+          tower.edges.forEach(({mesh, dx, dz})=>{
+            mesh.position.y = tower.mesh.position.y;
+            mesh.material.opacity = sT * 0.75;
+          });
+        });
+      }
+    }
+
     let t0 = performance.now();
     function tick(time){
       requestAnimationFrame(tick);
       if (lenis) lenis.raf(time || performance.now());
       const t = (performance.now()-t0)*0.001;
       updateCamera(globalProgress);
+      // === Per-scene build-анимации (зависят от scrolling progress) ===
+      applyBuildAnims();
       const ai = scenes.find(s=>s.label==='AI_VIDEO');
       if(ai && ai.group.userData.sphere){ai.group.userData.sphere.rotation.y=t*0.1;ai.group.userData.sphere.rotation.x=t*0.07}
       const mo = scenes.find(s=>s.label==='MOTION');
       if(mo && mo.group.userData.planes){mo.group.userData.planes.forEach((p,i)=>p.rotation.y+=0.002*(i%2?1:-1))}
-      const ci = scenes.find(s=>s.label==='CINEMATIC_SITES');
-      if(ci && ci.group.userData.torus){ci.group.userData.torus.rotation.x=t*0.3;ci.group.userData.torus.rotation.y=t*0.4}
-      const pr = scenes.find(s=>s.label==='PRODUCT_ADS');
+      const pr = scenes.find(s=>s.label==='MOTION');
       if(pr && pr.group.userData.product){pr.group.userData.product.rotation.y=Math.sin(t*0.3)*0.15}
       if(lobbyMeta && lobbyMeta.portals){lobbyMeta.portals.forEach((p,i)=>p.position.y+=Math.sin(t*0.5+i)*0.001)}
       videoTextures.forEach((texture)=>{if(texture.image && texture.image.readyState >= 2 && !texture.image.paused) texture.needsUpdate = true});
-      renderer.render(scene,camera);
+      if (composer) {
+        composer.render();
+      } else {
+        renderer.render(scene, camera);
+      }
     }
 
     let renderStarted = false;
@@ -981,8 +1272,16 @@
     // Запускаем рендер сразу, но видео ждут клика
     if(document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
     setTimeout(start, 2500);
+    } // end if(!IS_MOBILE)
     function enterStudio(){
-      syncSceneVideos(Math.max(activeSceneVideoIndex,0));
+      if (IS_MOBILE) {
+        // На мобильном проигрываем все .stage-bg-video, разрешая autoplay через жест
+        document.querySelectorAll('.stage-bg-video').forEach(v=>{
+          try { const p = v.play(); if (p && p.catch) p.catch(()=>{}); } catch(e) {}
+        });
+      } else if (typeof syncSceneVideos === 'function') {
+        syncSceneVideos(Math.max(typeof activeSceneVideoIndex !== 'undefined' ? activeSceneVideoIndex : 0, 0));
+      }
       setTimeout(()=>document.getElementById('loading').classList.add('gone'), 400);
     }
     function showEnter(){
@@ -998,6 +1297,47 @@
     if(document.readyState==='complete') showEnter();
     else window.addEventListener('load', showEnter);
     setTimeout(showEnter, 1800);
+
+    // ===== MOBILE INIT: video-фоны для секций + lazy-load =====
+    if (IS_MOBILE) {
+      // Маппинг data-stage → assets/userXX.mp4 (только для сцен где есть видео)
+      const mobileBgMap = {
+        0: 'assets/hype-logo-transparent.png', // LAPTOP — статичный poster (не видео)
+        1: 'assets/user-video-16.mp4',  // LOBBY
+        2: 'assets/user-video-16.mp4',  // COMMERCIAL
+        3: 'assets/user-video-17.mp4',  // AI VIDEO
+        4: 'assets/user-video-14.mp4',  // REELS
+        5: 'assets/user-video-04.mp4',  // BRAND FILMS
+        6: 'assets/user-video-02.mp4'   // POLISH
+        // 7-11 без видео (или добавим позже когда будут готовы)
+      };
+      document.querySelectorAll('.stage').forEach(s=>{
+        const stageNum = +s.dataset.stage;
+        const src = mobileBgMap[stageNum];
+        if (src && src.endsWith('.mp4')) {
+          const v = document.createElement('video');
+          v.src = src;
+          v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+          v.setAttribute('playsinline', '');
+          v.className = 'stage-bg-video';
+          s.prepend(v);
+        }
+        s.classList.add('in'); // показываем оверлей сразу
+      });
+      // IntersectionObserver — играем только видимое видео, паузим остальные
+      const mobileVidIO = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          const v = e.target.querySelector('.stage-bg-video');
+          if (!v) return;
+          if (e.isIntersecting) {
+            try { const p = v.play(); if (p && p.catch) p.catch(()=>{}); } catch(err) {}
+          } else {
+            v.pause();
+          }
+        });
+      }, {threshold: 0.25, rootMargin: '50% 0px'});
+      document.querySelectorAll('.stage').forEach(s=>mobileVidIO.observe(s));
+    }
   </script>
 </body>
 </html>
