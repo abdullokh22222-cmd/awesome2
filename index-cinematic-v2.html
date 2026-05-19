@@ -479,7 +479,7 @@
       };
       if(v.readyState >= 1) warm();
       else v.addEventListener('loadedmetadata', warm, {once:true});
-      v.load();
+      if(v.readyState === 0) v.load();
       const p = v.play();
       if(p && p.catch) p.catch(()=>{});
     }
