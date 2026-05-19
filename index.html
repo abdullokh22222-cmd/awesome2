@@ -318,6 +318,7 @@
 
   <div class="scroll-hint" id="scrollHint" data-i18n="scrollHint">Scroll</div>
 
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     const i18n = {
@@ -937,9 +938,24 @@
       }
     }
 
+    // === Lenis smooth scroll (отключён на мобильном и при prefers-reduced-motion) ===
+    let lenis = null;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = window.innerWidth > 900;
+    if (typeof Lenis !== 'undefined' && !reduceMotion && isDesktop) {
+      lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        smoothTouch: false,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.4
+      });
+    }
     let t0 = performance.now();
-    function tick(){
+    function tick(time){
       requestAnimationFrame(tick);
+      if (lenis) lenis.raf(time || performance.now());
       const t = (performance.now()-t0)*0.001;
       updateCamera(globalProgress);
       const ai = scenes.find(s=>s.label==='AI_VIDEO');
