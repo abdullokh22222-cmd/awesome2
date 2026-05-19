@@ -156,6 +156,7 @@
     <video id="v-user08" muted loop playsinline preload="metadata"><source src="assets/user-video-08.mp4" type="video/mp4"></video>
     <video id="v-user09" muted loop playsinline preload="metadata"><source src="assets/user-video-09.mp4" type="video/mp4"></video>
     <video id="v-user10" muted loop playsinline preload="metadata"><source src="assets/user-video-10.mp4" type="video/mp4"></video>
+    <video id="v-user11" muted loop playsinline preload="metadata"><source src="assets/user-video-11.mp4" type="video/mp4"></video>
     <video id="v-user12" muted loop playsinline preload="metadata"><source src="assets/user-video-12.mp4" type="video/mp4"></video>
     <video id="v-user13" muted loop playsinline preload="metadata"><source src="assets/user-video-13.mp4" type="video/mp4"></video>
     <video id="v-user14" muted loop playsinline preload="metadata"><source src="assets/user-video-14.mp4" type="video/mp4"></video>
@@ -178,7 +179,7 @@
 
   <header class="site-header">
     <a class="brand" href="#"><span class="dot">▍</span> HYPE PRODUCTION</a>
-    <div class="scene-counter"><span class="now" id="sceneNow">00</span> / <span id="sceneTotal">11</span><span style="margin-left:14px" id="sceneLabel">LAPTOP</span></div>
+    <div class="scene-counter"><span class="now" id="sceneNow">00</span> / <span id="sceneTotal">10</span><span style="margin-left:14px" id="sceneLabel">LAPTOP</span></div>
     <div class="header-actions">
       <div class="lang-switcher">
         <button type="button" data-lang="en">EN</button>
@@ -266,13 +267,8 @@
       <h2 class="med" data-i18n="s13Title">AI, reels <span class="gradient">и cinematic.</span></h2>
     </div></section>
 
-    <section class="stage top left" data-stage="10"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">10</span> <span data-i18n="s14Eyebrow">How we work</span></p>
-      <h2 class="med" data-i18n="s14Title">From idea <span class="gradient">to launch.</span></h2>
-      <p class="lead" data-i18n="s14Lead">5 этапов от встречи до публикации. Делаем AI-видео, reels и премиум-контент для брендов с сильной визуальной подачей.</p>
-    </div></section>
-    <section class="stage left" data-stage="11" id="contact"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">11</span> <span data-i18n="s16Eyebrow">Request</span></p>
+    <section class="stage left" data-stage="10" id="contact"><div class="stage-inner">
+      <p class="stage-eyebrow"><span class="num">10</span> <span data-i18n="s16Eyebrow">Request</span></p>
       <h2 class="med" data-i18n="s16Title">Ready to <span class="gradient">launch?</span></h2>
       <div class="contact-grid">
         <div>
@@ -730,7 +726,7 @@
 
     // 01 LOBBY — 8 порталов с видео + hero-video задник
     let lobbyMeta = null;
-    addScene(-25, 'LOBBY', g => {
+    addScene(-35, 'LOBBY', g => {
       const bg = new M.Mesh(new M.PlaneGeometry(24,13.5), new M.MeshBasicMaterial({map:vidTex('v-user16'),transparent:true,opacity:0.32,side:M.DoubleSide}));
       bg.position.z = -7; g.add(bg);
       const titleTex = textTex('HYPE PRODUCTION',{size:100,color:'#f8fbff',w:2048,h:256});
@@ -765,7 +761,7 @@
     });
 
     // 02 COMMERCIAL — биллборд опускается с неба, небоскрёбы вырастают из-под земли
-    addScene(-50,'COMMERCIAL',g=>{
+    addScene(-70,'COMMERCIAL',g=>{
       const bw=9,bh=5.2;
       const bb = new M.Mesh(new M.PlaneGeometry(bw,bh), new M.MeshBasicMaterial({map:vidTex('v-user16'),side:M.DoubleSide,transparent:true,opacity:0}));
       bb.position.set(0,8,0); // высоко в начале
@@ -798,7 +794,7 @@
     });
 
     // 03 AI VIDEO — сфера собирается из разлетевшихся узлов
-    addScene(-75,'AI_VIDEO',g=>{
+    addScene(-105,'AI_VIDEO',g=>{
       const sphereGeom = new M.IcosahedronGeometry(5,2);
       const wf = new M.LineSegments(new M.EdgesGeometry(sphereGeom),wireMat(0x6ee7ff,0));
       g.add(wf);
@@ -831,7 +827,7 @@
     });
 
     // 04 REELS — телефоны прилетают со сторон со staggered задержкой
-    addScene(-100,'REELS',g=>{
+    addScene(-140,'REELS',g=>{
       const cfg = [
         {x:-3.0,y:0.5,z:1,rotY:0.3,scale:1.2,vid:'v-user14'},
         {x:-0.5,y:-0.8,z:-0.5,rotY:-0.1,scale:1.6,vid:'v-user18'},
@@ -858,7 +854,7 @@
     });
 
     // 05 BRAND FILMS
-    addScene(-125,'BRAND_FILMS',g=>{
+    addScene(-175,'BRAND_FILMS',g=>{
       const sw=12.6,sh=5.4;
       const sc = new M.Mesh(new M.PlaneGeometry(sw,sh), new M.MeshBasicMaterial({map:vidTex('v-user04'),side:M.DoubleSide}));
       sc.position.set(0,1.6,-3); g.add(sc);
@@ -870,7 +866,7 @@
     });
 
     // 06 MOTION + PRODUCT (Visual Polish)
-    addScene(-150,'MOTION',g=>{
+    addScene(-210,'MOTION',g=>{
       const bg = new M.Mesh(new M.PlaneGeometry(14,8), new M.MeshBasicMaterial({map:vidTex('v-user02'),side:M.DoubleSide,transparent:true,opacity:0.35}));
       bg.position.z=-5; g.add(bg);
       // ЛЕВАЯ ПОЛОВИНА: motion-типографика (плашки HYPE)
@@ -901,14 +897,14 @@
     });
 
     // 08 AI SITES intro — 3 портала с видео
-    addScene(-175,'AI_SITES',g=>{
+    addScene(-245,'AI_SITES',g=>{
       const t1 = textTex('AI SITES',{size:180,color:'#f8fbff',w:1024,h:256});
       const m1 = new M.Mesh(new M.PlaneGeometry(8,2), new M.MeshBasicMaterial({map:t1,transparent:true}));
       m1.position.y=1.5; g.add(m1);
       const t2 = textTex('— three formats —',{size:36,color:'#6ee7ff',w:1024,h:96,weight:700});
       const m2 = new M.Mesh(new M.PlaneGeometry(5,0.5), new M.MeshBasicMaterial({map:t2,transparent:true}));
       m2.position.y=0.2; g.add(m2);
-      const cfg = [{l:'LANDING',c:0x6ee7ff,v:null},{l:'BRAND',c:0x9b8cff,v:null},{l:'CINEMATIC',c:0xffcd6e,v:null}];
+      const cfg = [{l:'LANDING',c:0x6ee7ff,v:'v-user18'},{l:'BRAND',c:0x9b8cff,v:'v-user03'},{l:'CINEMATIC',c:0xffcd6e,v:'v-user11'}];
       cfg.forEach((p,i)=>{
         const x=(i-1)*3;
         const f = new M.Group(); f.position.set(x,-1.4,-1.5);
@@ -923,7 +919,7 @@
       });
     });
     // 12 PRICING — капсулы вырастают из пола с задержкой друг от друга
-    addScene(-200,'PRICING',g=>{
+    addScene(-280,'PRICING',g=>{
       const cfg = [{x:-3.2,color:0x6ee7ff,label:'START',price:'Discuss'},{x:0,color:0x9b8cff,label:'GROWTH',price:'Discuss',big:true},{x:3.2,color:0xffcd6e,label:'HYPE',price:'Discuss'}];
       const caps = [];
       cfg.forEach(c=>{
@@ -945,7 +941,7 @@
     });
 
     // 13 PORTFOLIO — экраны включаются по очереди в шахматке (как камеры наблюдения)
-    addScene(-225,'PORTFOLIO',g=>{
+    addScene(-315,'PORTFOLIO',g=>{
       const vids = ['v-user06','v-user07','v-user08','v-user09','v-user10','v-user12'];
       const labels = ['UGC','PRODUCT','PROMO','BRAND','CYBER','ACTION'];
       const cols=3,rows=2,w=2.8,h=1.7,gap=0.4;
@@ -968,24 +964,8 @@
       g.userData.anim = {screens};
     });
 
-    // 14 PROCESS — киноплёнка
-    addScene(-250,'PROCESS',g=>{
-      const fw=2.6,fh=1.9,gap=0.15;
-      for(let i=0;i<5;i++){
-        const x=(i-2)*(fw+gap);
-        const bd = new M.Mesh(new M.PlaneGeometry(fw,fh), new M.MeshStandardMaterial({color:0x0c121b,metalness:0.4,roughness:0.7,transparent:true,opacity:0.85}));
-        bd.position.set(x,0,0); g.add(bd);
-        const ed = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(fw,fh,0.02)),wireMat(0x6ee7ff,0.4));
-        ed.position.set(x,0,0); g.add(ed);
-        const nT = textTex('0'+(i+1),{size:200,color:'#6ee7ff',w:512,h:512,weight:900});
-        const nM = new M.Mesh(new M.PlaneGeometry(1.6,1.6), new M.MeshBasicMaterial({map:nT,transparent:true}));
-        nM.position.set(x,0,0.01); g.add(nM);
-        for(const s of [1,-1]){for(let h=0;h<8;h++){const hole=new M.Mesh(new M.CircleGeometry(0.05,12),new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.5}));hole.position.set(x-fw/2+h*(fw/7),s*(fh/2+0.15),0.01);g.add(hole)}}
-      }
-    });
-
     // 16 CONTACT
-    addScene(-275,'CONTACT',g=>{
+    addScene(-350,'CONTACT',g=>{
       const pn = new M.Mesh(new M.PlaneGeometry(6,4), new M.MeshStandardMaterial({color:0x6ee7ff,metalness:0.6,roughness:0.1,transparent:true,opacity:0.18,side:M.DoubleSide}));
       pn.position.set(0,0.3,0); g.add(pn);
       const pe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(6.2,4.2,0.04)),wireMat(0x6ee7ff,0.9));
@@ -999,7 +979,7 @@
       g.add(new M.Points(pG,new M.PointsMaterial({color:0x9b8cff,size:0.02,transparent:true,opacity:0.4,blending:M.AdditiveBlending,depthWrite:false})));
     });
 
-    const sceneNames = ['00 LAPTOP','01 LOBBY','02 COMMERCIAL','03 AI VIDEO','04 REELS','05 BRAND FILMS','06 POLISH','07 AI SITES','08 PRICING','09 PORTFOLIO','10 PROCESS','11 CONTACT'];
+    const sceneNames = ['00 LAPTOP','01 LOBBY','02 COMMERCIAL','03 AI VIDEO','04 REELS','05 BRAND FILMS','06 POLISH','07 AI SITES','08 PRICING','09 PORTFOLIO','10 CONTACT'];
     document.getElementById('sceneTotal').textContent = String(sceneNames.length);
 
     const stages = document.querySelectorAll('.stage');
@@ -1023,7 +1003,7 @@
     let activeSceneVideoIndex = -1;
     function syncSceneVideos(activeIndex){
       const keep = new Set();
-      for(let offset=-1; offset<=1; offset++){
+      for(let offset=-2; offset<=2; offset++){
         const s = scenes[activeIndex + offset];
         if(s && s.videoIds) s.videoIds.forEach(id=>keep.add(id));
       }
@@ -1048,7 +1028,7 @@
       const easedT = easeInOut(t);
       const a = scenes[i].z, b = scenes[i+1].z;
       const sceneZ = lerp(a,b,easedT);
-      let camOffset=8, camY=0.6, camX=0, lookY=0, lookX=0;
+      let camOffset=12, camY=0.6, camX=0, lookY=0, lookX=0;
       const cur = scenes[i].label;
       if(cur==='LAPTOP'){
         const orbit = lerp(-0.6,0.0,smoothstep(0.0,0.6,t));
@@ -1059,12 +1039,8 @@
         lookY = lerp(0.3,0.9,smoothstep(0.0,0.7,t));
         if(t>0.7){const zoom=smoothstep(0.7,1.0,t);camOffset=lerp(camOffset,0.4,zoom);camY=lerp(camY,0.9,zoom);camX=lerp(camX,0,zoom)}
       }
-      const tilt = {LOBBY:{y:0,x:0},COMMERCIAL:{y:1,x:0},AI_VIDEO:{y:0,x:0},REELS:{y:0,x:0},BRAND_FILMS:{y:-0.3,x:0},MOTION:{y:0,x:0},AI_SITES:{y:0,x:0},PRICING:{y:0,x:0},PORTFOLIO:{y:0,x:0},PROCESS:{y:0,x:0},CONTACT:{y:0.2,x:0}};
+      const tilt = {LOBBY:{y:0,x:0},COMMERCIAL:{y:1,x:0},AI_VIDEO:{y:0,x:0},REELS:{y:0,x:0},BRAND_FILMS:{y:-0.3,x:0},MOTION:{y:0,x:0},AI_SITES:{y:0,x:0},PRICING:{y:0,x:0},PORTFOLIO:{y:0,x:0},CONTACT:{y:0.2,x:0}};
       if(tilt[cur]){lookY=tilt[cur].y; lookX=tilt[cur].x}
-      if(cur==='REELS') camX = lerp(-2,2,t);
-      if(cur==='PORTFOLIO') camX = lerp(-3,3,t);
-      if(cur==='BRAND_FILMS'){camY=lerp(0,0.3,t); camOffset=lerp(9,7,t)}
-      if(cur==='AI_VIDEO') camOffset = lerp(8,5.5,t);
       
       camera.position.set(camX,camY,sceneZ+camOffset);
       camera.lookAt(lookX,lookY,sceneZ);
@@ -1081,22 +1057,22 @@
         // 0.65-0.78: экран загорается
         // 0.55-0.85: частицы взрываются
         // 0.78-1.00: камера в экран + fog растворяется
-        const wireFade = lerp(1,0.10,smoothstep(0.12,0.45,lp));
+        const wireFade = lerp(1,0.12,smoothstep(0.05,0.20,lp));
         laptopMeta.baseW.material.opacity = wireFade;
         laptopMeta.lidW.material.opacity = wireFade;
         if(laptopMeta.tpEdge) laptopMeta.tpEdge.material.opacity = wireFade*0.7;
-        const solidAmt = smoothstep(0.25,0.45,lp);
+        const solidAmt = smoothstep(0.08,0.20,lp);
         laptopMeta.solidMat.opacity = solidAmt;
-        const detailsAmt = smoothstep(0.18,0.38,lp);
+        const detailsAmt = smoothstep(0.06,0.18,lp);
         laptopMeta.matteBlackMat.opacity = detailsAmt;
         laptopMeta.glassMat.opacity = detailsAmt;
         laptopMeta.bezelMat.opacity = detailsAmt;
-        laptopMeta.kbGlow.material.opacity = smoothstep(0.35,0.55,lp)*0.18;
-        laptopMeta.logoMat.opacity = smoothstep(0.20,0.40,lp);
-        laptopMeta.shadow.material.opacity = smoothstep(0.05,0.32,lp)*0.55;
-        laptopMeta.bounce.intensity = smoothstep(0.20,0.50,lp)*0.35;
-        laptopMeta.lidPivot.rotation.x = lerp(0,-Math.PI*0.58,smoothstep(0.48,0.65,lp));
-        laptopMeta.screenMat.opacity = smoothstep(0.65,0.78,lp);
+        laptopMeta.kbGlow.material.opacity = smoothstep(0.20,0.35,lp)*0.18;
+        laptopMeta.logoMat.opacity = smoothstep(0.08,0.22,lp);
+        laptopMeta.shadow.material.opacity = smoothstep(0.0,0.15,lp)*0.55;
+        laptopMeta.bounce.intensity = smoothstep(0.08,0.25,lp)*0.35;
+        laptopMeta.lidPivot.rotation.x = lerp(0,-Math.PI*0.58,smoothstep(0.30,0.55,lp));
+        laptopMeta.screenMat.opacity = smoothstep(0.55,0.70,lp);
         const pa = smoothstep(0.55,0.65,lp)*(1-smoothstep(0.78,0.88,lp));
         laptopMeta.partMat.opacity = pa*0.9;
         const ba = smoothstep(0.55,0.70,lp)-smoothstep(0.70,0.85,lp);
@@ -1193,7 +1169,7 @@
           n.position.z = lerp(n.userData.start.z, n.userData.target.z, sT);
           n.material.opacity = sT * 0.85;
         });
-        ud.vp.material.opacity = smoothstep(0.5, 0.9, buildT);
+        ud.vp.material.opacity = 1; // всегда видно
         ud.vf.material.opacity = smoothstep(0.5, 0.9, buildT) * 0.15;
       }
       // === REELS — телефоны прилетают со сторон ===
@@ -1205,7 +1181,7 @@
           const startX = target.x + offDir*12;
           phone.position.x = lerp(startX, target.x, sT);
           phone.scale.setScalar(sT * target.scale);
-          plane.material.opacity = smoothstep(0.4, 0.8, sT);
+          plane.material.opacity = 1; // видео всегда видно
           frame.material.opacity = sT * 0.7;
         });
       }
@@ -1214,18 +1190,18 @@
         ud.screens.forEach(({sc, fr, lM, orderIdx})=>{
           const start = orderIdx*0.08;
           const sT = smoothstep(start, start+0.25, buildT);
-          sc.material.opacity = sT;
-          fr.material.opacity = sT * 0.5;
-          lM.material.opacity = sT;
+          sc.material.opacity = 1;
+          fr.material.opacity = 0.5;
+          lM.material.opacity = 1;
         });
       }
       // === COMMERCIAL — биллборд опускается, небоскрёбы вырастают ===
       else if(curLabel === 'COMMERCIAL' && ud.towers){
         const billT = smoothstep(0.0, 0.45, buildT);
         ud.billboard.position.y = lerp(8, 1.2, billT);
-        ud.billboard.material.opacity = billT;
+        ud.billboard.material.opacity = 1;
         ud.frame.position.y = lerp(8, 1.2, billT);
-        ud.frame.material.opacity = billT * 0.9;
+        ud.frame.material.opacity = 0.9;
         ud.towers.forEach((tower, i)=>{
           const start = 0.15 + (i%6)*0.04;
           const sT = smoothstep(start, start+0.35, buildT);
@@ -1279,8 +1255,16 @@
         document.querySelectorAll('.stage-bg-video').forEach(v=>{
           try { const p = v.play(); if (p && p.catch) p.catch(()=>{}); } catch(e) {}
         });
-      } else if (typeof syncSceneVideos === 'function') {
-        syncSceneVideos(Math.max(typeof activeSceneVideoIndex !== 'undefined' ? activeSceneVideoIndex : 0, 0));
+      } else {
+        // Прогреваем ВСЕ видео сразу — потом syncSceneVideos оставит активными ±2 сцены
+        document.querySelectorAll('video').forEach(v=>{
+          try { const p = v.play(); if(p && p.catch) p.catch(()=>{}); } catch(e) {}
+        });
+        setTimeout(()=>{
+          if (typeof syncSceneVideos === 'function') {
+            syncSceneVideos(Math.max(typeof activeSceneVideoIndex !== 'undefined' ? activeSceneVideoIndex : 0, 0));
+          }
+        }, 800);
       }
       setTimeout(()=>document.getElementById('loading').classList.add('gone'), 400);
     }
