@@ -2,315 +2,198 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HYPE PRODUCTION | Cinematic Video Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>HYPE PRODUCTION — Cinematic Flythrough</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #02040a; --bg-soft: #080d16; --text: #f8fbff; --muted: #9aa8ba;
-      --line: rgba(167, 230, 255, 0.18); --line-strong: rgba(167, 230, 255, 0.42);
-      --blue: #6ee7ff; --violet: #9b8cff; --champagne: #d9c8a9; --gold: #ffcd6e;
-      --radius: 8px;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; background: #000; color: var(--text); font-family: "Manrope", sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    :root { --warm:#d9c8a9; --ink:#f5f0e8; --dim:#7a7570; --blue:#6ee7ff; --violet:#9b8cff; --line:rgba(217,200,169,0.18); --line-strong:rgba(217,200,169,0.42); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; color: var(--ink); font-family: "Inter", sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
     button, input, textarea { font: inherit; }
-    .scene-canvas-wrap { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    #three-canvas { display: block; width: 100%; height: 100%; }
-    .portal-flash { position: fixed; inset: 0; z-index: 30; background: #fff; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
-    .scroll-progress { position: fixed; top: 0; left: 0; z-index: 90; width: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--violet)); box-shadow: 0 0 18px rgba(110, 231, 255, 0.6); }
-    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 80; display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(18px, 4vw, 56px); background: rgba(2, 4, 10, 0.42); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line); }
-    .brand { font-family: "Inter", sans-serif; font-weight: 900; letter-spacing: 0.18em; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; }
-    .brand .dot { color: var(--blue); }
-    .scene-counter { font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: 0.22em; color: var(--muted); font-weight: 800; }
-    .scene-counter .now { color: var(--blue); }
-    .header-actions { display: flex; align-items: center; gap: 12px; }
-    .lang-switcher { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.03); }
-    .lang-switcher button { min-width: 34px; height: 26px; border: 0; border-radius: 5px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 0.08em; background: transparent; cursor: pointer; }
-    .lang-switcher button.active { color: #02040a; background: var(--blue); }
-    .header-cta { padding: 8px 16px; border: 1px solid var(--line-strong); border-radius: var(--radius); font-size: 11px; letter-spacing: 0.1em; font-weight: 700; text-transform: uppercase; }
-    @media (max-width: 720px) { .scene-counter { display: none; } }
-    main { position: relative; z-index: 10; pointer-events: none; }
-    .stage { position: relative; min-height: 100vh; display: flex; align-items: center; pointer-events: none; }
-    .stage-inner { width: 100%; max-width: 1500px; margin: 0 auto; padding: 0 clamp(20px, 6vw, 80px); opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: auto; }
-    .stage.in .stage-inner { opacity: 1; transform: translateY(0); }
-    .stage-eyebrow { color: var(--blue); letter-spacing: 0.24em; font-size: 11px; text-transform: uppercase; font-weight: 800; margin: 0 0 16px; display: inline-flex; align-items: center; gap: 10px; }
-    .stage-eyebrow .num { padding: 4px 10px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(110, 231, 255, 0.06); font-family: "Inter", sans-serif; }
-    .stage h2 { font-family: "Inter", sans-serif; font-weight: 900; letter-spacing: -0.02em; line-height: 0.92; margin: 0 0 18px; font-size: clamp(40px, 8vw, 120px); }
-    .stage h2.med { font-size: clamp(32px, 5vw, 72px); }
-    .stage p.lead { color: var(--muted); font-size: clamp(15px, 1.4vw, 19px); line-height: 1.55; max-width: 560px; margin: 0 0 22px; }
-    .gradient { background: linear-gradient(90deg, var(--blue), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .stage.left .stage-inner { text-align: left; }
-    .stage.right .stage-inner { text-align: right; }
-    .stage.center .stage-inner { text-align: center; }
-    .stage.bottom { align-items: flex-end; padding-bottom: 12vh; }
-    .hero-stats { margin-top: 36px; display: flex; gap: 36px; flex-wrap: wrap; }
-    .hero-stats > div { display: flex; flex-direction: column; gap: 4px; }
-    .hero-stats strong { font-family: "Inter", sans-serif; font-weight: 900; font-size: clamp(22px, 2.2vw, 28px); color: var(--blue); }
-    .hero-stats span { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
-    .scroll-hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 70; color: var(--muted); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 12px; animation: pulse 2.4s infinite; transition: opacity 0.5s ease; pointer-events: none; }
-    .scroll-hint.hidden { opacity: 0; }
-    .scroll-hint::before { content: ""; width: 28px; height: 1px; background: var(--blue); }
-    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.95; } }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: var(--radius); font-family: "Inter", sans-serif; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; cursor: pointer; border: 1px solid transparent; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
-    .btn.primary { background: var(--blue); color: #02040a; box-shadow: 0 8px 28px rgba(110, 231, 255, 0.28); }
-    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(110, 231, 255, 0.42); }
-    .btn.ghost { border-color: var(--line-strong); color: var(--text); background: rgba(2, 4, 10, 0.4); backdrop-filter: blur(8px); }
-    .btn.ghost:hover { background: rgba(110, 231, 255, 0.08); }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 0; }
-    .panel { display: inline-block; padding: 24px 28px; border: 1px solid var(--line); border-radius: 12px; background: rgba(8, 13, 22, 0.6); backdrop-filter: blur(14px); max-width: 600px; }
-    .panel p { color: var(--muted); margin: 0; line-height: 1.55; font-size: 15px; }
-    .pricing-labels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin-top: 22px; }
-    .pl-card { padding: 16px 20px; border: 1px solid var(--line); border-radius: 12px; background: rgba(8, 13, 22, 0.65); backdrop-filter: blur(14px); text-align: center; }
-    .pl-card .pl-tier { font-family: "Inter", sans-serif; font-weight: 900; letter-spacing: 0.18em; font-size: 11px; margin: 0 0 6px; }
-    .pl-card .pl-name { font-family: "Inter", sans-serif; font-size: 18px; font-weight: 800; margin: 0 0 8px; }
-    .pl-card .pl-price { color: var(--muted); font-size: 13px; margin: 0; }
-    .pl-card.start .pl-tier { color: var(--blue); }
-    .pl-card.growth .pl-tier { color: var(--violet); }
-    .pl-card.hype .pl-tier { color: var(--gold); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1200px; align-items: start; }
-    @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 30px; } }
-    .contact-links { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
-    .contact-links a { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 10px; background: rgba(8, 13, 22, 0.6); backdrop-filter: blur(12px); transition: border-color 0.2s, background 0.2s; }
-    .contact-links a:hover { border-color: var(--line-strong); background: rgba(110, 231, 255, 0.06); }
-    .contact-links span { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
-    .contact-links strong { font-family: "Inter", sans-serif; font-size: 15px; }
-    .contact-form { display: flex; flex-direction: column; gap: 14px; padding: 28px; border: 1px solid var(--line); border-radius: 14px; background: rgba(8, 13, 22, 0.78); backdrop-filter: blur(18px); }
-    .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
-    .contact-form input, .contact-form textarea { padding: 13px 14px; border: 1px solid var(--line); border-radius: 8px; background: rgba(2, 4, 10, 0.6); color: var(--text); font-size: 14px; font-family: "Manrope", sans-serif; transition: border-color 0.2s, box-shadow 0.2s; }
-    .contact-form input:focus, .contact-form textarea:focus { outline: 0; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(110, 231, 255, 0.18); }
-    .form-status { font-size: 12px; color: var(--muted); margin: 0; }
-    .chat-widget { position: fixed; right: 18px; bottom: 18px; z-index: 100; pointer-events: auto; }
-    .chat-launcher { min-height: 48px; padding: 0 18px; border: 1px solid rgba(110, 231, 255, 0.42); border-radius: 999px; color: #03131d; font: inherit; font-size: 13px; font-weight: 800; background: linear-gradient(135deg, #dff8ff, #7feaff 42%, #9b8cff 100%); box-shadow: 0 0 32px rgba(110, 231, 255, 0.25), 0 18px 44px rgba(0, 0, 0, 0.38); cursor: pointer; }
-    .chat-panel { position: absolute; right: 0; bottom: 62px; display: none; width: min(390px, calc(100vw - 28px)); overflow: hidden; border: 1px solid var(--line-strong); border-radius: 16px; background: radial-gradient(circle at 20% 0%, rgba(110, 231, 255, 0.12), transparent 36%), rgba(5, 8, 15, 0.94); box-shadow: 0 0 44px rgba(110, 231, 255, 0.14), 0 24px 70px rgba(0, 0, 0, 0.55); backdrop-filter: blur(22px); }
+    .canvas-wrap { position: fixed; inset: 0; z-index: 1; }
+    #c { width: 100%; height: 100%; display: block; }
+    .grain { position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); background-size: 240px; }
+    .vig { position: fixed; inset: 0; z-index: 45; pointer-events: none; background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%); }
+    .progress { position: fixed; top: 0; left: 0; z-index: 90; width: 0; height: 1px; background: var(--warm); box-shadow: 0 0 8px rgba(217,200,169,0.5); }
+    .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; mix-blend-mode: difference; gap: 16px; }
+    .topbar .brand { font-size: 11px; font-weight: 900; letter-spacing: 0.5em; color: #fff; }
+    .topbar .ctr { font-size: 10px; letter-spacing: 0.4em; color: #fff; opacity: 0.55; }
+    .lang { display: flex; gap: 2px; padding: 3px; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; mix-blend-mode: normal; background: rgba(0,0,0,0.4); }
+    .lang button { min-width: 32px; height: 22px; border: 0; border-radius: 3px; color: rgba(255,255,255,0.5); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; background: transparent; cursor: pointer; }
+    .lang button.active { color: #000; background: var(--warm); }
+    .lang button:hover { color: #fff; }
+    .scroll { position: relative; z-index: 20; }
+    .chapter { min-height: 100vh; pointer-events: none; padding: 0; }
+    /* По умолчанию: ch-text — маленький fixed badge в нижнем левом углу */
+    .ch-text { position: fixed; bottom: 42px; left: 42px; opacity: 0; transform: translateY(10px); pointer-events: auto; text-align: left; padding: 18px 26px; border: 1px solid rgba(217,200,169,0.32); border-radius: 8px; background: rgba(8,10,16,0.68); backdrop-filter: blur(12px); z-index: 30; max-width: min(560px, 86vw); transition: opacity 0.35s ease-out, transform 0.35s ease-out; transition-delay: 0s; }
+    .chapter.active .ch-text { opacity: 1; transform: translateY(0); transition: opacity 0.45s ease-in, transform 0.45s ease-in; transition-delay: 0.4s; }
+    .ch-num { font-size: 11px; letter-spacing: 0.55em; color: var(--warm); margin-bottom: 8px; font-weight: 800; }
+    .ch-name { font-size: 22px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.22; color: var(--ink); }
+    .ch-name em { font-style: normal; color: var(--warm); }
+    /* Сцена 10 (Contact) — полный layout, не fixed */
+    .chapter.center { display: flex; align-items: flex-end; padding: 0 6vw 14vh; pointer-events: none; }
+    .chapter.center .ch-text { position: static; opacity: 0; transform: translateY(20px); padding: 0; border: 0; background: none; backdrop-filter: none; text-align: center; max-width: 1200px; margin: 0 auto; pointer-events: auto; }
+    .chapter.center.active .ch-text { opacity: 1; transform: translateY(0); }
+    .chapter.center .ch-num { font-size: 10px; letter-spacing: 0.55em; margin-bottom: 14px; }
+    .chapter.center .ch-name { font-size: clamp(38px, 5vw, 64px); font-weight: 900; letter-spacing: -0.025em; line-height: 1; }
+    .contact-grid { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 1100px; align-items: start; text-align: left; }
+    .contact-grid .lead { font-size: 16px; line-height: 1.55; color: var(--dim); max-width: 460px; margin: 0 0 24px; font-family: "Manrope", sans-serif; }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; max-width: 380px; }
+    .contact-links a { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 10px; background: rgba(8,13,22,0.55); backdrop-filter: blur(10px); transition: border-color 0.2s, background 0.2s; font-family: "Manrope", sans-serif; }
+    .contact-links a:hover { border-color: var(--line-strong); background: rgba(217,200,169,0.06); }
+    .contact-links .l { font-size: 10px; letter-spacing: 0.24em; color: var(--dim); text-transform: uppercase; font-weight: 800; }
+    .contact-links strong { font-family: "Inter", sans-serif; font-size: 15px; font-weight: 700; }
+    .contact-form { display: flex; flex-direction: column; gap: 12px; padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: rgba(8,13,22,0.7); backdrop-filter: blur(14px); font-family: "Manrope", sans-serif; }
+    .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim); font-weight: 800; }
+    .contact-form input, .contact-form textarea { padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: rgba(0,0,0,0.55); color: var(--ink); font-size: 14px; font-family: "Manrope", sans-serif; transition: border-color 0.2s, box-shadow 0.2s; }
+    .contact-form input:focus, .contact-form textarea:focus { outline: 0; border-color: var(--warm); box-shadow: 0 0 0 3px rgba(217,200,169,0.14); }
+    .contact-form .btn-send { padding: 12px 24px; border: 1px solid var(--warm); background: var(--warm); color: #000; font-family: "Inter", sans-serif; font-weight: 800; letter-spacing: 0.18em; font-size: 11px; text-transform: uppercase; cursor: pointer; border-radius: 8px; transition: background 0.2s, color 0.2s; margin-top: 4px; }
+    .contact-form .btn-send:hover { background: transparent; color: var(--warm); }
+    .form-status { font-size: 12px; color: var(--dim); margin: 0; min-height: 16px; }
+    @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 24px; } }
+    .loader { position: fixed; inset: 0; z-index: 200; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; transition: opacity 1.2s cubic-bezier(0.65,0,0.35,1); }
+    .loader.gone { opacity: 0; pointer-events: none; }
+    .loader .l-brand { font-size: 12px; letter-spacing: 0.55em; font-weight: 900; color: var(--warm); }
+    .loader .l-bar { width: 240px; height: 1px; background: rgba(217,200,169,0.12); position: relative; overflow: hidden; }
+    .loader .l-bar::after { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: var(--warm); animation: lbar 1.6s infinite cubic-bezier(0.65,0,0.35,1); }
+    @keyframes lbar { 0%, 100% { transform: translateX(-110%); } 50% { transform: translateX(330%); } }
+    .enter { display: none; margin-top: 6px; padding: 14px 32px; border: 1px solid var(--warm); background: transparent; color: var(--warm); font-family: "Inter", sans-serif; font-weight: 800; letter-spacing: 0.4em; font-size: 11px; cursor: pointer; transition: background 0.3s, color 0.3s; }
+    .enter:hover { background: var(--warm); color: #000; }
+    /* === Chat widget === */
+    .chat-widget { position: fixed; right: 18px; bottom: 18px; z-index: 100; font-family: "Manrope", sans-serif; }
+    .chat-launcher { min-height: 44px; padding: 0 18px; border: 1px solid rgba(217,200,169,0.42); border-radius: 999px; color: #03131d; font: inherit; font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; background: linear-gradient(135deg, #f5e6c8, #d9c8a9 50%, #c89868 100%); box-shadow: 0 0 32px rgba(217,200,169,0.25), 0 18px 44px rgba(0,0,0,0.38); cursor: pointer; }
+    .chat-panel { position: absolute; right: 0; bottom: 58px; display: none; width: min(380px, calc(100vw - 28px)); overflow: hidden; border: 1px solid var(--line-strong); border-radius: 14px; background: radial-gradient(circle at 20% 0%, rgba(217,200,169,0.12), transparent 36%), rgba(5,8,15,0.95); box-shadow: 0 0 44px rgba(217,200,169,0.14), 0 24px 70px rgba(0,0,0,0.55); backdrop-filter: blur(20px); }
     .chat-widget.is-open .chat-panel { display: block; }
-    .chat-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 18px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    .chat-header p { margin: 0 0 5px; color: var(--blue); font-size: 11px; font-weight: 800; text-transform: uppercase; }
-    .chat-header strong { display: block; font-size: 18px; line-height: 1.2; }
-    .chat-close { width: 32px; height: 32px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 9px; color: var(--text); font-size: 22px; line-height: 1; background: rgba(255, 255, 255, 0.04); cursor: pointer; }
-    .chat-body { display: grid; gap: 12px; max-height: min(620px, calc(100vh - 128px)); padding: 16px; overflow-y: auto; }
-    .chat-message { max-width: 92%; padding: 12px 13px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; color: #d8e2ef; font-size: 14px; line-height: 1.55; background: rgba(255, 255, 255, 0.045); }
-    .chat-message.accent { justify-self: end; border-color: rgba(110, 231, 255, 0.2); color: var(--text); background: rgba(110, 231, 255, 0.07); }
-    .chat-options { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chat-option { min-height: 36px; padding: 0 12px; border: 1px solid rgba(110, 231, 255, 0.16); border-radius: 999px; color: var(--text); font: inherit; font-size: 13px; font-weight: 700; background: rgba(255, 255, 255, 0.045); cursor: pointer; }
-    .chat-option:hover { border-color: rgba(110, 231, 255, 0.44); background: rgba(110, 231, 255, 0.08); }
-    .chat-summary { display: grid; gap: 7px; padding: 13px; border: 1px solid rgba(110, 231, 255, 0.16); border-radius: 14px; background: rgba(110, 231, 255, 0.045); }
-    .chat-summary p { margin: 0; color: var(--muted); font-size: 13px; }
-    .chat-lead-form { display: grid; gap: 10px; }
-    .chat-lead-form input, .chat-lead-form textarea { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; background: rgba(255, 255, 255, 0.045); }
-    .chat-lead-form textarea { min-height: 74px; padding-block: 11px; resize: vertical; }
-    .chat-lead-form button { min-height: 42px; border: 0; border-radius: 10px; color: #03131d; font: inherit; font-size: 13px; font-weight: 800; background: linear-gradient(135deg, #dff8ff, #7feaff 42%, #9b8cff 100%); cursor: pointer; }
-    .chat-status { min-height: 18px; margin: 0; color: var(--blue); font-size: 12px; }
-    @media (max-width: 560px) { .chat-widget { right: 12px; bottom: 12px; left: 12px; } .chat-launcher { width: 100%; min-height: 46px; } .chat-panel { right: 0; bottom: 58px; width: 100%; border-radius: 14px; } }
-    .loading { position: fixed; inset: 0; z-index: 200; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 18px; transition: opacity 0.6s ease; }
-    .loading.gone { opacity: 0; pointer-events: none; }
-    .loading .l-brand { font-family: "Inter", sans-serif; font-weight: 900; letter-spacing: 0.3em; font-size: 14px; }
-    .loading .l-dot { color: var(--blue); }
-    .loading .l-bar { width: 220px; height: 1px; background: rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; }
-    .loading .l-bar::after { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 40%; background: var(--blue); animation: loadingBar 1.4s infinite ease-in-out; }
-    @keyframes loadingBar { 0%, 100% { transform: translateX(-100%); } 50% { transform: translateX(250%); } }
+    .chat-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 16px 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .chat-header p { margin: 0 0 4px; color: var(--warm); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; }
+    .chat-header strong { display: block; font-size: 15px; line-height: 1.2; color: var(--ink); }
+    .chat-close { width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: var(--ink); font-size: 18px; line-height: 1; background: rgba(255,255,255,0.04); cursor: pointer; }
+    .chat-body { display: grid; gap: 10px; max-height: min(560px, calc(100vh - 120px)); padding: 14px; overflow-y: auto; }
+    .chat-message { max-width: 92%; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #d8e2ef; font-size: 13px; line-height: 1.5; background: rgba(255,255,255,0.04); }
+    .chat-message.accent { justify-self: end; border-color: rgba(217,200,169,0.2); color: var(--ink); background: rgba(217,200,169,0.07); }
+    .chat-options { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chat-option { min-height: 32px; padding: 0 11px; border: 1px solid rgba(217,200,169,0.16); border-radius: 999px; color: var(--ink); font: inherit; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.04); cursor: pointer; }
+    .chat-option:hover { border-color: rgba(217,200,169,0.44); background: rgba(217,200,169,0.08); }
+    .chat-summary { display: grid; gap: 6px; padding: 12px; border: 1px solid rgba(217,200,169,0.16); border-radius: 12px; background: rgba(217,200,169,0.04); font-size: 12px; }
+    .chat-lead-form { display: grid; gap: 8px; margin-top: 8px; }
+    .chat-lead-form input, .chat-lead-form textarea { padding: 9px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; background: rgba(0,0,0,0.45); color: var(--ink); font-family: "Manrope", sans-serif; font-size: 12px; }
+    .chat-lead-form button { padding: 9px 16px; border: 1px solid var(--warm); background: var(--warm); color: #000; font-weight: 800; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; border-radius: 8px; }
+    .chat-status { font-size: 11px; color: var(--dim); margin: 0; }
+    @media (max-width: 560px) { .chat-widget { right: 12px; bottom: 12px; left: 12px; } .chat-launcher { width: 100%; } .chat-panel { right: 0; bottom: 56px; width: 100%; } }
+    @media (max-width: 900px) {
+      .canvas-wrap { display: none !important; }
+      .grain, .vig, .progress { display: none !important; }
+      html, body { scroll-snap-type: y mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+      .chapter { min-height: 100dvh; scroll-snap-align: start; align-items: center !important; padding: 14vh 6vw 12vh !important; position: relative; overflow: hidden; }
+      .chapter.center { align-items: center !important; }
+      .ch-text { opacity: 1 !important; transform: none !important; margin: 0 auto !important; text-align: center !important; max-width: 100% !important; }
+      .ch-name { font-size: clamp(34px, 9vw, 56px) !important; }
+      .chapter::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(180deg, #050609 0%, #0b0b10 100%); }
+      .mb-vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.45; }
+      .chapter::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(4,5,10,0.5) 0%, rgba(4,5,10,0.88) 100%); pointer-events: none; }
+      .ch-text { z-index: 1; position: relative; }
+      .topbar { padding: 14px 18px; }
+      .topbar .ctr { display: none; }
+      .contact-grid { text-align: center !important; margin: 32px auto 0 !important; }
+      .chat-widget { bottom: 88px; }
+    }
   </style>
 </head>
 <body>
   <div style="position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
-    <video id="v-hero" muted loop playsinline preload="metadata"><source src="assets/hero-video.mp4" type="video/mp4"></video>
-    <video id="v-promo" muted loop playsinline preload="metadata"><source src="assets/promo-video.mp4" type="video/mp4"></video>
-    <video id="v-cyber" muted loop playsinline preload="metadata"><source src="assets/cyber-punk-video.mp4" type="video/mp4"></video>
-    <video id="v-ugc" muted loop playsinline preload="metadata"><source src="assets/ugc-blogger-content.mp4" type="video/mp4"></video>
-    <video id="v-cinematic" muted loop playsinline preload="metadata"><source src="assets/cinematic-reels.mp4" type="video/mp4"></video>
-    <video id="v-action" muted loop playsinline preload="metadata"><source src="assets/action-video.mp4" type="video/mp4"></video>
-    <video id="v-motion" muted loop playsinline preload="metadata"><source src="assets/hyper-motion-product-video.mp4" type="video/mp4"></video>
-    <video id="v-extra1" muted loop playsinline preload="metadata"><source src="assets/extra-1.mp4" type="video/mp4"></video>
-    <video id="v-extra2" muted loop playsinline preload="metadata"><source src="assets/extra-2.mp4" type="video/mp4"></video>
-    <video id="v-extra3" muted loop playsinline preload="metadata"><source src="assets/extra-3.mp4" type="video/mp4"></video>
-    <video id="v-extra4" muted loop playsinline preload="metadata"><source src="assets/extra-4.mp4" type="video/mp4"></video>
-    <video id="v-user01" muted loop playsinline preload="metadata"><source src="assets/user-video-01.mp4" type="video/mp4"></video>
-    <video id="v-user02" muted loop playsinline preload="metadata"><source src="assets/user-video-02.mp4" type="video/mp4"></video>
-    <video id="v-user03" muted loop playsinline preload="metadata"><source src="assets/user-video-03.mp4" type="video/mp4"></video>
-    <video id="v-user04" muted loop playsinline preload="metadata"><source src="assets/user-video-04.mp4" type="video/mp4"></video>
-    <video id="v-user05" muted loop playsinline preload="metadata"><source src="assets/user-video-05.mp4" type="video/mp4"></video>
-    <video id="v-user06" muted loop playsinline preload="metadata"><source src="assets/user-video-06.mp4" type="video/mp4"></video>
-    <video id="v-user07" muted loop playsinline preload="metadata"><source src="assets/user-video-07.mp4" type="video/mp4"></video>
-    <video id="v-user08" muted loop playsinline preload="metadata"><source src="assets/user-video-08.mp4" type="video/mp4"></video>
-    <video id="v-user09" muted loop playsinline preload="metadata"><source src="assets/user-video-09.mp4" type="video/mp4"></video>
-    <video id="v-user10" muted loop playsinline preload="metadata"><source src="assets/user-video-10.mp4" type="video/mp4"></video>
-    <video id="v-user11" muted loop playsinline preload="metadata"><source src="assets/user-video-11.mp4" type="video/mp4"></video>
-    <video id="v-user12" muted loop playsinline preload="metadata"><source src="assets/user-video-12.mp4" type="video/mp4"></video>
-    <video id="v-user13" muted loop playsinline preload="metadata"><source src="assets/user-video-13.mp4" type="video/mp4"></video>
-    <video id="v-user14" muted loop playsinline preload="metadata"><source src="assets/user-video-14.mp4" type="video/mp4"></video>
-    <video id="v-user15" muted loop playsinline preload="metadata"><source src="assets/user-video-15.mp4" type="video/mp4"></video>
-    <video id="v-user16" muted loop playsinline preload="metadata"><source src="assets/user-video-16.mp4" type="video/mp4"></video>
-    <video id="v-user17" muted loop playsinline preload="metadata"><source src="assets/user-video-17.mp4" type="video/mp4"></video>
-    <video id="v-user18" muted loop playsinline preload="metadata"><source src="assets/user-video-18.mp4" type="video/mp4"></video>
-    <video id="v-user19" muted loop playsinline preload="metadata"><source src="assets/user-video-19.mp4" type="video/mp4"></video>
+    <video id="v-lobby-bg" muted loop playsinline preload="none"></video>
+    <video id="v-lobby-cm" muted loop playsinline preload="metadata"><source src="assets/frame-lobby-cm.mp4" type="video/mp4"></video>
+    <video id="v-lobby-ai" muted loop playsinline preload="metadata"><source src="assets/frame-lobby-ai.mp4" type="video/mp4"></video>
+    <video id="v-lobby-rl" muted loop playsinline preload="metadata"><source src="assets/frame-lobby-rl.mp4" type="video/mp4"></video>
+    <video id="v-lobby-br" muted loop playsinline preload="metadata"><source src="assets/frame-lobby-br.mp4" type="video/mp4"></video>
+    <video id="v-lobby-vp" muted loop playsinline preload="metadata"><source src="assets/frame-lobby-vp.mp4" type="video/mp4"></video>
+    <video id="v-lobby-wb" muted loop playsinline preload="metadata"><source src="assets/frame-lobby-wb.mp4" type="video/mp4"></video>
+    <video id="v-com" muted loop playsinline preload="metadata"><source src="assets/frame-commercial.mp4" type="video/mp4"></video>
+    <video id="v-ai" muted loop playsinline preload="metadata"><source src="assets/frame-ai.mp4" type="video/mp4"></video>
+    <video id="v-r1" muted loop playsinline preload="metadata"><source src="assets/frame-reels-1.mp4" type="video/mp4"></video>
+    <video id="v-r2" muted loop playsinline preload="metadata"><source src="assets/frame-reels-2.mp4" type="video/mp4"></video>
+    <video id="v-r3" muted loop playsinline preload="metadata"><source src="assets/frame-reels-3.mp4" type="video/mp4"></video>
+    <video id="v-r4" muted loop playsinline preload="metadata"><source src="assets/frame-reels-4.mp4" type="video/mp4"></video>
+    <video id="v-r5" muted loop playsinline preload="metadata"><source src="assets/frame-reels-5.mp4" type="video/mp4"></video>
+    <video id="v-brand" muted loop playsinline preload="metadata"><source src="assets/frame-brand.mp4" type="video/mp4"></video>
+    <video id="v-polish-bg" muted loop playsinline preload="none"></video>
+    <video id="v-polish-prod" muted loop playsinline preload="metadata"><source src="assets/frame-polish-prod.mp4" type="video/mp4"></video>
+    <video id="v-sites-1" muted loop playsinline preload="none"></video>
+    <video id="v-sites-2" muted loop playsinline preload="none"></video>
+    <video id="v-sites-3" muted loop playsinline preload="none"></video>
+    </div>
+
+  <div class="loader" id="loader">
+    <div class="l-brand">▍ HYPE PRODUCTION</div>
+    <div class="l-bar" id="lbar"></div>
+    <button class="enter" id="enterBtn" type="button" data-i18n="enterBtn">ENTER →</button>
   </div>
 
-  <div class="loading" id="loading">
-    <div class="l-brand"><span class="l-dot">▍</span> HYPE PRODUCTION</div>
-    <div class="l-bar" id="lBar"></div>
-    <button id="enterBtn" type="button" style="margin-top:24px;padding:14px 32px;border:1px solid #6ee7ff;border-radius:8px;background:transparent;color:#6ee7ff;font-family:Inter,sans-serif;font-weight:800;letter-spacing:0.2em;font-size:12px;cursor:pointer;display:none;">ENTER THE STUDIO →</button>
-    <p id="lStatus" style="margin:14px 0 0;font-size:10px;letter-spacing:0.22em;color:#9aa8ba;text-transform:uppercase;">Loading videos...</p>
-  </div>
-
-  <div class="scroll-progress"></div>
-  <div class="portal-flash" id="portalFlash"></div>
-
-  <header class="site-header">
-    <a class="brand" href="#"><span class="dot">▍</span> HYPE PRODUCTION</a>
-    <div class="scene-counter"><span class="now" id="sceneNow">00</span> / <span id="sceneTotal">16</span><span style="margin-left:14px" id="sceneLabel">LAPTOP</span></div>
-    <div class="header-actions">
-      <div class="lang-switcher">
-        <button type="button" data-lang="en">EN</button>
-        <button type="button" data-lang="ru" class="active">RU</button>
-        <button type="button" data-lang="uz">UZ</button>
-      </div>
-      <a class="header-cta" href="#contact" data-i18n="headerCta">Start project</a>
+  <div class="progress" id="progress"></div>
+  <header class="topbar">
+    <div class="brand">▍ HYPE PRODUCTION</div>
+    <div class="ctr" id="ctr">00 / 11</div>
+    <div class="lang" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ru" class="active">RU</button>
+      <button type="button" data-lang="uz">UZ</button>
     </div>
   </header>
+  <div class="canvas-wrap"><canvas id="c"></canvas></div>
+  <div class="grain"></div>
+  <div class="vig"></div>
 
-  <div class="scene-canvas-wrap"><canvas id="three-canvas"></canvas></div>
-
-  <main>
-    <section class="stage left" data-stage="0"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">00</span> <span data-i18n="s0Eyebrow">Cinematic Video Studio</span></p>
-      <h2 data-i18n="s0Title">HYPE PRODUCTION</h2>
-      <p class="lead" data-i18n="s0Lead">Воплощаем любые идеи в кадре. Скроль вниз — увидишь все направления студии.</p>
-      <div class="hero-actions">
-        <a class="btn primary" href="#contact" data-i18n="ctaStart">Start a project</a>
-        <a class="btn ghost" href="#works" data-i18n="ctaWorks">View works</a>
-      </div>
-      <div class="hero-stats">
-        <div><strong>1000+</strong><span data-i18n="statVideos">videos created</span></div>
-        <div><strong>7+</strong><span data-i18n="statCompanies">companies</span></div>
-        <div><strong>15</strong><span data-i18n="statBloggers">bloggers</span></div>
-      </div>
-    </div></section>
-
-    <section class="stage center" data-stage="1"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">01</span> <span data-i18n="s1Eyebrow">Enter the studio</span></p>
-      <h2 data-i18n="s1Title">8 <span class="gradient">directions.</span> One studio.</h2>
-      <p class="lead" style="margin:0 auto" data-i18n="s1Lead">Каждое направление — собственная сцена. Скролль дальше.</p>
-    </div></section>
-
-    <section class="stage left" data-stage="2"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">02 / CM</span> <span data-i18n="s2Eyebrow">Commercial Videos</span></p>
-      <h2 class="med" data-i18n="s2Title">Built for <span class="gradient">paid media.</span></h2>
-      <p class="lead" data-i18n="s2Lead">Видео высокого импакта для рекламных кампаний и запусков.</p>
-      <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
-    </div></section>
-
-    <section class="stage right" data-stage="3"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">03 / AI</span> <span data-i18n="s3Eyebrow">AI Generated</span></p>
-      <h2 class="med" data-i18n="s3Title">Concept worlds <span class="gradient">by AI.</span></h2>
-      <p class="lead" style="margin-left:auto" data-i18n="s3Lead">Концепты, сцены и визуальные системы на основе AI.</p>
-      <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
-    </div></section>
-
-    <section class="stage left" data-stage="4"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">04 / RL</span> <span data-i18n="s4Eyebrow">Social Media Reels</span></p>
-      <h2 class="med" data-i18n="s4Title">Built for <span class="gradient">the thumb.</span></h2>
-      <p class="lead" data-i18n="s4Lead">Вертикальные монтажи. Хук, удержание, пересылки.</p>
-      <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
-    </div></section>
-
-    <section class="stage center bottom" data-stage="5"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">05 / BR</span> <span data-i18n="s5Eyebrow">Brand Promo Films</span></p>
-      <h2 class="med" data-i18n="s5Title">Premium <span class="gradient">storytelling.</span></h2>
-      <p class="lead" style="margin:0 auto" data-i18n="s5Lead">Cinematic-съёмка, саунд-дизайн, цветокоррекция.</p>
-    </div></section>
-
-    <section class="stage right" data-stage="6"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">06 / MD</span> <span data-i18n="s6Eyebrow">Motion Design</span></p>
-      <h2 class="med" data-i18n="s6Title">Kinetic <span class="gradient">typography.</span></h2>
-      <p class="lead" style="margin-left:auto" data-i18n="s6Lead">Титры, переходы, UI-motion, типографика в движении.</p>
-      <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
-    </div></section>
-
-    <section class="stage left" data-stage="7"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">07 / AD</span> <span data-i18n="s7Eyebrow">Product Ads</span></p>
-      <h2 class="med" data-i18n="s7Title">Clean. Focused. <span class="gradient">Converts.</span></h2>
-      <p class="lead" data-i18n="s7Lead">Продуктовая реклама для воронок и запусков.</p>
-      <a class="btn ghost" href="#contact" data-i18n="ctaDiscuss">Discuss project</a>
-    </div></section>
-
-    <section class="stage center" data-stage="8"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">08 / WB</span> <span data-i18n="s8Eyebrow">New service</span></p>
-      <h2 data-i18n="s8Title">We build <span class="gradient">sites too.</span></h2>
-      <p class="lead" style="margin:0 auto" data-i18n="s8Lead">От промпта до запущенного сайта — за дни.</p>
-    </div></section>
-
-    <section class="stage left" data-stage="9"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">08a</span> <span data-i18n="s9Eyebrow">Landing pages</span></p>
-      <h2 class="med" data-i18n="s9Title">One page. <span class="gradient">One goal.</span></h2>
-      <p class="lead" data-i18n="s9Lead">3–5 секций, форма, мобильная версия — за дни.</p>
-      <div class="panel"><p data-i18n="s9Price"><strong style="color:var(--blue)">от 4 000 000 UZS</strong> · 5–7 дней</p></div>
-    </div></section>
-
-    <section class="stage right" data-stage="10"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:flex-end"><span class="num">08b</span> <span data-i18n="s10Eyebrow">Brand sites</span></p>
-      <h2 class="med" data-i18n="s10Title">Full <span class="gradient">brand experience.</span></h2>
-      <p class="lead" style="margin-left:auto" data-i18n="s10Lead">Многостраничный сайт со скролл-анимациями и блогом.</p>
-      <div class="panel" style="margin-left:auto"><p data-i18n="s10Price"><strong style="color:var(--violet)">от 9 000 000 UZS</strong> · 2–3 недели</p></div>
-    </div></section>
-
-    <section class="stage center" data-stage="11"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">08c</span> <span data-i18n="s11Eyebrow">Cinematic sites</span></p>
-      <h2 class="med" data-i18n="s11Title">Like the one <span class="gradient">you're in.</span></h2>
-      <p class="lead" style="margin:0 auto" data-i18n="s11Lead">3D-сцены, scroll-driven анимации, кастомная графика.</p>
-      <div class="panel" style="margin:22px auto 0"><p data-i18n="s11Price"><strong style="color:var(--gold)">от 18 000 000 UZS</strong> · 4–6 недель</p></div>
-    </div></section>
-
-    <section class="stage center" data-stage="12"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">09</span> <span data-i18n="s12Eyebrow">Video packages</span></p>
-      <h2 class="med" data-i18n="s12Title">Start simple. <span class="gradient">Scale when it works.</span></h2>
-      <div class="pricing-labels">
-        <div class="pl-card start"><p class="pl-tier" data-i18n="priceStartLabel">START</p><p class="pl-name" data-i18n="priceStartTitle">AI Reel</p><p class="pl-price" data-i18n="priceStartPrice">from 1 000 000 UZS</p></div>
-        <div class="pl-card growth"><p class="pl-tier" data-i18n="priceGrowthLabel">GROWTH</p><p class="pl-name" data-i18n="priceGrowthTitle">Reels Pack</p><p class="pl-price" data-i18n="priceGrowthPrice">from 3 000 000 UZS</p></div>
-        <div class="pl-card hype"><p class="pl-tier" data-i18n="priceHypeLabel">HYPE</p><p class="pl-name" data-i18n="priceHypeTitle">AI Promo</p><p class="pl-price" data-i18n="priceHypePrice">from 7 000 000 UZS</p></div>
-      </div>
-    </div></section>
-
-    <section class="stage left bottom" data-stage="13" id="works"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">10</span> <span data-i18n="s13Eyebrow">Selected work</span></p>
-      <h2 class="med" data-i18n="s13Title">AI, reels <span class="gradient">и cinematic.</span></h2>
-      <p class="lead" data-i18n="s13Lead">Камера проезжает мимо стены экранов.</p>
-    </div></section>
-
-    <section class="stage left bottom" data-stage="14"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">11</span> <span data-i18n="s14Eyebrow">How we work</span></p>
-      <h2 class="med" data-i18n="s14Title">From idea <span class="gradient">to launch.</span></h2>
-      <p class="lead" data-i18n="s14Lead">5 этапов от встречи до публикации.</p>
-    </div></section>
-
-    <section class="stage center" data-stage="15"><div class="stage-inner">
-      <p class="stage-eyebrow" style="justify-content:center"><span class="num">12</span> <span data-i18n="s15Eyebrow">Studio</span></p>
-      <h2 class="med" data-i18n="s15Title">HYPE PRODUCTION делает <span class="gradient">AI-видео, reels и премиум-контент</span> для брендов.</h2>
-    </div></section>
-
-    <section class="stage left" data-stage="16" id="contact"><div class="stage-inner">
-      <p class="stage-eyebrow"><span class="num">13</span> <span data-i18n="s16Eyebrow">Request</span></p>
-      <h2 class="med" data-i18n="s16Title">Ready to <span class="gradient">launch?</span></h2>
-      <div class="contact-grid">
-        <div>
-          <p class="lead" data-i18n="s16Lead">Расскажи идею. Ответим в течение 24 часов.</p>
-          <div class="contact-links">
-            <a href="https://www.instagram.com/HYPE_PROMOTION_UZ" target="_blank" rel="noreferrer"><span data-i18n="instagramLabel">Instagram</span><strong>HYPE_PROMOTION_UZ</strong></a>
-            <a href="tel:+998935064200"><span data-i18n="phoneLabel">Phone</span><strong>+998 93 506 42 00</strong></a>
+  <div class="scroll">
+    <section class="chapter" data-chapter="0" data-mb="v-lobby-bg">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch0Num">SCENE 00</p><h2 class="ch-name" data-i18n="ch0Name">HYPE <em>PRODUCTION</em></h2></div>
+    </section>
+    <section class="chapter" data-chapter="1" data-mb="v-lobby-bg">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch1Num">SCENE 01</p><h2 class="ch-name" data-i18n="ch1Name"><em>Lobby.</em> 6 directions, one studio.</h2></div>
+    </section>
+    <section class="chapter" data-chapter="2" data-mb="v-com">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch2Num">SCENE 02</p><h2 class="ch-name" data-i18n="ch2Name">Commercial <em>Videos.</em></h2></div>
+    </section>
+    <section class="chapter" data-chapter="3" data-mb="v-ai">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch3Num">SCENE 03</p><h2 class="ch-name" data-i18n="ch3Name"><em>AI</em> Video.</h2></div>
+    </section>
+    <section class="chapter" data-chapter="4" data-mb="v-r1">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch4Num">SCENE 04</p><h2 class="ch-name" data-i18n="ch4Name">Reels.</h2></div>
+    </section>
+    <section class="chapter" data-chapter="5" data-mb="v-brand">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch5Num">SCENE 05</p><h2 class="ch-name" data-i18n="ch5Name">Brand <em>Films.</em></h2></div>
+    </section>
+    <section class="chapter" data-chapter="6" data-mb="v-polish-bg">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch6Num">SCENE 06</p><h2 class="ch-name" data-i18n="ch6Name">Visual <em>Polish.</em></h2></div>
+    </section>
+    <section class="chapter" data-chapter="7" data-mb="v-sites-1">
+      <div class="ch-text"><p class="ch-num" data-i18n="ch7Num">SCENE 07</p><h2 class="ch-name" data-i18n="ch7Name">AI <em>Sites.</em></h2></div>
+    </section>
+    <section class="chapter center" data-chapter="10" id="contact">
+      <div class="ch-text">
+        <p class="ch-num" data-i18n="ch10Num">SCENE 10</p>
+        <h2 class="ch-name" data-i18n="ch10Name">Ready to <em>launch?</em></h2>
+        <div class="contact-grid">
+          <div>
+            <p class="lead" data-i18n="contactLead">Расскажи свою идею. Соберём визуальную концепцию и план съёмки в течение 24 часов.</p>
+            <div class="contact-links">
+              <a href="https://www.instagram.com/HYPE_PROMOTION_UZ" target="_blank" rel="noreferrer"><span class="l" data-i18n="instagramLabel">Instagram</span><strong>HYPE_PROMOTION_UZ</strong></a>
+              <a href="tel:+998935064200"><span class="l" data-i18n="phoneLabel">Phone</span><strong>+998 93 506 42 00</strong></a>
+            </div>
           </div>
+          <form class="contact-form" id="contactForm">
+            <label><span data-i18n="formName">Name</span><input type="text" name="name" data-i18n-placeholder="formNamePlaceholder" placeholder="Your name" /></label>
+            <label><span data-i18n="formPhone">Phone</span><input type="tel" name="phone" placeholder="+998" data-i18n-placeholder="formPhonePlaceholder" /></label>
+            <label><span data-i18n="formProject">Project</span><textarea name="project" rows="4" data-i18n-placeholder="formProjectPlaceholder" placeholder="What do you want to create?"></textarea></label>
+            <button class="btn-send" type="submit" data-i18n="formSubmit">Send request</button>
+            <p class="form-status"></p>
+          </form>
         </div>
-        <form class="contact-form" id="contactForm">
-          <label><span data-i18n="formName">Name</span><input type="text" name="name" data-i18n-placeholder="formNamePlaceholder" /></label>
-          <label><span data-i18n="formPhone">Phone</span><input type="tel" name="phone" placeholder="+998" data-i18n-placeholder="formPhonePlaceholder" /></label>
-          <label><span data-i18n="formProject">Project</span><textarea name="project" rows="4" data-i18n-placeholder="formProjectPlaceholder"></textarea></label>
-          <button class="btn primary" type="submit" data-i18n="formSubmit">Send request</button>
-          <p class="form-status"></p>
-        </form>
       </div>
-    </div></section>
-  </main>
+    </section>
+  </div>
 
   <aside class="chat-widget" aria-label="HYPE Assistant">
     <button class="chat-launcher" type="button">
@@ -328,81 +211,165 @@
     </section>
   </aside>
 
-  <div class="scroll-hint" id="scrollHint" data-i18n="scrollHint">Scroll</div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
   <script>
+    // ============ i18n EN / RU / UZ ============
     const i18n = {
-      en: { headerCta:"Start project",scrollHint:"Scroll",ctaStart:"Start a project",ctaWorks:"View works",ctaDiscuss:"Discuss project",statVideos:"videos created",statCompanies:"companies",statBloggers:"bloggers",s0Eyebrow:"Cinematic Video Studio",s0Title:"HYPE PRODUCTION",s0Lead:"We turn any idea into a powerful video.",s1Eyebrow:"Enter the studio",s1Title:"8 <span class='gradient'>directions.</span> One studio.",s1Lead:"Each direction has its own room. Keep scrolling.",s2Eyebrow:"Commercial Videos",s2Title:"Built for <span class='gradient'>paid media.</span>",s2Lead:"High-impact videos for ad campaigns and launches.",s3Eyebrow:"AI Generated",s3Title:"Concept worlds <span class='gradient'>by AI.</span>",s3Lead:"Concepts and visual systems powered by AI.",s4Eyebrow:"Social Media Reels",s4Title:"Built for <span class='gradient'>the thumb.</span>",s4Lead:"Vertical edits. Hook, retention, DM shares.",s5Eyebrow:"Brand Promo Films",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic shooting, sound design, color.",s6Eyebrow:"Motion Design",s6Title:"Kinetic <span class='gradient'>typography.</span>",s6Lead:"Titles, transitions, UI motion, kinetic typography.",s7Eyebrow:"Product Ads",s7Title:"Clean. Focused. <span class='gradient'>Converts.</span>",s7Lead:"Product ads for funnels and launches.",s8Eyebrow:"New service",s8Title:"We build <span class='gradient'>sites too.</span>",s8Lead:"From prompt to launched site — in days.",s9Eyebrow:"Landing pages",s9Title:"One page. <span class='gradient'>One goal.</span>",s9Lead:"3–5 sections, form, mobile — in days.",s9Price:"<strong style='color:var(--blue)'>from 4 000 000 UZS</strong> · 5–7 days",s10Eyebrow:"Brand sites",s10Title:"Full <span class='gradient'>brand experience.</span>",s10Lead:"Multi-page site with animations and blog.",s10Price:"<strong style='color:var(--violet)'>from 9 000 000 UZS</strong> · 2–3 weeks",s11Eyebrow:"Cinematic sites",s11Title:"Like the one <span class='gradient'>you're in.</span>",s11Lead:"3D scenes, scroll-driven animations, custom graphics.",s11Price:"<strong style='color:var(--gold)'>from 18 000 000 UZS</strong> · 4–6 weeks",s12Eyebrow:"Video packages",s12Title:"Start simple. <span class='gradient'>Scale when it works.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"from 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"from 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"from 7 000 000 UZS",s13Eyebrow:"Selected work",s13Title:"AI, reels <span class='gradient'>and cinematic.</span>",s13Lead:"Camera drifts past a wall of screens.",s14Eyebrow:"How we work",s14Title:"From idea <span class='gradient'>to launch.</span>",s14Lead:"5 steps from first meeting to publication.",s15Eyebrow:"Studio",s15Title:"HYPE PRODUCTION creates <span class='gradient'>AI videos, reels and premium content</span> for brands.",s16Eyebrow:"Request",s16Title:"Ready to <span class='gradient'>launch?</span>",s16Lead:"Tell us your idea. We'll respond within 24h.",instagramLabel:"Instagram",phoneLabel:"Phone",formName:"Name",formNamePlaceholder:"Your name",formPhone:"Phone",formPhonePlaceholder:"+998",formProject:"Project",formProjectPlaceholder:"What do you want to create?",formSubmit:"Send request",formSuccess:"Thanks — we'll be in touch within 24h.",formError:"Please fill in name and phone." },
-      ru: { headerCta:"Начать проект",scrollHint:"Скроль",ctaStart:"Начать проект",ctaWorks:"Смотреть работы",ctaDiscuss:"Обсудить проект",statVideos:"созданных видео",statCompanies:"компаний",statBloggers:"блогеров",s0Eyebrow:"Cinematic-студия видеопродакшна",s0Title:"HYPE PRODUCTION",s0Lead:"Воплощаем любые идеи в кадре.",s1Eyebrow:"Войди в студию",s1Title:"8 <span class='gradient'>направлений.</span> Одна студия.",s1Lead:"Каждое направление — собственная сцена. Камера проведёт через все.",s2Eyebrow:"Рекламные видео",s2Title:"Сделано для <span class='gradient'>рекламы.</span>",s2Lead:"Видео высокого импакта для рекламных кампаний.",s3Eyebrow:"AI-видео",s3Title:"Концепт-миры <span class='gradient'>с помощью AI.</span>",s3Lead:"Концепты и визуальные системы на основе AI.",s4Eyebrow:"Reels для соцсетей",s4Title:"Сделано <span class='gradient'>для большого пальца.</span>",s4Lead:"Вертикальные монтажи. Хук, удержание, пересылки.",s5Eyebrow:"Brand-фильмы",s5Title:"Премиальный <span class='gradient'>сторителлинг.</span>",s5Lead:"Cinematic-съёмка, саунд-дизайн, цветокоррекция.",s6Eyebrow:"Motion-дизайн",s6Title:"Кинетическая <span class='gradient'>типографика.</span>",s6Lead:"Титры, переходы, UI-motion, типографика в движении.",s7Eyebrow:"Product-реклама",s7Title:"Чисто. Сфокусированно. <span class='gradient'>Продаёт.</span>",s7Lead:"Продуктовая реклама для воронок и запусков.",s8Eyebrow:"Новая услуга",s8Title:"Мы делаем <span class='gradient'>и сайты.</span>",s8Lead:"От промпта до запущенного сайта — за дни.",s9Eyebrow:"Лендинги",s9Title:"Одна страница. <span class='gradient'>Одна цель.</span>",s9Lead:"3–5 секций, форма, мобильная версия — за дни.",s9Price:"<strong style='color:var(--blue)'>от 4 000 000 UZS</strong> · 5–7 дней",s10Eyebrow:"Brand-сайты",s10Title:"Полный <span class='gradient'>brand-опыт.</span>",s10Lead:"Многостраничный сайт со скролл-анимациями и блогом.",s10Price:"<strong style='color:var(--violet)'>от 9 000 000 UZS</strong> · 2–3 недели",s11Eyebrow:"Cinematic-сайты",s11Title:"Как тот, <span class='gradient'>в котором ты сейчас.</span>",s11Lead:"3D-сцены, scroll-driven анимации, кастомная графика.",s11Price:"<strong style='color:var(--gold)'>от 18 000 000 UZS</strong> · 4–6 недель",s12Eyebrow:"Видео-пакеты",s12Title:"Начни просто. <span class='gradient'>Масштабируй, когда контент работает.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"от 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"от 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"от 7 000 000 UZS",s13Eyebrow:"Избранные работы",s13Title:"AI, reels <span class='gradient'>и cinematic.</span>",s13Lead:"Камера медленно проезжает мимо стены экранов.",s14Eyebrow:"Как мы работаем",s14Title:"От идеи <span class='gradient'>до запуска.</span>",s14Lead:"5 этапов от первой встречи до публикации.",s15Eyebrow:"Студия",s15Title:"HYPE PRODUCTION делает <span class='gradient'>AI-видео, reels и премиум-контент</span> для брендов.",s16Eyebrow:"Заявка",s16Title:"Готовы <span class='gradient'>запускать?</span>",s16Lead:"Расскажи идею. Ответим в течение 24 часов.",instagramLabel:"Instagram",phoneLabel:"Телефон",formName:"Имя",formNamePlaceholder:"Ваше имя",formPhone:"Телефон",formPhonePlaceholder:"+998",formProject:"Проект",formProjectPlaceholder:"Что хотите создать?",formSubmit:"Отправить заявку",formSuccess:"Спасибо — ответим в течение 24 часов.",formError:"Заполните имя и телефон." },
-      uz: { headerCta:"Loyiha boshlash",scrollHint:"Pastga",ctaStart:"Loyiha boshlash",ctaWorks:"Ishlarni ko'rish",ctaDiscuss:"Muhokama",statVideos:"yaratilgan video",statCompanies:"kompaniya",statBloggers:"bloger",s0Eyebrow:"Cinematic video studio",s0Title:"HYPE PRODUCTION",s0Lead:"Har qanday g'oyani videoga aylantiramiz.",s1Eyebrow:"Studiyaga kirish",s1Title:"8 <span class='gradient'>yo'nalish.</span> Bir studiya.",s1Lead:"Har biri o'z sahnasi. Kamera olib o'tadi.",s2Eyebrow:"Reklama videolari",s2Title:"Reklama uchun <span class='gradient'>yaratilgan.</span>",s2Lead:"Yuqori ta'sirli reklama videolari.",s3Eyebrow:"AI-videolar",s3Title:"AI yordamida <span class='gradient'>konsept dunyolar.</span>",s3Lead:"AI asosidagi konsept va vizual tizimlar.",s4Eyebrow:"Reels",s4Title:"Bosh barmoq uchun <span class='gradient'>yaratilgan.</span>",s4Lead:"Vertikal montajlar.",s5Eyebrow:"Brend-filmlar",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic suratga olish, ovoz dizayn.",s6Eyebrow:"Motion-dizayn",s6Title:"Kinetik <span class='gradient'>tipografika.</span>",s6Lead:"Titrlar, o'tishlar, UI-motion.",s7Eyebrow:"Mahsulot reklamasi",s7Title:"Toza. Aniq. <span class='gradient'>Sotadi.</span>",s7Lead:"Mahsulotga yo'naltirilgan reklama.",s8Eyebrow:"Yangi xizmat",s8Title:"Biz <span class='gradient'>saytlar ham qilamiz.</span>",s8Lead:"Promptdan ishga tushgan saytgacha — kunlarda.",s9Eyebrow:"Lending",s9Title:"Bir sahifa. <span class='gradient'>Bir maqsad.</span>",s9Lead:"Bir maqsad uchun lending. Kunlarda.",s9Price:"<strong style='color:var(--blue)'>4 000 000 UZSdan</strong> · 5–7 kun",s10Eyebrow:"Brend saytlar",s10Title:"To'liq <span class='gradient'>brend tajriba.</span>",s10Lead:"Ko'p sahifali sayt.",s10Price:"<strong style='color:var(--violet)'>9 000 000 UZSdan</strong> · 2–3 hafta",s11Eyebrow:"Cinematic saytlar",s11Title:"Siz <span class='gradient'>turgan saytga o'xshash.</span>",s11Lead:"3D sahnalar va maxsus grafika.",s11Price:"<strong style='color:var(--gold)'>18 000 000 UZSdan</strong> · 4–6 hafta",s12Eyebrow:"Video paketlar",s12Title:"Sodda boshlang. <span class='gradient'>Ishlasa — kengaytiring.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"1 000 000 UZSdan",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"3 000 000 UZSdan",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"7 000 000 UZSdan",s13Eyebrow:"Tanlangan ishlar",s13Title:"AI, reels <span class='gradient'>va cinematic.</span>",s13Lead:"Kamera ekranlar devori bo'ylab harakatlanadi.",s14Eyebrow:"Qanday ishlaymiz",s14Title:"G'oyadan <span class='gradient'>ishga tushirishgacha.</span>",s14Lead:"5 bosqich.",s15Eyebrow:"Studiya",s15Title:"HYPE PRODUCTION <span class='gradient'>AI-video, reels va premium kontent</span> yaratadi.",s16Eyebrow:"Buyurtma",s16Title:"Boshlashga <span class='gradient'>tayyormisiz?</span>",s16Lead:"G'oyangizni ayting. 24 soat ichida javob beramiz.",instagramLabel:"Instagram",phoneLabel:"Telefon",formName:"Ism",formNamePlaceholder:"Sizning ismingiz",formPhone:"Telefon",formPhonePlaceholder:"+998",formProject:"Loyiha",formProjectPlaceholder:"Nimani yaratmoqchisiz?",formSubmit:"Yuborish",formSuccess:"Rahmat — 24 soat ichida javob beramiz.",formError:"Ism va telefonni to'ldiring." }
+      en: {
+        enterBtn: "ENTER →",
+        ch0Num: "SCENE 00", ch0Name: "HYPE <em>PRODUCTION</em>",
+        ch1Num: "SCENE 01", ch1Name: "<em>Lobby.</em> 6 directions, one studio.",
+        ch2Num: "SCENE 02", ch2Name: "Commercial <em>Videos.</em>",
+        ch3Num: "SCENE 03", ch3Name: "<em>AI</em> Video.",
+        ch4Num: "SCENE 04", ch4Name: "Reels.",
+        ch5Num: "SCENE 05", ch5Name: "Brand <em>Films.</em>",
+        ch6Num: "SCENE 06", ch6Name: "Visual <em>Polish.</em>",
+        ch7Num: "SCENE 07", ch7Name: "AI <em>Sites.</em>",
+        ch8Num: "SCENE 08", ch8Name: "Packages.",
+        ch9Num: "SCENE 09", ch9Name: "Selected <em>work.</em>",
+        ch10Num: "SCENE 10", ch10Name: "Ready to <em>launch?</em>",
+        contactLead: "Tell us your idea. We will build the visual concept and production plan within 24 hours.",
+        instagramLabel: "Instagram", phoneLabel: "Phone",
+        formName: "Name", formNamePlaceholder: "Your name",
+        formPhone: "Phone", formPhonePlaceholder: "+998",
+        formProject: "Project", formProjectPlaceholder: "What do you want to create?",
+        formSubmit: "Send request",
+        formSuccess: "Thanks — we'll be in touch within 24h.",
+        formError: "Please fill in name and phone.",
+        sceneWord: "SCENE",
+        plaqueNames: ["PORTAL","LOBBY","COMMERCIAL","AI VIDEO","REELS","BRAND FILMS","VISUAL POLISH","AI SITES","PACKAGES","SELECTED WORK","CONTACT"]
+      },
+      ru: {
+        enterBtn: "ВОЙТИ →",
+        ch0Num: "СЦЕНА 00", ch0Name: "HYPE <em>PRODUCTION</em>",
+        ch1Num: "СЦЕНА 01", ch1Name: "<em>Лобби.</em> 6 направлений, одна студия.",
+        ch2Num: "СЦЕНА 02", ch2Name: "Рекламные <em>видео.</em>",
+        ch3Num: "СЦЕНА 03", ch3Name: "<em>AI</em>-видео.",
+        ch4Num: "СЦЕНА 04", ch4Name: "Reels.",
+        ch5Num: "СЦЕНА 05", ch5Name: "Brand-<em>фильмы.</em>",
+        ch6Num: "СЦЕНА 06", ch6Name: "Visual <em>Polish.</em>",
+        ch7Num: "СЦЕНА 07", ch7Name: "AI-<em>сайты.</em>",
+        ch8Num: "СЦЕНА 08", ch8Name: "Пакеты.",
+        ch9Num: "СЦЕНА 09", ch9Name: "Избранные <em>работы.</em>",
+        ch10Num: "СЦЕНА 10", ch10Name: "Готовы <em>запускать?</em>",
+        contactLead: "Расскажи свою идею. Соберём визуальную концепцию и план съёмки в течение 24 часов.",
+        instagramLabel: "Instagram", phoneLabel: "Телефон",
+        formName: "Имя", formNamePlaceholder: "Ваше имя",
+        formPhone: "Телефон", formPhonePlaceholder: "+998",
+        formProject: "Проект", formProjectPlaceholder: "Что хотите создать?",
+        formSubmit: "Отправить заявку",
+        formSuccess: "Спасибо — ответим в течение 24 часов.",
+        formError: "Заполните имя и телефон.",
+        sceneWord: "СЦЕНА",
+        plaqueNames: ["ПОРТАЛ","ЛОББИ","РЕКЛАМА","AI ВИДЕО","REELS","БРЕНД-ФИЛЬМЫ","ВИЗУАЛЬНЫЙ ЛОСК","AI САЙТЫ","ПАКЕТЫ","ИЗБРАННЫЕ РАБОТЫ","КОНТАКТ"]
+      },
+      uz: {
+        enterBtn: "KIRISH →",
+        ch0Num: "SAHNA 00", ch0Name: "HYPE <em>PRODUCTION</em>",
+        ch1Num: "SAHNA 01", ch1Name: "<em>Lobbi.</em> 6 yo'nalish, bitta studiya.",
+        ch2Num: "SAHNA 02", ch2Name: "Reklama <em>videolari.</em>",
+        ch3Num: "SAHNA 03", ch3Name: "<em>AI</em>-video.",
+        ch4Num: "SAHNA 04", ch4Name: "Reels.",
+        ch5Num: "SAHNA 05", ch5Name: "Brend <em>filmlari.</em>",
+        ch6Num: "SAHNA 06", ch6Name: "Visual <em>Polish.</em>",
+        ch7Num: "SAHNA 07", ch7Name: "AI-<em>saytlar.</em>",
+        ch8Num: "SAHNA 08", ch8Name: "Paketlar.",
+        ch9Num: "SAHNA 09", ch9Name: "Tanlangan <em>ishlar.</em>",
+        ch10Num: "SAHNA 10", ch10Name: "Boshlashga <em>tayyormisiz?</em>",
+        contactLead: "G'oyangizni ayting. 24 soat ichida vizual kontsepsiya va prodakshn rejasini quramiz.",
+        instagramLabel: "Instagram", phoneLabel: "Telefon",
+        formName: "Ism", formNamePlaceholder: "Sizning ismingiz",
+        formPhone: "Telefon", formPhonePlaceholder: "+998",
+        formProject: "Loyiha", formProjectPlaceholder: "Nimani yaratmoqchisiz?",
+        formSubmit: "Yuborish",
+        formSuccess: "Rahmat — 24 soat ichida javob beramiz.",
+        formError: "Ism va telefonni to'ldiring.",
+        sceneWord: "SAHNA",
+        plaqueNames: ["PORTAL","LOBBI","REKLAMA","AI VIDEO","REELS","BREND FILMLAR","VIZUAL JILO","AI SAYTLAR","PAKETLAR","TANLANGAN ISHLAR","ALOQA"]
+      }
     };
     let curLang = 'ru';
-    function applyLang(L){if(!i18n[L])return;curLang=L;document.documentElement.lang=L;const t=i18n[L];document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(t[k]!==undefined)e.innerHTML=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>{const k=e.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)e.setAttribute('placeholder',t[k])});document.querySelectorAll('.lang-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===L))}
-    document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+    function applyLang(L){
+      if (!i18n[L]) return;
+      curLang = L;
+      document.documentElement.lang = L;
+      const t = i18n[L];
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k = el.getAttribute('data-i18n');
+        if (t[k] !== undefined) el.innerHTML = t[k];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+        const k = el.getAttribute('data-i18n-placeholder');
+        if (t[k] !== undefined) el.setAttribute('placeholder', t[k]);
+      });
+      document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active', b.dataset.lang === L));
+      if (typeof updatePlaques === 'function') updatePlaques();
+    }
+    window.updatePlaques = function(){}; // безоп. заглушка до инициализации 3D
+    document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click', ()=>{ applyLang(b.dataset.lang); resetChat && resetChat(); }));
     applyLang('ru');
 
+    // ============ Chat widget ============
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAuK7CweGDJmnj1w182FAfH5hSPo31q0XnkU2WcqqN3vz_8Dzswlyi4DSqTxrmXSZT7w/exec';
     const chatContent = {
       en: {
-        launcher: 'Choose a format',
-        title: 'What do you want to create?',
-        intro: 'Answer a few quick questions. We will suggest the direction and price range.',
+        launcher: "Pick a format", title: "What to shoot?", intro: "Three quick questions and we'll suggest a format and price guide.",
         steps: [
-          {key:'goal', question:'What do you want to promote?', options:[['brand','Brand'],['product','Product'],['blog','Blog'],['event','Event']]},
-          {key:'platform', question:'Where will the video be used?', options:[['instagram','Instagram'],['tiktok','TikTok'],['telegram','Telegram'],['ads','Website / ads']]},
-          {key:'style', question:'Which visual style feels closer?', options:[['premium','Premium'],['dynamic','Dynamic'],['cyberpunk','Cyberpunk'],['minimal','Minimal'],['ugc','UGC']]},
-          {key:'format', question:'Which format do you need?', options:[['short','1 short video'],['reels','3 reels'],['promo','AI promo'],['product','Product ad'],['brand','Brand film'],['unsure','Not sure yet']]},
-          {key:'deadline', question:'When do you need the result?', options:[['urgent','1-2 days'],['soon','3-5 days'],['normal','1-2 weeks'],['discuss','Just discussing']]}
+          {key:'goal', question:'Goal?', options:[['promo','Brand promo'],['product','Product ad'],['social','Social reels'],['cinematic','Cinematic film'],['unsure','Not sure yet']]},
+          {key:'platform', question:'Where will it run?', options:[['instagram','Instagram'],['tiktok','TikTok'],['youtube','YouTube'],['site','Our site'],['paid','Paid ads']]},
+          {key:'style', question:'Style?', options:[['cinematic','Cinematic'],['fast','Fast / dynamic'],['ai','AI / surreal'],['clean','Clean / minimal']]},
+          {key:'format', question:'Format?', options:[['short','Short reel (15-30s)'],['reels','Reels pack (3-5)'],['promo','Promo film (60-90s)'],['brand','Brand film 2 min'],['unsure','Help me choose']]},
+          {key:'deadline', question:'When?', options:[['urgent','This week'],['soon','2-3 weeks'],['flexible','1-2 months'],['discuss','Discuss']]}
         ],
-        summaryTitle:'Direction selected', priceLabel:'Price guide',
-        urgentNote:'Fast delivery needs a priority production slot. The closer the deadline, the higher the cost.',
-        normalNote:'This timing gives more room for concept, generation, editing and revisions.',
-        contactPrompt:'Leave your contact and we will confirm the exact production plan.',
-        namePlaceholder:'Name', phonePlaceholder:'+998', commentPlaceholder:'Comment',
-        send:'Send request', sending:'Sending...', success:'Request sent. We will contact you soon.',
-        error:'Could not send. Please contact us by phone or Instagram.', priceConsult:'after brief',
-        prices:{short:['from 1 000 000 UZS','from 1 250 000 UZS','from 1 750 000 UZS'],reels:['from 3 000 000 UZS','from 3 500 000 UZS','from 4 500 000 UZS'],promo:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS'],product:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS'],brand:['from 7 000 000 UZS','from 8 000 000 UZS','from 9 000 000 UZS']}
+        priceConsult: "Discuss at meeting", priceLabel: "Estimate",
+        summaryTitle: "Your brief",
+        urgentNote: "Tight deadline noted — we'll prioritize.",
+        normalNote: "Sounds good. Leave a contact below.",
+        contactPrompt: "Send your details and we'll respond within 24h:",
+        namePlaceholder: "Name", phonePlaceholder: "Phone", commentPlaceholder: "Any comment?",
+        send: "Send", sending: "Sending...", success: "Sent. We'll be in touch.", error: "Could not send. Try again."
       },
       ru: {
-        launcher: 'Подобрать формат',
-        title: 'Что хотите снять?',
-        intro: 'Ответьте на пару вопросов. Мы подберем формат и ориентир по стоимости.',
+        launcher: "Подобрать формат", title: "Что хотите снять?", intro: "Три коротких вопроса — подскажем формат и ориентир по цене.",
         steps: [
-          {key:'goal', question:'Что хотите продвинуть?', options:[['brand','Бренд'],['product','Продукт'],['blog','Блог'],['event','Мероприятие']]},
-          {key:'platform', question:'Где будет использоваться видео?', options:[['instagram','Instagram'],['tiktok','TikTok'],['telegram','Telegram'],['ads','Сайт / реклама']]},
-          {key:'style', question:'Какой визуальный стиль ближе?', options:[['premium','Премиум'],['dynamic','Динамичный'],['cyberpunk','Киберпанк'],['minimal','Минимализм'],['ugc','UGC']]},
-          {key:'format', question:'Какой формат нужен?', options:[['short','1 короткий ролик'],['reels','3 reels'],['promo','AI promo'],['product','Product ad'],['brand','Brand film'],['unsure','Пока не знаю']]},
-          {key:'deadline', question:'Когда нужен результат?', options:[['urgent','1-2 дня'],['soon','3-5 дней'],['normal','1-2 недели'],['discuss','Пока обсуждаем']]}
+          {key:'goal', question:'Цель?', options:[['promo','Промо бренда'],['product','Реклама продукта'],['social','Reels в соцсети'],['cinematic','Cinematic-фильм'],['unsure','Пока не уверен']]},
+          {key:'platform', question:'Где будет идти?', options:[['instagram','Instagram'],['tiktok','TikTok'],['youtube','YouTube'],['site','На сайте'],['paid','Платная реклама']]},
+          {key:'style', question:'Стиль?', options:[['cinematic','Cinematic'],['fast','Быстрый / динамичный'],['ai','AI / сюр'],['clean','Чисто / минимализм']]},
+          {key:'format', question:'Формат?', options:[['short','Короткий reel (15-30с)'],['reels','Пак reels (3-5)'],['promo','Промо-ролик (60-90с)'],['brand','Бренд-фильм 2 мин'],['unsure','Помогите выбрать']]},
+          {key:'deadline', question:'Когда?', options:[['urgent','На этой неделе'],['soon','2-3 недели'],['flexible','1-2 месяца'],['discuss','Обсудим']]}
         ],
-        summaryTitle:'Направление подобрано', priceLabel:'Ориентир',
-        urgentNote:'Срочный запуск требует приоритетного production-слота. Чем ближе дедлайн, тем выше стоимость.',
-        normalNote:'Такой срок дает больше пространства для идеи, генерации, монтажа и правок.',
-        contactPrompt:'Оставьте контакт, и мы подтвердим точный план продакшена.',
-        namePlaceholder:'Имя', phonePlaceholder:'+998', commentPlaceholder:'Комментарий',
-        send:'Отправить заявку', sending:'Отправляем...', success:'Заявка отправлена. Мы скоро свяжемся с вами.',
-        error:'Не удалось отправить. Напишите нам по телефону или в Instagram.', priceConsult:'после брифа',
-        prices:{short:['от 1 000 000 UZS','от 1 250 000 UZS','от 1 750 000 UZS'],reels:['от 3 000 000 UZS','от 3 500 000 UZS','от 4 500 000 UZS'],promo:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS'],product:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS'],brand:['от 7 000 000 UZS','от 8 000 000 UZS','от 9 000 000 UZS']}
+        priceConsult: "Обсудим на встрече", priceLabel: "Оценка",
+        summaryTitle: "Ваш бриф",
+        urgentNote: "Жёсткий дедлайн — поставим в приоритет.",
+        normalNote: "Отлично. Оставьте контакт ниже.",
+        contactPrompt: "Оставьте контакты — ответим в течение 24 часов:",
+        namePlaceholder: "Имя", phonePlaceholder: "Телефон", commentPlaceholder: "Комментарий?",
+        send: "Отправить", sending: "Отправляем...", success: "Отправлено. Скоро на связи.", error: "Не получилось отправить. Попробуйте ещё раз."
       },
       uz: {
-        launcher: 'Format tanlash',
-        title: 'Nima suratga olamiz?',
-        intro: 'Bir necha savolga javob bering. Biz format va taxminiy narxni tanlaymiz.',
+        launcher: "Format tanlash", title: "Nimani suratga olamiz?", intro: "Uchta tezkor savol — format va narx yo'nalishi.",
         steps: [
-          {key:'goal', question:'Nimani targib qilmoqchisiz?', options:[['brand','Brend'],['product','Mahsulot'],['blog','Blog'],['event','Tadbir']]},
-          {key:'platform', question:'Video qayerda ishlatiladi?', options:[['instagram','Instagram'],['tiktok','TikTok'],['telegram','Telegram'],['ads','Sayt / reklama']]},
-          {key:'style', question:'Qaysi vizual uslub yaqinroq?', options:[['premium','Premium'],['dynamic','Dinamik'],['cyberpunk','Cyberpunk'],['minimal','Minimal'],['ugc','UGC']]},
-          {key:'format', question:'Qaysi format kerak?', options:[['short','1 ta qisqa rolik'],['reels','3 ta reels'],['promo','AI promo'],['product','Mahsulot reklamasi'],['brand','Brend filmi'],['unsure','Hali bilmayman']]},
-          {key:'deadline', question:'Natija qachon kerak?', options:[['urgent','1-2 kun'],['soon','3-5 kun'],['normal','1-2 hafta'],['discuss','Hozircha muhokama']]}
+          {key:'goal', question:'Maqsad?', options:[['promo','Brend promosi'],['product','Mahsulot reklamasi'],['social','Reels'],['cinematic','Cinematic film'],['unsure','Hali aniq emas']]},
+          {key:'platform', question:'Qayerda ko\'rsatiladi?', options:[['instagram','Instagram'],['tiktok','TikTok'],['youtube','YouTube'],['site','Saytda'],['paid','To\'lovli reklama']]},
+          {key:'style', question:'Uslub?', options:[['cinematic','Cinematic'],['fast','Tez / dinamik'],['ai','AI / syurrealizm'],['clean','Toza / minimal']]},
+          {key:'format', question:'Format?', options:[['short','Qisqa reel (15-30s)'],['reels','Reels paketi (3-5)'],['promo','Promo (60-90s)'],['brand','Brend filmi 2 daq.'],['unsure','Tanlashga yordam bering']]},
+          {key:'deadline', question:'Qachon?', options:[['urgent','Shu hafta'],['soon','2-3 hafta'],['flexible','1-2 oy'],['discuss','Muhokama qilamiz']]}
         ],
-        summaryTitle:'Yonalish tanlandi', priceLabel:'Taxminiy narx',
-        urgentNote:'Shoshilinch ish uchun alohida production slot ajratiladi. Muddat qancha yaqin bolsa, narx shuncha yuqori boladi.',
-        normalNote:'Bu muddat goya, generatsiya, montaj va tuzatishlar uchun koproq imkon beradi.',
-        contactPrompt:'Kontakt qoldiring, biz aniq prodakshen rejasini tasdiqlaymiz.',
-        namePlaceholder:'Ism', phonePlaceholder:'+998', commentPlaceholder:'Izoh',
-        send:'Ariza yuborish', sending:'Yuborilmoqda...', success:'Ariza yuborildi. Tez orada boglanamiz.',
-        error:'Yuborilmadi. Telefon yoki Instagram orqali boglaning.', priceConsult:'brifdan keyin',
-        prices:{short:['1 000 000 UZSdan','1 250 000 UZSdan','1 750 000 UZSdan'],reels:['3 000 000 UZSdan','3 500 000 UZSdan','4 500 000 UZSdan'],promo:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan'],product:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan'],brand:['7 000 000 UZSdan','8 000 000 UZSdan','9 000 000 UZSdan']}
+        priceConsult: "Uchrashuvda muhokama qilamiz", priceLabel: "Taxminiy narx",
+        summaryTitle: "Sizning brifingiz",
+        urgentNote: "Tezkor muddat — birinchi navbatga qo'yamiz.",
+        normalNote: "Yaxshi. Quyida aloqa ma'lumotlarini qoldiring.",
+        contactPrompt: "Aloqa ma'lumotlarini qoldiring — 24 soat ichida javob beramiz:",
+        namePlaceholder: "Ism", phonePlaceholder: "Telefon", commentPlaceholder: "Izoh?",
+        send: "Yuborish", sending: "Yuborilmoqda...", success: "Yuborildi. Tez orada bog'lanamiz.", error: "Yuborib bo'lmadi. Qaytadan urinib ko'ring."
       }
     };
     const chatWidget = document.querySelector('.chat-widget');
@@ -414,586 +381,1231 @@
     const chatTitle = document.querySelector('[data-chat-title]');
     let chatStepIndex = 0;
     let chatAnswers = {};
-    function getChatDictionary(){return chatContent[curLang] || chatContent.ru}
-    function createChatMessage(text,accent=false){const m=document.createElement('div');m.className=accent?'chat-message accent':'chat-message';m.textContent=text;return m}
-    function getChatPrice(format,deadline){const d=getChatDictionary();if(!format||format.id==='unsure'||deadline?.id==='discuss')return d.priceConsult;const set=d.prices[format.id]||d.prices.short;const idx=deadline?.id==='urgent'?2:deadline?.id==='soon'?1:0;return set[idx]}
-    function renderChatStep(){if(!chatBody)return;const d=getChatDictionary();const step=d.steps[chatStepIndex];if(!step){renderChatSummary();return}chatBody.appendChild(createChatMessage(step.question));const options=document.createElement('div');options.className='chat-options';step.options.forEach(([id,label])=>{const b=document.createElement('button');b.className='chat-option';b.type='button';b.textContent=label;b.addEventListener('click',()=>{chatAnswers[step.key]={id,label};chatBody.appendChild(createChatMessage(label,true));options.remove();chatStepIndex+=1;renderChatStep();chatBody.scrollTop=chatBody.scrollHeight});options.appendChild(b)});chatBody.appendChild(options)}
-    function renderChatSummary(){const d=getChatDictionary();const price=getChatPrice(chatAnswers.format,chatAnswers.deadline);const note=chatAnswers.deadline?.id==='urgent'||chatAnswers.deadline?.id==='soon'?d.urgentNote:d.normalNote;const summary=document.createElement('div');summary.className='chat-summary';summary.innerHTML=`<p><strong>${d.summaryTitle}</strong></p><p>${chatAnswers.goal?.label||''} / ${chatAnswers.platform?.label||''} / ${chatAnswers.style?.label||''}</p><p>${chatAnswers.format?.label||''} / ${chatAnswers.deadline?.label||''}</p><p><strong>${d.priceLabel}: ${price}</strong></p>`;chatBody.appendChild(summary);chatBody.appendChild(createChatMessage(note));chatBody.appendChild(createChatMessage(d.contactPrompt));renderChatLeadForm(price)}
-    function renderChatLeadForm(price){const d=getChatDictionary();const leadForm=document.createElement('form');leadForm.className='chat-lead-form';leadForm.innerHTML=`<input name="name" type="text" placeholder="${d.namePlaceholder}" /><input name="phone" type="tel" placeholder="${d.phonePlaceholder}" required /><textarea name="comment" placeholder="${d.commentPlaceholder}"></textarea><button type="submit">${d.send}</button><p class="chat-status" role="status"></p>`;leadForm.addEventListener('submit',async e=>{e.preventDefault();const st=leadForm.querySelector('.chat-status');const fd=new FormData(leadForm);st.textContent=d.sending;const project=['Mini-chat request',`Goal: ${chatAnswers.goal?.label||'-'}`,`Platform: ${chatAnswers.platform?.label||'-'}`,`Style: ${chatAnswers.style?.label||'-'}`,`Format: ${chatAnswers.format?.label||'-'}`,`Deadline: ${chatAnswers.deadline?.label||'-'}`,`Price guide: ${price}`,`Comment: ${fd.get('comment')||'-'}`].join('\n');try{await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({name:fd.get('name'),phone:fd.get('phone'),project,language:curLang,page:window.location.href,source:'mini-chat'})});leadForm.reset();st.textContent=d.success}catch(err){st.textContent=d.error}});chatBody.appendChild(leadForm)}
-    function resetChat(){if(!chatBody)return;const d=getChatDictionary();chatStepIndex=0;chatAnswers={};if(chatTitle)chatTitle.textContent=d.title;if(chatLauncherText)chatLauncherText.textContent=d.launcher;chatBody.innerHTML='';chatBody.appendChild(createChatMessage(d.intro));renderChatStep()}
-    function setChatOpen(open){if(!chatWidget||!chatPanel)return;chatWidget.classList.toggle('is-open',open);chatPanel.setAttribute('aria-hidden',String(!open));if(open&&!chatBody.children.length)resetChat()}
-    chatLauncher?.addEventListener('click',()=>setChatOpen(!chatWidget?.classList.contains('is-open')));
-    chatClose?.addEventListener('click',()=>setChatOpen(false));
-    document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>setTimeout(resetChat,0)));
+    function getChatDict(){ return chatContent[curLang] || chatContent.ru; }
+    function createChatMessage(text, accent){ const m = document.createElement('div'); m.className = accent ? 'chat-message accent' : 'chat-message'; m.textContent = text; return m; }
+    function getChatPrice(){ return getChatDict().priceConsult; }
+    function renderChatStep(){
+      if (!chatBody) return;
+      const d = getChatDict();
+      const step = d.steps[chatStepIndex];
+      if (!step){ renderChatSummary(); return; }
+      chatBody.appendChild(createChatMessage(step.question));
+      const opt = document.createElement('div'); opt.className='chat-options';
+      step.options.forEach(([id, label])=>{
+        const b = document.createElement('button'); b.className='chat-option'; b.type='button'; b.textContent = label;
+        b.addEventListener('click', ()=>{
+          chatAnswers[step.key] = {id, label};
+          chatBody.appendChild(createChatMessage(label, true));
+          opt.remove();
+          chatStepIndex += 1;
+          renderChatStep();
+          chatBody.scrollTop = chatBody.scrollHeight;
+        });
+        opt.appendChild(b);
+      });
+      chatBody.appendChild(opt);
+    }
+    function renderChatSummary(){
+      const d = getChatDict();
+      const price = getChatPrice();
+      const note = (chatAnswers.deadline && (chatAnswers.deadline.id==='urgent' || chatAnswers.deadline.id==='soon')) ? d.urgentNote : d.normalNote;
+      const summary = document.createElement('div'); summary.className='chat-summary';
+      summary.innerHTML = `<p><strong>${d.summaryTitle}</strong></p><p>${chatAnswers.goal?.label||''} / ${chatAnswers.platform?.label||''} / ${chatAnswers.style?.label||''}</p><p>${chatAnswers.format?.label||''} / ${chatAnswers.deadline?.label||''}</p><p><strong>${d.priceLabel}: ${price}</strong></p>`;
+      chatBody.appendChild(summary);
+      chatBody.appendChild(createChatMessage(note));
+      chatBody.appendChild(createChatMessage(d.contactPrompt));
+      renderChatLeadForm(price);
+    }
+    function renderChatLeadForm(price){
+      const d = getChatDict();
+      const f = document.createElement('form'); f.className='chat-lead-form';
+      f.innerHTML = `<input name="name" type="text" placeholder="${d.namePlaceholder}" /><input name="phone" type="tel" placeholder="${d.phonePlaceholder}" required /><textarea name="comment" placeholder="${d.commentPlaceholder}"></textarea><button type="submit">${d.send}</button><p class="chat-status" role="status"></p>`;
+      f.addEventListener('submit', async e=>{
+        e.preventDefault();
+        const st = f.querySelector('.chat-status');
+        const fd = new FormData(f);
+        st.textContent = d.sending;
+        const project = ['Mini-chat request',
+          `Goal: ${chatAnswers.goal?.label||'-'}`,
+          `Platform: ${chatAnswers.platform?.label||'-'}`,
+          `Style: ${chatAnswers.style?.label||'-'}`,
+          `Format: ${chatAnswers.format?.label||'-'}`,
+          `Deadline: ${chatAnswers.deadline?.label||'-'}`,
+          `Price guide: ${price}`,
+          `Comment: ${fd.get('comment')||'-'}`
+        ].join('\n');
+        try {
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method:'POST', mode:'no-cors',
+            headers:{'Content-Type':'text/plain;charset=utf-8'},
+            body: JSON.stringify({
+              name: fd.get('name'), phone: fd.get('phone'),
+              project, language: curLang,
+              page: window.location.href, source: 'flythrough-chat'
+            })
+          });
+          f.reset(); st.textContent = d.success;
+        } catch(err){ st.textContent = d.error; }
+      });
+      chatBody.appendChild(f);
+    }
+    function resetChat(){
+      if (!chatBody) return;
+      const d = getChatDict();
+      chatStepIndex = 0; chatAnswers = {};
+      if (chatTitle) chatTitle.textContent = d.title;
+      if (chatLauncherText) chatLauncherText.textContent = d.launcher;
+      chatBody.innerHTML = '';
+      chatBody.appendChild(createChatMessage(d.intro));
+      renderChatStep();
+    }
+    function setChatOpen(open){
+      if (!chatWidget || !chatPanel) return;
+      chatWidget.classList.toggle('is-open', open);
+      chatPanel.setAttribute('aria-hidden', String(!open));
+      if (open && !chatBody.children.length) resetChat();
+    }
+    chatLauncher?.addEventListener('click', ()=>setChatOpen(!chatWidget?.classList.contains('is-open')));
+    chatClose?.addEventListener('click', ()=>setChatOpen(false));
     resetChat();
 
-    const canvas = document.getElementById('three-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
-    const maxAniso = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x02040a, 8, 60);
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 600);
-    camera.position.set(0, 0.8, 9);
-    function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-    window.addEventListener('resize',resize);
-    scene.add(new THREE.AmbientLight(0xffffff,0.18));
-    const kL=new THREE.DirectionalLight(0x6ee7ff,0.55);kL.position.set(4,6,5);scene.add(kL);
-    const rL=new THREE.DirectionalLight(0x9b8cff,0.42);rL.position.set(-5,2,-4);scene.add(rL);
+    // ============ Contact form (main) ============
+    const cForm = document.getElementById('contactForm');
+    cForm.addEventListener('submit', async e=>{
+      e.preventDefault();
+      const st = cForm.querySelector('.form-status');
+      const fd = new FormData(cForm);
+      const name = (fd.get('name')||'').trim();
+      const phone = (fd.get('phone')||'').trim();
+      const t = i18n[curLang];
+      if (!name || !phone){ st.textContent = t.formError; st.style.color = '#ff8c8c'; return; }
+      st.textContent = '...';
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method:'POST', mode:'no-cors',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body: JSON.stringify({
+            name, phone,
+            project: fd.get('project') || '',
+            language: curLang,
+            page: window.location.href,
+            source: 'flythrough-form'
+          })
+        });
+        cForm.reset(); st.textContent = t.formSuccess; st.style.color = 'var(--warm)';
+      } catch(err){ st.textContent = t.formError; st.style.color = '#ff8c8c'; }
+    });
 
-    const M = THREE;
-    const lerp=(a,b,t)=>a+(b-a)*t;
-    const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-    const smoothstep=(e0,e1,x)=>{const t=clamp((x-e0)/(e1-e0),0,1);return t*t*(3-2*t)};
-    const easeInOut=t=>t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-    const wireMat=(c,o=0.7)=>new M.LineBasicMaterial({color:c,transparent:true,opacity:o});
-    const addEdges=(m,c,o)=>{const e=new M.LineSegments(new M.EdgesGeometry(m.geometry),wireMat(c,o));m.add(e);return e};
-    let buildingVideoIds = null;
-    const videoTextures = new Map();
-    const missingVideoTextures = new Map();
-    function prepareVideo(v){
-      if(!v) return null;
-      v.autoplay = false;
-      v.muted = true;
-      v.loop = true;
-      v.playsInline = true;
-      v.preload = 'metadata';
-      if(v.readyState === 0) v.load();
-      return v;
+    // ============ Scroll progress + reveal ============
+    const IS_MOBILE = window.innerWidth <= 900;
+    const chapters = document.querySelectorAll('.chapter');
+    const progressBar = document.getElementById('progress');
+    const counter = document.getElementById('ctr');
+    function gp(){
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      return total>0 ? Math.max(0, Math.min(1, window.scrollY/total)) : 0;
     }
-    function primeVideo(v){
-      if(!v) return;
-      v.muted = true;
-      v.loop = true;
-      v.playsInline = true;
-      v.preload = 'auto';
-      const warm = () => {
-        if(Number.isFinite(v.duration) && v.duration > 0 && v.currentTime < 0.05){
-          try { v.currentTime = Math.min(0.6, Math.max(0.12, v.duration * 0.04)); } catch(e) {}
+    // Только ОДНА сцена active в любой момент — определяется по позиции скролла.
+    // Так badges не накладываются друг на друга при переходе.
+    let lastActiveIdx = -1;
+    function updateActiveScene(){
+      const N = chapters.length;
+      // Камера в tick() движется по N-1 интервалам waypoints (idx = p*(n-1)).
+      // Берём ближайший waypoint — badge синхронизирован с фактической камерой:
+      // когда камера прибыла в сцену K, badge показывает сцену K.
+      const idx = Math.min(Math.max(0, Math.round(gp() * (N - 1))), N - 1);
+      if (idx !== lastActiveIdx){
+        chapters.forEach((c, i)=> c.classList.toggle('active', i === idx));
+        counter.textContent = String(idx).padStart(2,'0') + ' / ' + String(N).padStart(2,'0');
+        lastActiveIdx = idx;
+      }
+    }
+    window.addEventListener('scroll', ()=>{
+      progressBar.style.width = (gp()*100)+'%';
+      updateActiveScene();
+    }, {passive:true});
+    updateActiveScene();
+
+    // ============ MOBILE flow ============
+    if (IS_MOBILE) {
+      chapters.forEach(c=>{
+        const id = c.dataset.mb;
+        if (id){
+          const src = document.getElementById(id);
+          if (src){
+            const v = document.createElement('video');
+            src.querySelectorAll('source').forEach(s=>{
+              const ns = document.createElement('source');
+              ns.src = s.src; ns.type = s.type;
+              v.appendChild(ns);
+            });
+            v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+            v.setAttribute('playsinline','');
+            v.className = 'mb-vid';
+            c.prepend(v);
+          }
         }
-        const p = v.play();
-        if(p && p.catch) p.catch(()=>{});
-      };
-      if(v.readyState >= 1) warm();
-      else v.addEventListener('loadedmetadata', warm, {once:true});
-      if(v.readyState === 0) v.load();
-      const p = v.play();
-      if(p && p.catch) p.catch(()=>{});
-    }
-    function vidTex(id){
-      if(buildingVideoIds) buildingVideoIds.add(id);
-      if(videoTextures.has(id)) return videoTextures.get(id);
-      const v=document.getElementById(id);
-      if(!v){
-        if(missingVideoTextures.has(id)) return missingVideoTextures.get(id);
-        const c=document.createElement('canvas'); c.width=32; c.height=32;
-        const x=c.getContext('2d'); x.fillStyle='#02040a'; x.fillRect(0,0,32,32);
-        const t=new M.CanvasTexture(c); t.minFilter=M.LinearFilter; t.magFilter=M.LinearFilter;
-        missingVideoTextures.set(id,t); return t;
-      }
-      prepareVideo(v);
-      const t=new M.VideoTexture(v);
-      t.minFilter=M.LinearFilter;
-      t.magFilter=M.LinearFilter;
-      t.generateMipmaps=false;
-      t.anisotropy=maxAniso;
-      if('encoding' in t) t.encoding=M.sRGBEncoding;
-      t.needsUpdate=true;
-      videoTextures.set(id,t);
-      return t;
-    }
-    function emptyFrameMat(){
-      return new M.MeshBasicMaterial({color:0x02040a,transparent:true,opacity:0.72,side:M.DoubleSide});
-    }
-    function videoFrameMat(id){
-      return id ? new M.MeshBasicMaterial({map:vidTex(id),side:M.DoubleSide}) : emptyFrameMat();
-    }
-    function textTex(text,o={}){const w=o.w||1024,h=o.h||256;const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle=o.bg||'rgba(0,0,0,0)';x.fillRect(0,0,w,h);x.fillStyle=o.color||'#f8fbff';x.font=`${o.weight||900} ${o.size||140}px Inter, "Arial Black", sans-serif`;x.textAlign='center';x.textBaseline='middle';x.fillText(text,w/2,h/2);const t=new M.CanvasTexture(c);t.minFilter=M.LinearFilter;return t}
-
-    const scenes = [];
-    function addScene(z,label,builder){const g=new M.Group();g.position.z=z;scene.add(g);const prev=buildingVideoIds;buildingVideoIds=new Set();const meta=builder(g,z)||{};const videoIds=[...buildingVideoIds];buildingVideoIds=prev;scenes.push({z,label,group:g,videoIds,...meta});return g}
-
-    // 00 LAPTOP
-    let laptopMeta = null;
-    addScene(0, 'LAPTOP', g => {
-      const solidMat = new M.MeshStandardMaterial({color:0x141a26,metalness:0.75,roughness:0.3,transparent:true,opacity:0});
-      const baseGeom = new M.BoxGeometry(3.0,0.1,2.0);
-      const base = new M.Mesh(baseGeom,solidMat); g.add(base);
-      const baseW = addEdges(base,0x6ee7ff,1);
-      const kb = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(2.4,0.02,1.2)),wireMat(0x6ee7ff,0.4));
-      kb.position.set(0,0.052,0.25); base.add(kb);
-      const tp = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.2,0.005,0.6)),wireMat(0x6ee7ff,0.35));
-      tp.position.set(0,0.053,-0.55); base.add(tp);
-      const lidPivot = new M.Group(); lidPivot.position.set(0,0.05,-1.0); g.add(lidPivot);
-      const lidGeom = new M.BoxGeometry(3.0,0.08,1.9);
-      const lid = new M.Mesh(lidGeom,solidMat); lid.position.set(0,0.04,0.95); lidPivot.add(lid);
-      const lidW = addEdges(lid,0x6ee7ff,1);
-      const sc = document.createElement('canvas'); sc.width=1280; sc.height=800;
-      const x = sc.getContext('2d');
-      x.fillStyle='#02040a'; x.fillRect(0,0,sc.width,sc.height);
-      x.strokeStyle='rgba(167,230,255,0.05)';
-      for(let i=0;i<sc.width;i+=48){x.beginPath();x.moveTo(i,0);x.lineTo(i,sc.height);x.stroke()}
-      for(let i=0;i<sc.height;i+=48){x.beginPath();x.moveTo(0,i);x.lineTo(sc.width,i);x.stroke()}
-      x.fillStyle='rgba(255,255,255,0.04)'; x.fillRect(0,0,sc.width,64);
-      x.fillStyle='#6ee7ff'; x.font='800 22px Inter'; x.fillText('HYPE',36,40);
-      const rad = x.createRadialGradient(sc.width*0.4,sc.height*0.45,50,sc.width*0.4,sc.height*0.45,700);
-      rad.addColorStop(0,'rgba(110,231,255,0.2)'); rad.addColorStop(1,'rgba(110,231,255,0)');
-      x.fillStyle=rad; x.fillRect(0,0,sc.width,sc.height);
-      x.fillStyle='#6ee7ff'; x.font='800 14px Inter';
-      x.fillText('CINEMATIC VIDEO PRODUCTION',70,220);
-      x.fillStyle='#f8fbff'; x.font='900 88px Inter';
-      x.fillText('Cinematic',70,320); x.fillText('AI Studio',70,410);
-      x.fillStyle='#6ee7ff'; x.fillRect(70,500,180,50);
-      x.fillStyle='#02040a'; x.font='800 14px Inter'; x.fillText('START PROJECT',92,532);
-      const screenTex = new M.CanvasTexture(sc); screenTex.minFilter = M.LinearFilter;
-      const screenMat = new M.MeshBasicMaterial({map:screenTex,transparent:true,opacity:0,side:M.DoubleSide});
-      const screenPlane = new M.Mesh(new M.PlaneGeometry(2.78,1.7),screenMat);
-      screenPlane.rotation.x = Math.PI/2;
-      screenPlane.position.set(0,-0.043,0.95);
-      lidPivot.add(screenPlane);
-      const PC=1200; const partGeom = new M.BufferGeometry();
-      const pp=new Float32Array(PC*3),po=new Float32Array(PC*3),pt=new Float32Array(PC*3);
-      for(let i=0;i<PC;i++){
-        const ox=(Math.random()-0.5)*2.4,oy=(Math.random()-0.5)*1.4,oz=0;
-        po[i*3]=ox;po[i*3+1]=oy;po[i*3+2]=oz;
-        pp[i*3]=ox;pp[i*3+1]=oy;pp[i*3+2]=oz;
-        const a=Math.random()*Math.PI*2,r=2+Math.random()*3;
-        pt[i*3]=ox+Math.cos(a)*r;pt[i*3+1]=oy+Math.sin(a)*r;pt[i*3+2]=oz+(Math.random()-0.5)*3;
-      }
-      partGeom.setAttribute('position',new M.BufferAttribute(pp,3));
-      const partMat = new M.PointsMaterial({color:0x6ee7ff,size:0.02,transparent:true,opacity:0,blending:M.AdditiveBlending,depthWrite:false});
-      const particles = new M.Points(partGeom,partMat);
-      particles.rotation.x = Math.PI/2; particles.position.set(0,-0.04,0.95);
-      lidPivot.add(particles);
-      laptopMeta = { solidMat, baseW, lidW, lidPivot, screenMat, partMat, partGeom, po, pt, PC };
-    });
-
-    // 01 LOBBY — 8 порталов с видео + hero-video задник
-    let lobbyMeta = null;
-    addScene(-25, 'LOBBY', g => {
-      const bg = new M.Mesh(new M.PlaneGeometry(24,13.5), new M.MeshBasicMaterial({map:vidTex('v-user16'),transparent:true,opacity:0.32,side:M.DoubleSide}));
-      bg.position.z = -7; g.add(bg);
-      const titleTex = textTex('HYPE PRODUCTION',{size:100,color:'#f8fbff',w:2048,h:256});
-      const title = new M.Mesh(new M.PlaneGeometry(12,1.5),new M.MeshBasicMaterial({map:titleTex,transparent:true}));
-      title.position.y = 1.2; g.add(title);
-      const subTex = textTex('— enter the studio —',{size:36,color:'#6ee7ff',w:1024,h:96,weight:700});
-      const sub = new M.Mesh(new M.PlaneGeometry(5,0.45),new M.MeshBasicMaterial({map:subTex,transparent:true}));
-      sub.position.y = 0.2; g.add(sub);
-      const portCfg = [
-        {lbl:'CM',vid:'v-user01'},{lbl:'AI',vid:'v-user05'},{lbl:'RL',vid:'v-user14'},{lbl:'BR',vid:'v-user04'},
-        {lbl:'MD',vid:'v-user02'},{lbl:'AD',vid:'v-user18'},{lbl:'WB',vid:null},{lbl:'$',vid:'v-user03'}
-      ];
-      const portals = [];
-      portCfg.forEach((p,i)=>{
-        const a=(i/portCfg.length)*Math.PI*2, r=7;
-        const f = new M.Group();
-        f.position.set(Math.cos(a)*r, Math.sin(a)*1.5-1.5, Math.sin(a)*r*0.4-3);
-        const vp = new M.Mesh(new M.PlaneGeometry(1.4,2.2), videoFrameMat(p.vid));
-        vp.position.z=0.01; f.add(vp);
-        const fe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.45,2.25,0.06)),wireMat(0x6ee7ff,0.85));
-        f.add(fe);
-        const lT = textTex(p.lbl,{size:90,color:'#6ee7ff',w:256,h:128,weight:900});
-        const lM = new M.Mesh(new M.PlaneGeometry(0.4,0.2), new M.MeshBasicMaterial({map:lT,transparent:true}));
-        lM.position.set(-0.45,-0.95,0.03); f.add(lM);
-        f.lookAt(0,0,0); g.add(f); portals.push(f);
+        c.classList.add('active');
       });
-      const dG = new M.BufferGeometry(); const dN=400, dP=new Float32Array(dN*3);
-      for(let i=0;i<dN;i++){dP[i*3]=(Math.random()-0.5)*20;dP[i*3+1]=(Math.random()-0.5)*12;dP[i*3+2]=(Math.random()-0.5)*16-4}
-      dG.setAttribute('position',new M.BufferAttribute(dP,3));
-      g.add(new M.Points(dG,new M.PointsMaterial({color:0x9b8cff,size:0.025,transparent:true,opacity:0.5,blending:M.AdditiveBlending,depthWrite:false})));
-      lobbyMeta = { portals };
-    });
+      const vio = new IntersectionObserver(es=>{
+        es.forEach(e=>{
+          const v = e.target.querySelector('.mb-vid');
+          if (!v) return;
+          if (e.isIntersecting){ try{const p=v.play(); if(p&&p.catch) p.catch(()=>{});}catch(err){} }
+          else v.pause();
+        });
+      }, {threshold: 0.3, rootMargin: '40% 0px'});
+      chapters.forEach(c=>vio.observe(c));
+      document.getElementById('enterBtn').style.display = 'inline-block';
+      document.getElementById('enterBtn').addEventListener('click', ()=>{
+        document.querySelectorAll('.mb-vid').forEach(v=>{
+          const r = v.closest('.chapter').getBoundingClientRect();
+          if (r.top < innerHeight * 0.75 && r.bottom > innerHeight * 0.25){
+            try{const p=v.play(); if(p&&p.catch) p.catch(()=>{});}catch(e){}
+          } else {
+            v.pause();
+          }
+        });
+        setTimeout(()=>document.getElementById('loader').classList.add('gone'), 400);
+      });
+    }
 
-    // 02 COMMERCIAL
-    addScene(-50,'COMMERCIAL',g=>{
-      const bw=9,bh=5.2;
-      const bb = new M.Mesh(new M.PlaneGeometry(bw,bh), new M.MeshBasicMaterial({map:vidTex('v-user16'),side:M.DoubleSide}));
-      bb.position.y=1.2; g.add(bb);
-      const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(bw+0.4,bh+0.4,0.08)),wireMat(0x6ee7ff,0.9));
-      fr.position.y=1.2; g.add(fr);
-      for(let i=0;i<18;i++){
-        const h=2+Math.random()*5, w=0.4+Math.random()*0.6;
-        const a=(i/18)*Math.PI*2, r=9+Math.random()*6;
-        const s = new M.Mesh(new M.BoxGeometry(w,h,w), new M.MeshStandardMaterial({color:0x0a0e16,metalness:0.6,roughness:0.7}));
-        s.position.set(Math.cos(a)*r, h/2-2, Math.sin(a)*r*0.6-4);
-        g.add(s);
-        const eM = new M.MeshBasicMaterial({color:i%3?0x6ee7ff:0x9b8cff,transparent:true,opacity:0.75});
-        [-0.5,0.5].forEach(d=>{const e=new M.Mesh(new M.BoxGeometry(w*0.05,h,w*0.05),eM);e.position.set(s.position.x+w*d,s.position.y,s.position.z+w*0.5);g.add(e)});
+    // ============ DESKTOP 3D ============
+    if (!IS_MOBILE) (function(){
+      console.log('[HYPE] Desktop 3D init. Videos in DOM:', document.querySelectorAll('video').length);
+      const M = THREE;
+      const canvas = document.getElementById('c');
+      const renderer = new M.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputEncoding = M.sRGBEncoding;
+      renderer.toneMapping = M.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+      const scene = new M.Scene();
+      scene.background = new M.Color(0x000000);
+      scene.fog = new M.Fog(0x000000, 10, 50);
+      const camera = new M.PerspectiveCamera(40, 1, 0.05, 200);
+      function resize(){
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w/h; camera.updateProjectionMatrix();
+        if (composer) composer.setSize(w, h);
+        if (bloomPass) bloomPass.setSize(w, h);
       }
-      const ground = new M.Mesh(new M.PlaneGeometry(40,40), new M.MeshStandardMaterial({color:0x05080f,metalness:0.8,roughness:0.4}));
-      ground.rotation.x=-Math.PI/2; ground.position.y=-2.2; g.add(ground);
-    });
+      window.addEventListener('resize', resize);
+      scene.add(new M.AmbientLight(0xffffff, 0.18));
+      const kL = new M.DirectionalLight(0x6ee7ff, 0.55); kL.position.set(4,6,5); scene.add(kL);
+      const rL = new M.DirectionalLight(0x9b8cff, 0.42); rL.position.set(-5,2,-4); scene.add(rL);
+      const lerp = (a,b,t)=>a+(b-a)*t;
+      const videoCache = {};
+      function vidTex(id){
+        if (videoCache[id]) return videoCache[id];
+        const v = document.getElementById(id); if (!v) return null;
+        const t = new M.VideoTexture(v);
+        t.minFilter = M.LinearFilter; t.magFilter = M.LinearFilter;
+        t.generateMipmaps = false;
+        if ('encoding' in t) t.encoding = M.sRGBEncoding;
+        v.addEventListener('loadedmetadata', ()=>{
+          if (v.duration > 0 && v.currentTime < 0.02){
+            try { v.currentTime = Math.min(0.2, v.duration * 0.04); } catch(e){}
+          }
+          t.needsUpdate = true;
+        }, {once:true});
+        v.addEventListener('canplay', ()=>{ t.needsUpdate = true; });
+        v.addEventListener('error', e=>{
+          console.warn('[HYPE] video failed:', id, v.currentSrc || '(no src)');
+        });
+        videoCache[id] = t; return t;
+      }
+      function textTex(text, size, color){
+        // Сохраняем исходную пропорцию 4:1, но удваиваем разрешение
+        // для чёткости + добавляем auto-shrink шрифта
+        const W = 2048, H = 512;
+        const cnv = document.createElement('canvas'); cnv.width=W; cnv.height=H;
+        const x = cnv.getContext('2d');
+        x.fillStyle = color||'#f8fbff';
+        let fs = (size||140) * 2; // x2 т.к. canvas в 2 раза больше
+        x.font = `900 ${fs}px Inter, "Arial Black", sans-serif`;
+        const maxW = W - 120;
+        while (x.measureText(text).width > maxW && fs > 40){
+          fs -= 6;
+          x.font = `900 ${fs}px Inter, "Arial Black", sans-serif`;
+        }
+        x.textAlign='center'; x.textBaseline='middle';
+        x.fillText(text, W/2, H/2);
+        const t = new M.CanvasTexture(cnv);
+        t.minFilter = M.LinearFilter; t.magFilter = M.LinearFilter;
+        return t;
+      }
+      function wireMat(c, o){ return new M.LineBasicMaterial({color:c, transparent:true, opacity:o||0.7}); }
 
-    // 03 AI VIDEO
-    addScene(-75,'AI_VIDEO',g=>{
-      const sphereGeom = new M.IcosahedronGeometry(5,2);
-      const wf = new M.LineSegments(new M.EdgesGeometry(sphereGeom),wireMat(0x6ee7ff,0.5));
-      g.add(wf);
-      const nodeMat = new M.MeshBasicMaterial({color:0x9b8cff,transparent:true,opacity:0.85});
-      const nodeGeom = new M.SphereGeometry(0.06,8,8);
-      const pos = sphereGeom.attributes.position;
+      function makeScreen(vidId, w, h){
+        const grp = new M.Group();
+        const bz = new M.Mesh(new M.BoxGeometry(w+0.1, h+0.1, 0.04), new M.MeshStandardMaterial({color:0x1a1c20, metalness:0.78, roughness:0.22}));
+        bz.position.z = -0.025; grp.add(bz);
+        const tex = vidTex(vidId);
+        const sc = new M.Mesh(new M.PlaneGeometry(w, h), new M.MeshBasicMaterial({map:tex, side:M.FrontSide}));
+        sc.position.z = 0.002; grp.add(sc);
+        const glow = new M.Mesh(new M.PlaneGeometry(w*1.4, h*1.4), new M.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.05, blending:M.AdditiveBlending, depthWrite:false}));
+        glow.position.z = -0.08; grp.add(glow);
+        return grp;
+      }
+      function makeSc(z){ const g = new M.Group(); g.position.set(0,0,z); scene.add(g); return g; }
+
+
+      // === ATMOSPHERIC CHAMBER HELPERS ===
+      // Глобальный массив анимаций (частицы, лучи) — обновляется в tick()
+      const animMeshes = [];
+
+      function makeWetFloor(group, y, w, d, tint){
+        // Тёмное «мокрое» зеркало: высокий металлик, низкий roughness
+        const m = new M.MeshStandardMaterial({
+          color: tint || 0x05070b,
+          metalness: 1.0,
+          roughness: 0.08,
+          envMapIntensity: 1.2
+        });
+        const floor = new M.Mesh(new M.PlaneGeometry(w, d), m);
+        floor.rotation.x = -Math.PI/2;
+        floor.position.y = y;
+        group.add(floor);
+        // Тонкая warm-полоска по периметру переда — даёт «горизонт»
+        const edge = new M.Mesh(new M.BoxGeometry(w*0.92, 0.012, 0.012),
+          new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.42}));
+        edge.position.set(0, y+0.008, d*0.42);
+        group.add(edge);
+        return floor;
+      }
+
+      function makeGodRays(group, x, y, z, colorA, colorB){
+        // 4 пересекающихся плоскости под лёгким углом, additive
+        const colors = [colorA||0x6ee7ff, colorB||0xd9c8a9, colorA||0x6ee7ff, colorB||0xd9c8a9];
+        const rays = [];
+        for (let i = 0; i < 4; i++){
+          const ray = new M.Mesh(
+            new M.PlaneGeometry(0.9, 6.5),
+            new M.MeshBasicMaterial({
+              color: colors[i],
+              transparent: true,
+              opacity: 0.085 + Math.random()*0.04,
+              blending: M.AdditiveBlending,
+              depthWrite: false,
+              side: M.DoubleSide
+            })
+          );
+          ray.position.set(x + (Math.random()-0.5)*0.8, y, z + (Math.random()-0.5)*0.8);
+          ray.rotation.y = (i/4) * Math.PI * 2;
+          ray.rotation.z = (Math.random()-0.5)*0.15;
+          ray.userData.spinSpeed = 0.04 + Math.random()*0.05;
+          group.add(ray);
+          rays.push(ray);
+          animMeshes.push({type:'godray', m:ray});
+        }
+        return rays;
+      }
+
+      function makeAtmoParticles(group, count, range, color, opacity){
+        const g = new M.BufferGeometry();
+        const p = new Float32Array(count*3);
+        for (let i = 0; i < count; i++){
+          p[i*3]   = (Math.random()-0.5) * range[0];
+          p[i*3+1] = (Math.random()-0.5) * range[1];
+          p[i*3+2] = (Math.random()-0.5) * range[2];
+        }
+        g.setAttribute('position', new M.BufferAttribute(p, 3));
+        const pts = new M.Points(g, new M.PointsMaterial({
+          color: color || 0xd9c8a9,
+          size: 0.018,
+          transparent: true,
+          opacity: opacity || 0.55,
+          blending: M.AdditiveBlending,
+          depthWrite: false,
+          sizeAttenuation: true
+        }));
+        pts.userData.driftY = 0.02 + Math.random()*0.03;
+        pts.userData.driftX = (Math.random()-0.5)*0.01;
+        group.add(pts);
+        animMeshes.push({type:'particles', m:pts});
+        return pts;
+      }
+
+      function makeTrimLight(group, x, y, z, sx, sy, sz, color){
+        const m = new M.Mesh(
+          new M.BoxGeometry(sx, sy, sz),
+          new M.MeshBasicMaterial({color: color || 0xd9c8a9, transparent:true, opacity:0.85})
+        );
+        m.position.set(x, y, z);
+        group.add(m);
+        // Glow halo вокруг
+        const halo = new M.Mesh(
+          new M.PlaneGeometry(sx*3 + sz*3, sy*8),
+          new M.MeshBasicMaterial({color: color || 0xd9c8a9, transparent:true, opacity:0.12, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide})
+        );
+        halo.position.set(x, y, z + 0.01);
+        group.add(halo);
+        return m;
+      }
+
+      function makeOrbLight(group, x, y, z, color, intensity){
+        const sphere = new M.Mesh(
+          new M.SphereGeometry(0.08, 16, 16),
+          new M.MeshBasicMaterial({color: color, transparent:true, opacity:0.95})
+        );
+        sphere.position.set(x, y, z);
+        group.add(sphere);
+        const halo = new M.Mesh(
+          new M.SphereGeometry(0.25, 16, 16),
+          new M.MeshBasicMaterial({color: color, transparent:true, opacity:0.18, blending:M.AdditiveBlending, depthWrite:false})
+        );
+        halo.position.set(x, y, z);
+        group.add(halo);
+        const pl = new M.PointLight(color, intensity || 0.8, 8);
+        pl.position.set(x, y, z);
+        group.add(pl);
+        sphere.userData.basePos = [x, y, z];
+        sphere.userData.haloRef = halo;
+        sphere.userData.pulseSpeed = 0.8 + Math.random()*0.6;
+        animMeshes.push({type:'orb', m:sphere});
+        return sphere;
+      }
+
+      function decorateChamber(group, opts){
+        // Универсальная атмосферная обработка любой сцены.
+        // opts: {floorY, floorW, floorD, accent, warm, rayY, rayX, particles}
+        const o = opts || {};
+        const fy = o.floorY !== undefined ? o.floorY : -2.2;
+        const fw = o.floorW || 22;
+        const fd = o.floorD || 16;
+        const accent = o.accent || 0x6ee7ff;
+        const warm = o.warm || 0xd9c8a9;
+        // Mirror floor
+        makeWetFloor(group, fy, fw, fd, o.floorTint);
+        // God rays from above
+        const rx = o.rayX !== undefined ? o.rayX : 0;
+        const ry = o.rayY !== undefined ? o.rayY : 1.5;
+        const rz = o.rayZ !== undefined ? o.rayZ : -3;
+        makeGodRays(group, rx, ry, rz, accent, warm);
+        // Atmospheric particles
+        const pcount = o.particles || 220;
+        makeAtmoParticles(group, pcount, [fw*0.9, 8, fd*0.9], warm, 0.45);
+        makeAtmoParticles(group, Math.floor(pcount*0.5), [fw*0.7, 5, fd*0.7], accent, 0.32);
+        // Floor-level trim strip front
+        makeTrimLight(group, 0, fy+0.005, fd*0.40, fw*0.6, 0.008, 0.01, warm);
+        // Two corner orbs
+        if (!o.noOrbs){
+          makeOrbLight(group, -fw*0.32, fy+1.0, fd*0.20, accent, 0.7);
+          makeOrbLight(group,  fw*0.32, fy+0.8, fd*0.20, warm, 0.55);
+        }
+      }
+
+      // === END HELPERS ===
+
+      // 00 LAPTOP
+      const s0 = makeSc(0);
+      const solidMat = new M.MeshStandardMaterial({color:0x2a2a2c, metalness:0.85, roughness:0.30});
+      const base = new M.Mesh(new M.BoxGeometry(3.0, 0.1, 2.0), solidMat); s0.add(base);
+      const lidPiv = new M.Group(); lidPiv.position.set(0, 0.05, -1); lidPiv.rotation.x = -Math.PI*0.58; s0.add(lidPiv);
+      const lid = new M.Mesh(new M.BoxGeometry(3.0, 0.08, 1.9), solidMat); lid.position.set(0, 0.04, 0.95); lidPiv.add(lid);
+      const sc0 = document.createElement('canvas'); sc0.width=1280; sc0.height=800;
+      const sx0 = sc0.getContext('2d');
+      sx0.fillStyle='#02040a'; sx0.fillRect(0,0,sc0.width,sc0.height);
+      sx0.strokeStyle='rgba(167,230,255,0.05)';
+      for(let i=0;i<sc0.width;i+=48){sx0.beginPath();sx0.moveTo(i,0);sx0.lineTo(i,sc0.height);sx0.stroke()}
+      for(let i=0;i<sc0.height;i+=48){sx0.beginPath();sx0.moveTo(0,i);sx0.lineTo(sc0.width,i);sx0.stroke()}
+      sx0.fillStyle='#6ee7ff'; sx0.font='900 88px Inter'; sx0.fillText('HYPE', 70, 320);
+      sx0.fillStyle='#f5f0e8'; sx0.fillText('PRODUCTION', 70, 410);
+      const screenTex0 = new M.CanvasTexture(sc0); screenTex0.minFilter = M.LinearFilter;
+      const screen0 = new M.Mesh(new M.PlaneGeometry(2.74, 1.68), new M.MeshBasicMaterial({map:screenTex0, side:M.DoubleSide}));
+      screen0.rotation.x = Math.PI/2; screen0.position.set(0, -0.041, 0.95); lidPiv.add(screen0);
+      const matteKey = new M.MeshStandardMaterial({color:0x080808, metalness:0.2, roughness:0.85});
+      const keyG = new M.BoxGeometry(0.155, 0.028, 0.155);
+      const KR=5, KC=14, KW=0.155, KH=0.155, KGAP=0.022;
+      const tw0 = KC*(KW+KGAP)-KGAP, td0 = KR*(KH+KGAP)-KGAP;
+      const keysIM = new M.InstancedMesh(keyG, matteKey, KR*KC);
+      const mm = new M.Matrix4(); let ix=0;
+      for (let r=0;r<KR;r++) for (let c=0;c<KC;c++){
+        mm.makeTranslation(-tw0/2+c*(KW+KGAP)+KW/2, 0.064, -td0/2+r*(KH+KGAP)+KH/2+0.20);
+        keysIM.setMatrixAt(ix++, mm);
+      }
+      base.add(keysIM);
+      const tp0 = new M.Mesh(new M.BoxGeometry(1.0, 0.012, 0.55), new M.MeshStandardMaterial({color:0x1a1a1c, metalness:0.65, roughness:0.12}));
+      tp0.position.set(0, 0.058, -0.55); base.add(tp0);
+      const logoTex0 = textTex('▍ HYPE', 90, '#6ee7ff');
+      const logoMesh0 = new M.Mesh(new M.PlaneGeometry(0.8, 0.2), new M.MeshBasicMaterial({map:logoTex0, transparent:true}));
+      logoMesh0.position.set(0, 0.083, 0.95); logoMesh0.rotation.x = -Math.PI/2; lidPiv.add(logoMesh0);
+      const shCanvas = document.createElement('canvas'); shCanvas.width=256; shCanvas.height=256;
+      const shCtx = shCanvas.getContext('2d');
+      const shGrad = shCtx.createRadialGradient(128,128,20, 128,128,128);
+      shGrad.addColorStop(0,'rgba(0,0,0,0.7)'); shGrad.addColorStop(1,'rgba(0,0,0,0)');
+      shCtx.fillStyle = shGrad; shCtx.fillRect(0,0,256,256);
+      const sh0 = new M.Mesh(new M.PlaneGeometry(4.5,4.5), new M.MeshBasicMaterial({map:new M.CanvasTexture(shCanvas), transparent:true, depthWrite:false}));
+      sh0.rotation.x = -Math.PI/2; sh0.position.y = -0.06; s0.add(sh0);
+      const deskMat = new M.MeshStandardMaterial({color:0x080b10, metalness:0.72, roughness:0.28});
+      const desk = new M.Mesh(new M.BoxGeometry(7.2, 0.14, 4.2), deskMat);
+      desk.position.set(0, -0.17, 0.18); s0.add(desk);
+      const deskEdgeMat = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.34});
+      const deskEdge = new M.Mesh(new M.BoxGeometry(7.25, 0.018, 0.035), deskEdgeMat);
+      deskEdge.position.set(0, -0.085, 2.22); s0.add(deskEdge);
+      const wallMat0 = new M.MeshStandardMaterial({color:0x050912, metalness:0.25, roughness:0.82, side:M.DoubleSide});
+      const wall0 = new M.Mesh(new M.PlaneGeometry(12, 6.2), wallMat0);
+      wall0.position.set(0, 1.45, -3.25); s0.add(wall0);
+      const wallLineMat = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.12, side:M.DoubleSide});
+      for (let i = -4; i <= 4; i++){
+        const vLine = new M.Mesh(new M.PlaneGeometry(0.012, 4.7), wallLineMat);
+        vLine.position.set(i * 1.05, 1.45, -3.22); s0.add(vLine);
+      }
+      for (let i = -2; i <= 2; i++){
+        const hLine = new M.Mesh(new M.PlaneGeometry(9.2, 0.01), wallLineMat);
+        hLine.position.set(0, 1.45 + i * 0.72, -3.21); s0.add(hLine);
+      }
+      function panelTex0(label, color){
+        const cnv = document.createElement('canvas'); cnv.width = 900; cnv.height = 520;
+        const x = cnv.getContext('2d');
+        x.fillStyle = '#040812'; x.fillRect(0,0,cnv.width,cnv.height);
+        x.strokeStyle = 'rgba(110,231,255,0.12)';
+        for(let i=0;i<cnv.width;i+=60){x.beginPath();x.moveTo(i,0);x.lineTo(i,cnv.height);x.stroke()}
+        for(let i=0;i<cnv.height;i+=60){x.beginPath();x.moveTo(0,i);x.lineTo(cnv.width,i);x.stroke()}
+        x.fillStyle = color; x.globalAlpha = 0.72;
+        for(let i=0;i<5;i++) x.fillRect(80, 110 + i*58, 420 - i*38, 18);
+        x.globalAlpha = 1; x.fillStyle = '#f5f0e8'; x.font = '900 58px Inter, Arial';
+        x.fillText(label, 78, 86);
+        const t = new M.CanvasTexture(cnv); t.minFilter = M.LinearFilter; t.magFilter = M.LinearFilter;
+        return t;
+      }
+      [
+        {x:-3.35, y:1.05, z:-2.35, ry:0.34, label:'REELS', color:'#6ee7ff'},
+        {x:3.28, y:1.15, z:-2.48, ry:-0.34, label:'RENDER', color:'#d9c8a9'}
+      ].forEach(p=>{
+        const monitor = new M.Group();
+        const m = new M.Mesh(new M.PlaneGeometry(2.25, 1.3), new M.MeshBasicMaterial({map:panelTex0(p.label, p.color), side:M.DoubleSide}));
+        monitor.add(m);
+        const e = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(2.34, 1.39, 0.04)), wireMat(0xd9c8a9, 0.38));
+        monitor.add(e);
+        monitor.position.set(p.x, p.y, p.z); monitor.rotation.y = p.ry; s0.add(monitor);
+      });
+      const softBeamMat0 = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.08, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide});
+      const beamA0 = new M.Mesh(new M.PlaneGeometry(1.1, 5.2), softBeamMat0);
+      beamA0.position.set(-4.8, 1.45, -2.65); beamA0.rotation.z = -0.08; s0.add(beamA0);
+      const beamB0 = new M.Mesh(new M.PlaneGeometry(1.0, 5.1), new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.06, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      beamB0.position.set(4.7, 1.35, -2.72); beamB0.rotation.z = 0.08; s0.add(beamB0);
+      const rim0 = new M.PointLight(0x6ee7ff, 0.95, 8);
+      rim0.position.set(-2.8, 2.2, 1.7); s0.add(rim0);
+      const warm0 = new M.PointLight(0xd9c8a9, 0.58, 6);
+      warm0.position.set(2.6, 1.45, 1.6); s0.add(warm0);
+
+      decorateChamber(s0, {accent:0x6ee7ff, warm:0xd9c8a9, floorY:-1.8, floorW:18, floorD:14, rayY:2, particles:200});
+      // === HOLOGRAPHIC UI CARDS вокруг лаптопа ===
+      function makeHoloCard(label, value, color, w, h){
+        const cnv = document.createElement('canvas'); cnv.width=512; cnv.height=320;
+        const x = cnv.getContext('2d');
+        x.fillStyle = 'rgba(8,12,22,0.78)';
+        x.fillRect(0,0,512,320);
+        x.strokeStyle = color;
+        x.lineWidth = 3; x.strokeRect(4,4,504,312);
+        // Grid
+        x.strokeStyle = 'rgba(110,231,255,0.10)';
+        x.lineWidth = 1;
+        for (let i=20;i<500;i+=30){ x.beginPath(); x.moveTo(i,0); x.lineTo(i,320); x.stroke(); }
+        for (let i=20;i<300;i+=30){ x.beginPath(); x.moveTo(0,i); x.lineTo(512,i); x.stroke(); }
+        // Bars
+        x.fillStyle = color; x.globalAlpha = 0.72;
+        for (let i=0;i<4;i++) x.fillRect(40, 80 + i*42, 240 - i*30, 18);
+        x.globalAlpha = 1;
+        // Label
+        x.fillStyle = color; x.font = '700 26px Inter, Arial'; x.fillText(label, 40, 50);
+        // Value
+        x.fillStyle = '#f5f0e8'; x.font = '900 88px Inter, Arial Black'; x.fillText(value, 280, 200);
+        const t = new M.CanvasTexture(cnv); t.minFilter = M.LinearFilter; t.magFilter = M.LinearFilter;
+        const mesh = new M.Mesh(new M.PlaneGeometry(w||1.6, h||1.0),
+          new M.MeshBasicMaterial({map:t, transparent:true, side:M.DoubleSide}));
+        return mesh;
+      }
+      const card1 = makeHoloCard('PROJECTS', '120+', '#6ee7ff', 1.5, 0.94);
+      card1.position.set(-3.6, 1.9, 0); card1.rotation.y = 0.35; s0.add(card1);
+      const card2 = makeHoloCard('YEARS', '07', '#d9c8a9', 1.3, 0.82);
+      card2.position.set(3.7, 2.2, -0.3); card2.rotation.y = -0.42; s0.add(card2);
+      const card3 = makeHoloCard('FORMATS', '4K · AI', '#9b8cff', 1.5, 0.94);
+      card3.position.set(-4.0, 0.4, 1.8); card3.rotation.y = 0.5; s0.add(card3);
+      // Лёгкий подъём орб-света вокруг ноутбука
+      makeOrbLight(s0, -2.5, 0.8, 1.2, 0x6ee7ff, 0.5);
+      makeOrbLight(s0,  2.8, 0.6, 0.8, 0xd9c8a9, 0.4);
+            // ATMOSPHERIC: Lobby получает 5 god-rays + двойной слой частиц
+      decorateChamber(s1, {accent:0x6ee7ff, warm:0xd9c8a9, floorY:-2.5, floorW:22, floorD:16, rayY:2.5, particles:300});
+      // Дополнительный central pillar of light
+      const pillar1 = new M.Mesh(new M.CylinderGeometry(0.05, 0.05, 7, 8),
+        new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.32, blending:M.AdditiveBlending}));
+      pillar1.position.set(0, 1.5, -5); s1.add(pillar1);
+// 01 LOBBY
+      const s1 = makeSc(-25);
+      const lobbyWallMat = new M.MeshStandardMaterial({color:0x050915, metalness:0.28, roughness:0.82, side:M.DoubleSide});
+      const lobbyBack = new M.Mesh(new M.PlaneGeometry(18, 8.5), lobbyWallMat);
+      lobbyBack.position.set(0, 0.2, -7.4); s1.add(lobbyBack);
+      const lobbyFloor = new M.Mesh(new M.PlaneGeometry(18, 13), new M.MeshStandardMaterial({color:0x05080f, metalness:0.76, roughness:0.34, side:M.DoubleSide}));
+      lobbyFloor.rotation.x = -Math.PI/2; lobbyFloor.position.set(0, -2.45, -2.5); s1.add(lobbyFloor);
+      const lobbySideMat = new M.MeshStandardMaterial({color:0x060a12, metalness:0.45, roughness:0.62, transparent:true, opacity:0.88, side:M.DoubleSide});
+      [{x:-6.2, ry:0.42}, {x:6.2, ry:-0.42}].forEach(p=>{
+        const side = new M.Mesh(new M.PlaneGeometry(5.5, 6.2), lobbySideMat);
+        side.position.set(p.x, 0.15, -3.7); side.rotation.y = p.ry; s1.add(side);
+      });
+      const lobbyLineMat = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.14, side:M.DoubleSide});
+      for (let i=-5; i<=5; i++){
+        const line = new M.Mesh(new M.PlaneGeometry(0.014, 5.7), lobbyLineMat);
+        line.position.set(i * 0.96, 0.35, -7.35); s1.add(line);
+      }
+      for (let i=-3; i<=3; i++){
+        const line = new M.Mesh(new M.PlaneGeometry(12.5, 0.012), lobbyLineMat);
+        line.position.set(0, i * 0.68, -7.34); s1.add(line);
+      }
+      const panelBandMat = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.08, side:M.DoubleSide});
+      [-3.9, 3.9].forEach(x=>{
+        const band = new M.Mesh(new M.PlaneGeometry(2.4, 5.4), panelBandMat);
+        band.position.set(x, 0.18, -7.28); s1.add(band);
+      });
+      const portalMat = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.72, blending:M.AdditiveBlending});
+      [
+        {x:-2.85, y:0, sx:0.035, sy:3.7},
+        {x:2.85, y:0, sx:0.035, sy:3.7},
+        {x:0, y:1.85, sx:5.75, sy:0.035},
+        {x:0, y:-1.85, sx:5.75, sy:0.035}
+      ].forEach(p=>{
+        const bar = new M.Mesh(new M.PlaneGeometry(p.sx, p.sy), portalMat);
+        bar.position.set(p.x, p.y, -6.85); s1.add(bar);
+      });
+      const runwayMat = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.18, blending:M.AdditiveBlending, side:M.DoubleSide});
+      const runway = new M.Mesh(new M.PlaneGeometry(4.8, 8.8), runwayMat);
+      runway.rotation.x = -Math.PI/2; runway.position.set(0, -2.37, -1.2); s1.add(runway);
+      const floorEdgeMat = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.32});
+      [-2.55, 2.55].forEach(x=>{
+        const edge = new M.Mesh(new M.BoxGeometry(0.035, 0.02, 8.8), floorEdgeMat);
+        edge.position.set(x, -2.28, -1.2); s1.add(edge);
+      });
+      const table = new M.Mesh(new M.CylinderGeometry(1.75, 2.15, 0.18, 56), new M.MeshStandardMaterial({color:0x080b12, metalness:0.82, roughness:0.22}));
+      table.position.set(0, -1.82, -1.25); s1.add(table);
+      const tableTop = new M.Mesh(new M.CircleGeometry(1.66, 56), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.12, blending:M.AdditiveBlending, side:M.DoubleSide}));
+      tableTop.rotation.x = -Math.PI/2; tableTop.position.set(0, -1.72, -1.25); s1.add(tableTop);
+      const tableTex = textTex('CONTROL LOBBY', 70, '#d9c8a9');
+      const tableLabel = new M.Mesh(new M.PlaneGeometry(2.7, 0.5), new M.MeshBasicMaterial({map:tableTex, transparent:true, side:M.DoubleSide, opacity:0.82}));
+      tableLabel.rotation.x = -Math.PI/2; tableLabel.position.set(0, -1.68, -1.25); s1.add(tableLabel);
+      const ceilingMat = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.18, blending:M.AdditiveBlending});
+      [-4.2, -2.1, 0, 2.1, 4.2].forEach((x, i)=>{
+        const rail = new M.Mesh(new M.BoxGeometry(0.045, 0.035, 6.2), ceilingMat);
+        rail.position.set(x, 2.86, -3.55); s1.add(rail);
+        const glow = new M.Mesh(new M.PlaneGeometry(0.9, 4.4), new M.MeshBasicMaterial({color:i%2 ? 0xd9c8a9 : 0x6ee7ff, transparent:true, opacity:0.035, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        glow.position.set(x, 1.0, -3.3); glow.rotation.x = -0.08; s1.add(glow);
+      });
+      const lobbyBeamA = new M.Mesh(new M.PlaneGeometry(1.25, 7.2), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.06, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      lobbyBeamA.position.set(-4.7, 0.45, -5.8); lobbyBeamA.rotation.z = -0.12; s1.add(lobbyBeamA);
+      const lobbyBeamB = new M.Mesh(new M.PlaneGeometry(1.2, 7.2), new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.055, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      lobbyBeamB.position.set(4.7, 0.45, -5.8); lobbyBeamB.rotation.z = 0.12; s1.add(lobbyBeamB);
+      const lobbyLightA = new M.PointLight(0x6ee7ff, 0.7, 10);
+      lobbyLightA.position.set(-3.4, 1.8, -0.8); s1.add(lobbyLightA);
+      const lobbyLightB = new M.PointLight(0xd9c8a9, 0.48, 9);
+      lobbyLightB.position.set(3.2, 1.4, -1.1); s1.add(lobbyLightB);
+      const title1 = new M.Mesh(new M.PlaneGeometry(7.5, 0.94), new M.MeshBasicMaterial({map:textTex('HYPE PRODUCTION', 100, '#f8fbff'), transparent:true}));
+      title1.position.set(0, 2.3, -1); s1.add(title1);
+      [
+        {lbl:'CM', vid:'v-lobby-cm', x:-4.85, y:-0.35, z:-3.15, ry:0.46, scale:1.05, c:0xd9c8a9},
+        {lbl:'AI', vid:'v-lobby-ai', x:-2.55, y:0.12, z:-4.45, ry:0.2, scale:0.9, c:0x9b8cff},
+        {lbl:'RL', vid:'v-lobby-rl', x:0, y:-0.06, z:-4.95, ry:0, scale:1.06, c:0x6ee7ff},
+        {lbl:'BR', vid:'v-lobby-br', x:2.55, y:0.12, z:-4.45, ry:-0.2, scale:0.9, c:0xd9c8a9},
+        {lbl:'VP', vid:'v-lobby-vp', x:4.85, y:-0.35, z:-3.15, ry:-0.46, scale:1.05, c:0x6ee7ff},
+        {lbl:'WB', vid:'v-lobby-wb', x:0, y:-1.15, z:-2.0, ry:0, scale:0.72, c:0xd9c8a9}
+      ].forEach((p, i)=>{
+        const fr = new M.Group();
+        const glow = new M.Mesh(new M.PlaneGeometry(2.25, 3.25), new M.MeshBasicMaterial({color:p.c, transparent:true, opacity:0.055, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        glow.position.z = -0.12; fr.add(glow);
+        const backing = new M.Mesh(new M.PlaneGeometry(1.75, 2.62), new M.MeshStandardMaterial({color:0x070b13, metalness:0.6, roughness:0.22, transparent:true, opacity:0.74, side:M.DoubleSide}));
+        backing.position.z = -0.045; fr.add(backing);
+        const vp = new M.Mesh(new M.PlaneGeometry(1.34, 2.14), new M.MeshBasicMaterial({map:vidTex(p.vid), side:M.DoubleSide}));
+        vp.position.z = 0.012;
+        fr.add(vp);
+        const e = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.52, 2.34, 0.08)), wireMat(p.c, 0.88));
+        fr.add(e);
+        const inner = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.38, 2.18, 0.025)), wireMat(0xd9c8a9, 0.34));
+        inner.position.z = 0.025; fr.add(inner);
+        const lT = textTex(p.lbl, 90, '#6ee7ff');
+        const lM = new M.Mesh(new M.PlaneGeometry(0.4, 0.2), new M.MeshBasicMaterial({map:lT, transparent:true}));
+        lM.position.set(-0.47, -0.94, 0.035); fr.add(lM);
+        const stemMat = new M.MeshStandardMaterial({color:0x111821, metalness:0.74, roughness:0.28});
+        const stem = new M.Mesh(new M.BoxGeometry(0.038, 0.78, 0.038), stemMat);
+        stem.position.set(0, -1.54, -0.03); fr.add(stem);
+        const basePlate = new M.Mesh(new M.BoxGeometry(0.9, 0.045, 0.36), stemMat);
+        basePlate.position.set(0, -1.94, -0.03); fr.add(basePlate);
+        fr.position.set(p.x, p.y, p.z); fr.rotation.y = p.ry; fr.scale.setScalar(p.scale); s1.add(fr);
+        const anchor = new M.Mesh(new M.PlaneGeometry(1.28 * p.scale, 0.1), new M.MeshBasicMaterial({color:p.c, transparent:true, opacity:0.22, blending:M.AdditiveBlending, side:M.DoubleSide}));
+        anchor.rotation.x = -Math.PI/2; anchor.rotation.z = -p.ry * 0.28;
+        anchor.position.set(p.x, -2.22, p.z + 0.15); s1.add(anchor);
+      });
+
+            decorateChamber(s2, {accent:0xff6e6e, warm:0xd9c8a9, floorY:-2.2, floorW:24, floorD:18, rayY:3, particles:260, floorTint:0x140707});
+// 02 COMMERCIAL
+      const s2 = makeSc(-50);
+      const bw=9, bh=5.2;
+      const bb = new M.Mesh(new M.PlaneGeometry(bw, bh), new M.MeshBasicMaterial({map:vidTex('v-com'), side:M.DoubleSide}));
+      bb.position.y = 1.2; s2.add(bb);
+      const bbe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(bw+0.4, bh+0.4, 0.08)), wireMat(0x6ee7ff, 0.9));
+      bbe.position.y = 1.2; s2.add(bbe);
+      const stageWall = new M.Mesh(new M.PlaneGeometry(18, 9), new M.MeshStandardMaterial({color:0x070812, metalness:0.22, roughness:0.78, side:M.DoubleSide}));
+      stageWall.position.set(0, 1.0, -0.35); s2.add(stageWall);
+      const ground = new M.Mesh(new M.PlaneGeometry(42, 28), new M.MeshStandardMaterial({color:0x05080f, metalness:0.84, roughness:0.34, side:M.DoubleSide}));
+      ground.rotation.x = -Math.PI/2; ground.position.y = -2.28; s2.add(ground);
+      const stageWash = new M.Mesh(new M.PlaneGeometry(13.5, 7.4), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.08, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      stageWash.rotation.x = -Math.PI/2; stageWash.position.set(0, -2.22, 1.1); s2.add(stageWash);
+      const commercialTitle = new M.Mesh(new M.PlaneGeometry(4.4, 0.55), new M.MeshBasicMaterial({map:textTex('COMMERCIAL STAGE', 58, '#d9c8a9'), transparent:true, side:M.DoubleSide, opacity:0.88}));
+      commercialTitle.position.set(0, 4.15, -0.03); s2.add(commercialTitle);
+      const trussMat = new M.MeshStandardMaterial({color:0x111821, metalness:0.82, roughness:0.24});
+      const glowCyan = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.38, blending:M.AdditiveBlending});
+      const glowWarm = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.28, blending:M.AdditiveBlending});
+      [-5.8, 5.8].forEach(x=>{
+        const leg = new M.Mesh(new M.BoxGeometry(0.12, 7.2, 0.12), trussMat);
+        leg.position.set(x, 1.1, 0.1); s2.add(leg);
+        const light = new M.Mesh(new M.BoxGeometry(0.035, 6.5, 0.035), x < 0 ? glowCyan : glowWarm);
+        light.position.set(x * 0.985, 1.1, 0.2); s2.add(light);
+      });
+      [-2.9, 0, 2.9].forEach(x=>{
+        const top = new M.Mesh(new M.BoxGeometry(1.7, 0.09, 0.12), trussMat);
+        top.position.set(x, 4.65, 0.08); s2.add(top);
+        const strip = new M.Mesh(new M.BoxGeometry(1.55, 0.026, 0.04), x === 0 ? glowWarm : glowCyan);
+        strip.position.set(x, 4.55, 0.2); s2.add(strip);
+      });
+      [
+        {x:-7.6, y:1.15, z:1.1, ry:0.42, color:0x6ee7ff},
+        {x:7.6, y:1.15, z:1.1, ry:-0.42, color:0xd9c8a9}
+      ].forEach(p=>{
+        const side = new M.Mesh(new M.PlaneGeometry(3.6, 5.8), new M.MeshStandardMaterial({color:0x060a12, metalness:0.42, roughness:0.62, side:M.DoubleSide}));
+        side.position.set(p.x, p.y, p.z); side.rotation.y = p.ry; s2.add(side);
+        const panel = new M.Mesh(new M.PlaneGeometry(0.82, 4.6), new M.MeshBasicMaterial({color:p.color, transparent:true, opacity:0.1, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        panel.position.set(p.x * 0.97, p.y, p.z + 0.05); panel.rotation.y = p.ry; s2.add(panel);
+      });
+      [
+        {x:-4.4, z:3.4, w:1.6, h:2.7, c:0x6ee7ff, ry:-0.28},
+        {x:4.4, z:3.35, w:1.6, h:2.7, c:0xd9c8a9, ry:0.28},
+        {x:-2.0, z:4.8, w:1.25, h:2.0, c:0xd9c8a9, ry:-0.08},
+        {x:2.0, z:4.8, w:1.25, h:2.0, c:0x6ee7ff, ry:0.08}
+      ].forEach(p=>{
+        const soft = new M.Mesh(new M.PlaneGeometry(p.w, p.h), new M.MeshBasicMaterial({color:p.c, transparent:true, opacity:0.12, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        soft.position.set(p.x, 0.9, p.z); soft.rotation.y = p.ry; s2.add(soft);
+        const stand = new M.Mesh(new M.BoxGeometry(0.055, 2.2, 0.055), trussMat);
+        stand.position.set(p.x, -1.25, p.z); s2.add(stand);
+        const foot = new M.Mesh(new M.BoxGeometry(0.75, 0.04, 0.42), trussMat);
+        foot.position.set(p.x, -2.18, p.z); s2.add(foot);
+      });
+      const dolly = new M.Group();
+      const dollyBody = new M.Mesh(new M.BoxGeometry(1.1, 0.34, 0.66), new M.MeshStandardMaterial({color:0x0d1218, metalness:0.7, roughness:0.32}));
+      dollyBody.position.y = -1.95; dolly.add(dollyBody);
+      const lens = new M.Mesh(new M.CylinderGeometry(0.16, 0.22, 0.42, 24), new M.MeshStandardMaterial({color:0x111111, metalness:0.86, roughness:0.18}));
+      lens.rotation.x = Math.PI/2; lens.position.set(0, -1.83, -0.5); dolly.add(lens);
+      [-0.45, 0.45].forEach(x=>{
+        const rail = new M.Mesh(new M.BoxGeometry(0.035, 0.035, 3.4), glowCyan);
+        rail.position.set(x, -2.14, 0.15); dolly.add(rail);
+      });
+      dolly.position.set(-3.0, 0, 4.3); dolly.rotation.y = -0.38; s2.add(dolly);
+      const slate = new M.Mesh(new M.PlaneGeometry(1.85, 0.72), new M.MeshBasicMaterial({map:textTex('SHOT 02', 66, '#f5f0e8'), transparent:true, side:M.DoubleSide, opacity:0.72}));
+      slate.position.set(3.55, -0.35, 3.9); slate.rotation.y = 0.28; s2.add(slate);
+      const commercialKey = new M.PointLight(0x6ee7ff, 0.8, 12);
+      commercialKey.position.set(-4.8, 2.2, 3.4); s2.add(commercialKey);
+      const commercialFill = new M.PointLight(0xd9c8a9, 0.52, 10);
+      commercialFill.position.set(4.8, 1.8, 3.2); s2.add(commercialFill);
+
+            decorateChamber(s3, {accent:0x9b8cff, warm:0x6ee7ff, floorY:-3.5, floorW:18, floorD:14, rayY:0, particles:380, floorTint:0x0a0716});
+// 03 AI VIDEO
+      const s3 = makeSc(-75);
+      const aiWall = new M.Mesh(new M.PlaneGeometry(17, 9), new M.MeshStandardMaterial({color:0x050817, metalness:0.3, roughness:0.78, side:M.DoubleSide}));
+      aiWall.position.set(0, 0.1, -3.9); s3.add(aiWall);
+      const aiFloor = new M.Mesh(new M.PlaneGeometry(18, 14), new M.MeshStandardMaterial({color:0x040812, metalness:0.86, roughness:0.32, side:M.DoubleSide}));
+      aiFloor.rotation.x = -Math.PI/2; aiFloor.position.set(0, -2.35, -0.6); s3.add(aiFloor);
+      const aiGridMat = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.11, side:M.DoubleSide});
+      for (let i=-6; i<=6; i++){
+        const line = new M.Mesh(new M.PlaneGeometry(0.012, 10), aiGridMat);
+        line.rotation.x = -Math.PI/2; line.position.set(i * 0.8, -2.28, -0.8); s3.add(line);
+      }
+      for (let i=-5; i<=5; i++){
+        const line = new M.Mesh(new M.PlaneGeometry(10, 0.012), aiGridMat);
+        line.rotation.x = -Math.PI/2; line.position.set(0, -2.27, i * 0.8 - 0.8); s3.add(line);
+      }
+      const aiPodium = new M.Mesh(new M.CylinderGeometry(2.4, 2.9, 0.24, 64), new M.MeshStandardMaterial({color:0x070b14, metalness:0.82, roughness:0.22}));
+      aiPodium.position.set(0, -1.92, 0.05); s3.add(aiPodium);
+      const aiPodiumGlow = new M.Mesh(new M.CircleGeometry(2.24, 64), new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.12, blending:M.AdditiveBlending, side:M.DoubleSide}));
+      aiPodiumGlow.rotation.x = -Math.PI/2; aiPodiumGlow.position.set(0, -1.78, 0.05); s3.add(aiPodiumGlow);
+      const rackMat = new M.MeshStandardMaterial({color:0x070b12, metalness:0.7, roughness:0.38});
+      const rackLightA = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.42, blending:M.AdditiveBlending});
+      const rackLightB = new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.38, blending:M.AdditiveBlending});
+      [-5.9, -4.95, 4.95, 5.9].forEach((x, i)=>{
+        const rack = new M.Mesh(new M.BoxGeometry(0.54, 4.9, 0.48), rackMat);
+        rack.position.set(x, 0.1, -1.95); s3.add(rack);
+        for (let j=0; j<7; j++){
+          const led = new M.Mesh(new M.BoxGeometry(0.32, 0.035, 0.026), i%2 ? rackLightB : rackLightA);
+          led.position.set(x, -1.65 + j * 0.56, -1.69); s3.add(led);
+        }
+      });
+      [
+        {txt:'PROMPT', x:-3.55, y:1.55, z:-1.35, ry:0.34, color:'#6ee7ff'},
+        {txt:'RENDER', x:3.55, y:1.55, z:-1.35, ry:-0.34, color:'#9b8cff'},
+        {txt:'EDIT', x:-3.1, y:-0.75, z:0.7, ry:0.42, color:'#d9c8a9'},
+        {txt:'EXPORT', x:3.1, y:-0.75, z:0.7, ry:-0.42, color:'#6ee7ff'}
+      ].forEach(p=>{
+        const panel = new M.Mesh(new M.PlaneGeometry(1.75, 0.72), new M.MeshBasicMaterial({map:textTex(p.txt, 62, p.color), transparent:true, side:M.DoubleSide, opacity:0.82}));
+        panel.position.set(p.x, p.y, p.z); panel.rotation.y = p.ry; s3.add(panel);
+        const edge = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.92, 0.84, 0.035)), wireMat(0x6ee7ff, 0.34));
+        edge.position.copy(panel.position); edge.rotation.y = p.ry; s3.add(edge);
+      });
+      const ringMatA = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.28, blending:M.AdditiveBlending, side:M.DoubleSide});
+      const ringMatB = new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.22, blending:M.AdditiveBlending, side:M.DoubleSide});
+      const ringA = new M.Mesh(new M.TorusGeometry(2.45, 0.012, 12, 128), ringMatA);
+      const ringB = new M.Mesh(new M.TorusGeometry(3.25, 0.01, 12, 128), ringMatB);
+      const ringC = new M.Mesh(new M.TorusGeometry(1.82, 0.012, 12, 128), ringMatA);
+      ringA.rotation.x = Math.PI/2; ringB.rotation.y = Math.PI/2; ringC.rotation.z = Math.PI/2;
+      s3.add(ringA); s3.add(ringB); s3.add(ringC);
+      s3.userData.aiRings = [ringA, ringB, ringC];
+      const sphereG = new M.IcosahedronGeometry(5, 2);
+      const wf = new M.LineSegments(new M.EdgesGeometry(sphereG), wireMat(0x6ee7ff, 0.5));
+      s3.add(wf); s3.userData.sphere = wf;
+      const sphPos = sphereG.attributes.position;
       const used = new Set();
-      for(let i=0;i<pos.count;i+=2){
-        const k=`${pos.getX(i).toFixed(2)},${pos.getY(i).toFixed(2)},${pos.getZ(i).toFixed(2)}`;
-        if(used.has(k))continue; used.add(k);
-        const n = new M.Mesh(nodeGeom,nodeMat);
-        n.position.set(pos.getX(i),pos.getY(i),pos.getZ(i));
-        g.add(n);
+      for (let i = 0; i < sphPos.count; i += 2){
+        const k = `${sphPos.getX(i).toFixed(2)},${sphPos.getY(i).toFixed(2)},${sphPos.getZ(i).toFixed(2)}`;
+        if (used.has(k)) continue; used.add(k);
+        const n = new M.Mesh(new M.SphereGeometry(0.06, 8, 8), new M.MeshBasicMaterial({color:0x9b8cff}));
+        n.position.set(sphPos.getX(i), sphPos.getY(i), sphPos.getZ(i)); s3.add(n);
       }
-      const vp = new M.Mesh(new M.PlaneGeometry(2.8,1.6), new M.MeshBasicMaterial({map:vidTex('v-user17'),side:M.DoubleSide}));
-      g.add(vp);
-      const vf = new M.Mesh(new M.PlaneGeometry(3.2,2.0), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.15,blending:M.AdditiveBlending}));
-      vf.position.z=-0.01; g.add(vf);
-      g.userData.sphere = wf;
-    });
+      const aiScreen = new M.Group();
+      const aiScreenGlow = new M.Mesh(new M.PlaneGeometry(4.4, 2.8), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.07, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      aiScreenGlow.position.z = -0.12; aiScreen.add(aiScreenGlow);
+      const aiScreenBack = new M.Mesh(new M.PlaneGeometry(3.38, 2.08), new M.MeshStandardMaterial({color:0x070b13, metalness:0.68, roughness:0.2, transparent:true, opacity:0.82, side:M.DoubleSide}));
+      aiScreenBack.position.z = -0.04; aiScreen.add(aiScreenBack);
+      const vp3 = new M.Mesh(new M.PlaneGeometry(2.8, 1.6), new M.MeshBasicMaterial({map:vidTex('v-ai'), side:M.DoubleSide}));
+      vp3.position.z = 0.02; aiScreen.add(vp3);
+      const frame3 = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(3.12, 1.86, 0.08)), wireMat(0x9b8cff, 0.88));
+      frame3.position.z = 0.04; aiScreen.add(frame3);
+      const status3 = new M.Mesh(new M.PlaneGeometry(1.25, 0.22), new M.MeshBasicMaterial({map:textTex('AI GENERATED', 52, '#f5f0e8'), transparent:true, side:M.DoubleSide, opacity:0.78}));
+      status3.position.set(-0.72, -0.66, 0.06); aiScreen.add(status3);
+      s3.add(aiScreen);
+      const aiKey = new M.PointLight(0x6ee7ff, 0.82, 10);
+      aiKey.position.set(-2.8, 2.4, 2.2); s3.add(aiKey);
+      const aiFill = new M.PointLight(0x9b8cff, 0.62, 9);
+      aiFill.position.set(3.0, 1.8, 1.7); s3.add(aiFill);
 
-    // 04 REELS — 5 разных видео
-    addScene(-100,'REELS',g=>{
-      const cfg = [
-        {x:-3.0,y:0.5,z:1,rotY:0.3,scale:1.2,vid:'v-user14'},
-        {x:-0.5,y:-0.8,z:-0.5,rotY:-0.1,scale:1.6,vid:'v-user18'},
-        {x:2.5,y:0.7,z:0.5,rotY:-0.4,scale:1.1,vid:'v-user13'},
-        {x:4.5,y:-0.3,z:-1,rotY:-0.6,scale:0.9,vid:'v-user15'},
-        {x:-4.5,y:0.0,z:-1.5,rotY:0.5,scale:1.0,vid:'v-user19'}
-      ];
-      cfg.forEach(c=>{
-        const p = new M.Group();
-        const pl = new M.Mesh(new M.PlaneGeometry(1.0,1.8), new M.MeshBasicMaterial({map:vidTex(c.vid),side:M.DoubleSide}));
-        p.add(pl);
-        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.1,1.9,0.04)),wireMat(0x6ee7ff,0.7));
-        p.add(fr);
-        p.position.set(c.x,c.y,c.z); p.rotation.y=c.rotY; p.scale.setScalar(c.scale);
-        g.add(p);
+            decorateChamber(s4, {accent:0xff8ce6, warm:0xd9c8a9, floorY:-2.4, floorW:22, floorD:14, rayY:1.5, particles:280, floorTint:0x10081a});
+// 04 REELS
+      const s4 = makeSc(-100);
+      const reelWall = new M.Mesh(new M.PlaneGeometry(18, 8.8), new M.MeshStandardMaterial({color:0x090611, metalness:0.34, roughness:0.72, side:M.DoubleSide}));
+      reelWall.position.set(0, 0.2, -3.4); s4.add(reelWall);
+      const reelFloor = new M.Mesh(new M.PlaneGeometry(20, 14), new M.MeshStandardMaterial({color:0x06070c, metalness:0.82, roughness:0.28, side:M.DoubleSide}));
+      reelFloor.rotation.x = -Math.PI/2; reelFloor.position.set(0, -2.35, -0.3); s4.add(reelFloor);
+      const reelFloorGlow = new M.Mesh(new M.PlaneGeometry(10.5, 3.2), new M.MeshBasicMaterial({color:0xff4fc8, transparent:true, opacity:0.055, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      reelFloorGlow.rotation.x = -Math.PI/2; reelFloorGlow.position.set(0, -2.28, 0.7); s4.add(reelFloorGlow);
+      const reelRigMat = new M.MeshStandardMaterial({color:0x11131b, metalness:0.78, roughness:0.26});
+      const reelPink = new M.MeshBasicMaterial({color:0xff4fc8, transparent:true, opacity:0.28, blending:M.AdditiveBlending, depthWrite:false});
+      const reelCyan = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.24, blending:M.AdditiveBlending, depthWrite:false});
+      const reelWarm = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.18, blending:M.AdditiveBlending, depthWrite:false});
+      const reelTitle = new M.Mesh(new M.PlaneGeometry(4.2, 0.55), new M.MeshBasicMaterial({map:textTex('REELS SUITE', 62, '#f5f0e8'), transparent:true, side:M.DoubleSide, opacity:0.8}));
+      reelTitle.position.set(0, 3.65, -2.95); s4.add(reelTitle);
+      [-6.2, 6.2].forEach(x=>{
+        const tower = new M.Mesh(new M.BoxGeometry(0.12, 6.8, 0.12), reelRigMat);
+        tower.position.set(x, 0.7, -1.55); s4.add(tower);
+        const strip = new M.Mesh(new M.BoxGeometry(0.035, 5.9, 0.035), x < 0 ? reelPink : reelCyan);
+        strip.position.set(x * 0.99, 0.7, -1.4); s4.add(strip);
       });
-    });
-
-    // 05 BRAND FILMS
-    addScene(-125,'BRAND_FILMS',g=>{
-      const sw=12.6,sh=5.4;
-      const sc = new M.Mesh(new M.PlaneGeometry(sw,sh), new M.MeshBasicMaterial({map:vidTex('v-user04'),side:M.DoubleSide}));
-      sc.position.set(0,1.6,-3); g.add(sc);
-      const fe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(sw+0.3,sh+0.3,0.08)),wireMat(0x6ee7ff,0.8));
-      fe.position.set(0,1.6,-3); g.add(fe);
-      const sm = new M.MeshStandardMaterial({color:0x06090f,metalness:0.3,roughness:0.9});
-      for(let r=0;r<5;r++)for(let c=-5;c<=5;c++){const s=new M.Mesh(new M.BoxGeometry(0.7,0.7,0.7),sm);s.position.set(c*0.9,-1.6+r*0.1,2+r*1.1);g.add(s)}
-      for(const s of [-1,1]){const st=new M.Mesh(new M.BoxGeometry(0.1,4,0.1),new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.7}));st.position.set(s*7.5,1,0);g.add(st)}
-    });
-
-    // 06 MOTION DESIGN
-    addScene(-150,'MOTION',g=>{
-      const bg = new M.Mesh(new M.PlaneGeometry(14,8), new M.MeshBasicMaterial({map:vidTex('v-user02'),side:M.DoubleSide,transparent:true,opacity:0.45}));
-      bg.position.z=-5; g.add(bg);
-      const tex = textTex('HYPE',{size:180,color:'#f8fbff',w:1024,h:256});
-      const cfg = [{x:-3,y:1.5,z:0,rotY:-0.5,scale:1.4},{x:2,y:0.5,z:1,rotY:0.4,scale:1.7},{x:-1,y:-1.5,z:-1,rotY:-0.2,scale:1.1},{x:4,y:1.8,z:-0.5,rotY:0.8,scale:1.0},{x:-4,y:-0.2,z:0.5,rotY:0.7,scale:1.2}];
-      const planes = [];
-      cfg.forEach(c=>{
-        const m = new M.Mesh(new M.PlaneGeometry(2.4,0.6), new M.MeshBasicMaterial({map:tex,transparent:true,side:M.DoubleSide,opacity:0.7+Math.random()*0.3}));
-        m.position.set(c.x,c.y,c.z); m.rotation.y=c.rotY; m.scale.setScalar(c.scale);
-        g.add(m); planes.push(m);
+      [-3.4, 0, 3.4].forEach((x, i)=>{
+        const rail = new M.Mesh(new M.BoxGeometry(2.1, 0.08, 0.1), reelRigMat);
+        rail.position.set(x, 3.9, -1.5); s4.add(rail);
+        const light = new M.Mesh(new M.BoxGeometry(1.85, 0.024, 0.035), i === 1 ? reelWarm : reelPink);
+        light.position.set(x, 3.79, -1.34); s4.add(light);
       });
-      g.userData.planes = planes;
-    });
-
-    // 07 PRODUCT ADS
-    addScene(-175,'PRODUCT_ADS',g=>{
-      const pod = new M.Mesh(new M.CylinderGeometry(3.2,3.8,0.3,48), new M.MeshStandardMaterial({color:0x0a0e18,metalness:0.8,roughness:0.3}));
-      pod.position.y=-1.5; g.add(pod);
-      pod.add(new M.LineSegments(new M.EdgesGeometry(pod.geometry),wireMat(0x6ee7ff,0.5)));
-      const prod = new M.Mesh(new M.PlaneGeometry(2.4,3.3), new M.MeshBasicMaterial({map:vidTex('v-user19'),side:M.DoubleSide}));
-      prod.position.set(0,1,0); g.add(prod);
-      for(let i=0;i<8;i++){
-        const a=(i/8)*Math.PI*2;
-        const cn = new M.Mesh(new M.ConeGeometry(0.9,5,24,1,true), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.08,side:M.DoubleSide,blending:M.AdditiveBlending,depthWrite:false}));
-        cn.position.set(Math.cos(a)*3,3.5,Math.sin(a)*3); cn.rotation.x=Math.PI;
-        cn.lookAt(new M.Vector3(0,-1,0)); cn.rotateX(-Math.PI/2);
-        g.add(cn);
-      }
-      g.userData.product = prod;
-    });
-
-    // 08 AI SITES intro — 3 портала с видео
-    addScene(-200,'AI_SITES',g=>{
-      const t1 = textTex('AI SITES',{size:180,color:'#f8fbff',w:1024,h:256});
-      const m1 = new M.Mesh(new M.PlaneGeometry(8,2), new M.MeshBasicMaterial({map:t1,transparent:true}));
-      m1.position.y=1.5; g.add(m1);
-      const t2 = textTex('— three formats —',{size:36,color:'#6ee7ff',w:1024,h:96,weight:700});
-      const m2 = new M.Mesh(new M.PlaneGeometry(5,0.5), new M.MeshBasicMaterial({map:t2,transparent:true}));
-      m2.position.y=0.2; g.add(m2);
-      const cfg = [{l:'LANDING',c:0x6ee7ff,v:null},{l:'BRAND',c:0x9b8cff,v:null},{l:'CINEMATIC',c:0xffcd6e,v:null}];
-      cfg.forEach((p,i)=>{
-        const x=(i-1)*3;
-        const f = new M.Group(); f.position.set(x,-1.4,-1.5);
-        const vp = new M.Mesh(new M.PlaneGeometry(1.8,2.5), videoFrameMat(p.v));
-        vp.position.z=0.01; f.add(vp);
-        const fe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.85,2.55,0.06)),wireMat(p.c,0.9));
-        f.add(fe);
-        const lT = textTex(p.l,{size:64,color:'#f8fbff',w:512,h:128,weight:800});
-        const lM = new M.Mesh(new M.PlaneGeometry(1.4,0.35), new M.MeshBasicMaterial({map:lT,transparent:true}));
-        lM.position.y=-1.5; f.add(lM);
-        g.add(f);
+      [
+        {x:-5.8, y:1.0, z:2.6, ry:0.5, c:reelPink},
+        {x:5.8, y:1.0, z:2.6, ry:-0.5, c:reelCyan},
+        {x:-2.8, y:-1.75, z:3.05, ry:-0.08, c:reelWarm},
+        {x:2.8, y:-1.75, z:3.05, ry:0.08, c:reelWarm}
+      ].forEach(p=>{
+        const panel = new M.Mesh(new M.PlaneGeometry(1.4, 2.7), p.c);
+        panel.position.set(p.x, p.y, p.z); panel.rotation.y = p.ry; s4.add(panel);
+        const stand = new M.Mesh(new M.BoxGeometry(0.05, 2.0, 0.05), reelRigMat);
+        stand.position.set(p.x, -1.55, p.z); s4.add(stand);
       });
-    });
-
-    // 09 LANDING
-    addScene(-225,'LANDING',g=>{
-      const vp = new M.Mesh(new M.PlaneGeometry(3,4.5), emptyFrameMat());
-      g.add(vp);
-      const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(3.2,4.7,0.1)),wireMat(0x6ee7ff,0.7));
-      g.add(fr);
-      const pG = new M.BufferGeometry(); const pN=300, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){pP[i*3]=(Math.random()-0.5)*8;pP[i*3+1]=(Math.random()-0.5)*6;pP[i*3+2]=(Math.random()-0.5)*4-2}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0x6ee7ff,size:0.03,transparent:true,opacity:0.5,blending:M.AdditiveBlending,depthWrite:false})));
-    });
-
-    // 10 BRAND SITES — кольцо из 5 видео
-    addScene(-250,'BRAND_SITES',g=>{
-      const vids = [null,null,null,null,null];
-      const cols = [0x6ee7ff,0x9b8cff,0xd9c8a9,0x6ee7ff,0x9b8cff];
-      for(let i=0;i<5;i++){
-        const a=(i/5)*Math.PI*2, r=3.8;
-        const pg = new M.Group();
-        pg.position.set(Math.cos(a)*r, Math.sin(a)*0.4, Math.sin(a)*r*0.4);
-        const vp = new M.Mesh(new M.PlaneGeometry(1.8,2.7), videoFrameMat(vids[i]));
-        pg.add(vp);
-        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.9,2.8,0.05)),wireMat(cols[i],0.6));
-        pg.add(fr);
-        pg.lookAt(0,0,0); g.add(pg);
+      const timelineDeck = new M.Group();
+      const deckBase = new M.Mesh(new M.BoxGeometry(8.3, 0.12, 0.42), reelRigMat);
+      timelineDeck.add(deckBase);
+      const timelineBars = [];
+      for (let i=0; i<17; i++){
+        const mat = i % 3 === 0 ? reelPink : (i % 3 === 1 ? reelCyan : reelWarm);
+        const bar = new M.Mesh(new M.BoxGeometry(0.28 + (i % 4) * 0.18, 0.035, 0.04), mat.clone());
+        bar.position.set(-3.7 + i * 0.46, 0.09, -0.02 + (i % 2) * 0.09);
+        timelineDeck.add(bar); timelineBars.push(bar);
       }
-    });
-
-    // 11 CINEMATIC SITES — torus + video backdrop
-    addScene(-275,'CINEMATIC_SITES',g=>{
-      const tT = textTex('LIKE THIS ONE',{size:100,color:'#ffcd6e',w:1024,h:192,weight:900});
-      const tM = new M.Mesh(new M.PlaneGeometry(7,1.3), new M.MeshBasicMaterial({map:tT,transparent:true}));
-      tM.position.y=2; g.add(tM);
-      const bg = new M.Mesh(new M.PlaneGeometry(14,8), emptyFrameMat());
-      bg.position.z=-5; g.add(bg);
-      const torus = new M.Mesh(new M.TorusKnotGeometry(1.2,0.35,80,16), new M.MeshStandardMaterial({color:0xffcd6e,metalness:0.9,roughness:0.15,emissive:0xffcd6e,emissiveIntensity:0.18}));
-      torus.position.set(0,0.2,0); g.add(torus);
-      const pG = new M.BufferGeometry(); const pN=600, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){const r=2.5+Math.random()*3,a=Math.random()*Math.PI*2,b=(Math.random()-0.5)*Math.PI;pP[i*3]=Math.cos(a)*Math.cos(b)*r;pP[i*3+1]=Math.sin(b)*r;pP[i*3+2]=Math.sin(a)*Math.cos(b)*r}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0xffcd6e,size:0.02,transparent:true,opacity:0.6,blending:M.AdditiveBlending,depthWrite:false})));
-      g.userData.torus = torus;
-    });
-
-    // 12 PRICING
-    addScene(-300,'PRICING',g=>{
-      const cfg = [{x:-3.2,color:0x6ee7ff,label:'START',price:'1M'},{x:0,color:0x9b8cff,label:'GROWTH',price:'3M',big:true},{x:3.2,color:0xffcd6e,label:'HYPE',price:'7M'}];
-      cfg.forEach(c=>{
-        const r=c.big?1.0:0.85, h=c.big?4.2:3.6;
-        const cap = new M.Mesh(new M.CylinderGeometry(r,r,h,32,1,true), new M.MeshStandardMaterial({color:c.color,metalness:0.6,roughness:0.2,transparent:true,opacity:0.18,emissive:c.color,emissiveIntensity:0.5,side:M.DoubleSide}));
-        cap.position.set(c.x,0,0); g.add(cap);
-        const rt = new M.Mesh(new M.RingGeometry(r*0.95,r*1.05,32), new M.MeshBasicMaterial({color:c.color,transparent:true,opacity:0.9,blending:M.AdditiveBlending,side:M.DoubleSide}));
-        rt.position.set(c.x,h/2,0); rt.rotation.x=Math.PI/2; g.add(rt);
-        const rb = rt.clone(); rb.position.y=-h/2; g.add(rb);
-        const lT = textTex(c.label,{size:96,color:'#f8fbff',w:512,h:128,weight:800});
-        const lM = new M.Mesh(new M.PlaneGeometry(1.5,0.35), new M.MeshBasicMaterial({map:lT,transparent:true}));
-        lM.position.set(c.x,h/2+0.6,0); g.add(lM);
-        const pT = textTex(c.price+' UZS',{size:64,color:'#9aa8ba',w:512,h:128,weight:700});
-        const pM = new M.Mesh(new M.PlaneGeometry(1.5,0.3), new M.MeshBasicMaterial({map:pT,transparent:true}));
-        pM.position.set(c.x,-h/2-0.5,0); g.add(pM);
+      timelineDeck.position.set(0, -1.95, 2.7); s4.add(timelineDeck);
+      s4.userData.timelineBars = timelineBars;
+      const reelFrames = [];
+      [{x:-3.0, y:0.5, z:1, rotY:0.3, scale:1.2, vid:'v-r1', tag:'HOOK'},
+       {x:-0.5, y:-0.8, z:-0.5, rotY:-0.1, scale:1.6, vid:'v-r2', tag:'CUT'},
+       {x:2.5, y:0.7, z:0.5, rotY:-0.4, scale:1.1, vid:'v-r3', tag:'BEAT'},
+       {x:4.5, y:-0.3, z:-1, rotY:-0.6, scale:0.9, vid:'v-r4', tag:'CTA'},
+       {x:-4.5, y:0, z:-1.5, rotY:0.5, scale:1.0, vid:'v-r5', tag:'VIRAL'}].forEach((c, i)=>{
+        const ph = new M.Group();
+        const back = new M.Mesh(new M.PlaneGeometry(1.15, 1.95), new M.MeshStandardMaterial({color:0x080911, metalness:0.68, roughness:0.24, transparent:true, opacity:0.78, side:M.DoubleSide}));
+        back.position.z = -0.035; ph.add(back);
+        const halo = new M.Mesh(new M.PlaneGeometry(1.34, 2.16), new M.MeshBasicMaterial({color:i % 2 ? 0x6ee7ff : 0xff4fc8, transparent:true, opacity:0.065, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        halo.position.z = -0.08; ph.add(halo);
+        const pl = new M.Mesh(new M.PlaneGeometry(1.0, 1.8), new M.MeshBasicMaterial({map:vidTex(c.vid), side:M.DoubleSide}));
+        ph.add(pl);
+        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.1, 1.9, 0.04)), wireMat(i % 2 ? 0x6ee7ff : 0xff4fc8, 0.78));
+        ph.add(fr);
+        const bracket = new M.Mesh(new M.BoxGeometry(0.08, 0.4, 0.06), reelRigMat);
+        bracket.position.set(0, -1.13, -0.02); ph.add(bracket);
+        const foot = new M.Mesh(new M.BoxGeometry(0.58, 0.04, 0.18), reelRigMat);
+        foot.position.set(0, -1.36, -0.02); ph.add(foot);
+        const tag = new M.Mesh(new M.PlaneGeometry(0.72, 0.18), new M.MeshBasicMaterial({map:textTex(c.tag, 42, '#f5f0e8'), transparent:true, side:M.DoubleSide, opacity:0.72}));
+        tag.position.set(-0.19, -0.76, 0.04); ph.add(tag);
+        ph.position.set(c.x, c.y, c.z); ph.rotation.y = c.rotY; ph.scale.setScalar(c.scale);
+        ph.userData.baseY = c.y; ph.userData.baseRotZ = 0; ph.userData.floatPhase = i * 0.85;
+        s4.add(ph); reelFrames.push(ph);
       });
-    });
+      s4.userData.reelFrames = reelFrames;
+      const editConsole = new M.Group();
+      const consoleBody = new M.Mesh(new M.BoxGeometry(2.2, 0.35, 0.9), new M.MeshStandardMaterial({color:0x0c0d12, metalness:0.72, roughness:0.32}));
+      consoleBody.position.y = -1.82; editConsole.add(consoleBody);
+      const consoleScreen = new M.Mesh(new M.PlaneGeometry(1.35, 0.46), new M.MeshBasicMaterial({map:textTex('RETENTION 92%', 46, '#6ee7ff'), transparent:true, side:M.DoubleSide, opacity:0.78}));
+      consoleScreen.rotation.x = -0.55; consoleScreen.position.set(0, -1.54, -0.12); editConsole.add(consoleScreen);
+      editConsole.position.set(0.65, 0, 3.65); editConsole.rotation.y = -0.08; s4.add(editConsole);
+      const reelKey = new M.PointLight(0xff4fc8, 0.82, 10);
+      reelKey.position.set(-3.7, 2.4, 2.4); s4.add(reelKey);
+      const reelFill = new M.PointLight(0x6ee7ff, 0.62, 9);
+      reelFill.position.set(3.6, 1.9, 2.1); s4.add(reelFill);
 
-    // 13 PORTFOLIO — стена 2x3 видео
-    addScene(-325,'PORTFOLIO',g=>{
-      const vids = ['v-user06','v-user07','v-user08','v-user09','v-user10','v-user12'];
-      const labels = ['UGC','PRODUCT','PROMO','BRAND','CYBER','ACTION'];
-      const cols=3,rows=2,w=2.8,h=1.7,gap=0.4;
-      const tw=cols*(w+gap)-gap, th=rows*(h+gap)-gap;
-      for(let i=0;i<vids.length;i++){
-        const col=i%cols, row=Math.floor(i/cols);
-        const x=-tw/2+col*(w+gap)+w/2, y=th/2-row*(h+gap)-h/2;
-        const sc = new M.Mesh(new M.PlaneGeometry(w,h), new M.MeshBasicMaterial({map:vidTex(vids[i]),side:M.DoubleSide}));
-        sc.position.set(x,y,0); g.add(sc);
-        const fr = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(w+0.1,h+0.1,0.04)),wireMat(0x6ee7ff,0.5));
-        fr.position.set(x,y,0); g.add(fr);
-        const lT = textTex(labels[i],{size:44,color:'#6ee7ff',w:512,h:96,weight:800});
-        const lM = new M.Mesh(new M.PlaneGeometry(1,0.18), new M.MeshBasicMaterial({map:lT,transparent:true}));
-        lM.position.set(x,y-h/2-0.18,0.02); g.add(lM);
-      }
-    });
-
-    // 14 PROCESS — киноплёнка
-    addScene(-350,'PROCESS',g=>{
-      const fw=2.6,fh=1.9,gap=0.15;
-      for(let i=0;i<5;i++){
-        const x=(i-2)*(fw+gap);
-        const bd = new M.Mesh(new M.PlaneGeometry(fw,fh), new M.MeshStandardMaterial({color:0x0c121b,metalness:0.4,roughness:0.7,transparent:true,opacity:0.85}));
-        bd.position.set(x,0,0); g.add(bd);
-        const ed = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(fw,fh,0.02)),wireMat(0x6ee7ff,0.4));
-        ed.position.set(x,0,0); g.add(ed);
-        const nT = textTex('0'+(i+1),{size:200,color:'#6ee7ff',w:512,h:512,weight:900});
-        const nM = new M.Mesh(new M.PlaneGeometry(1.6,1.6), new M.MeshBasicMaterial({map:nT,transparent:true}));
-        nM.position.set(x,0,0.01); g.add(nM);
-        for(const s of [1,-1]){for(let h=0;h<8;h++){const hole=new M.Mesh(new M.CircleGeometry(0.05,12),new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.5}));hole.position.set(x-fw/2+h*(fw/7),s*(fh/2+0.15),0.01);g.add(hole)}}
-      }
-    });
-
-    // 15 ABOUT
-    addScene(-375,'ABOUT',g=>{
-      const pG = new M.BufferGeometry(); const pN=800, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){pP[i*3]=(Math.random()-0.5)*16;pP[i*3+1]=(Math.random()-0.5)*10;pP[i*3+2]=(Math.random()-0.5)*8-2}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0xa7e6ff,size:0.025,transparent:true,opacity:0.4,blending:M.AdditiveBlending,depthWrite:false})));
-      const ring = new M.Mesh(new M.RingGeometry(4,4.2,64), new M.MeshBasicMaterial({color:0x6ee7ff,transparent:true,opacity:0.18,side:M.DoubleSide,blending:M.AdditiveBlending}));
-      ring.rotation.x=Math.PI/2; ring.position.y=-1.5; g.add(ring);
-    });
-
-    // 16 CONTACT
-    addScene(-400,'CONTACT',g=>{
-      const pn = new M.Mesh(new M.PlaneGeometry(6,4), new M.MeshStandardMaterial({color:0x6ee7ff,metalness:0.6,roughness:0.1,transparent:true,opacity:0.18,side:M.DoubleSide}));
-      pn.position.set(0,0.3,0); g.add(pn);
-      const pe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(6.2,4.2,0.04)),wireMat(0x6ee7ff,0.9));
-      pe.position.set(0,0.3,0); g.add(pe);
-      const tT = textTex('GET IN TOUCH',{size:90,color:'#f8fbff',w:1024,h:192,weight:900});
-      const tM = new M.Mesh(new M.PlaneGeometry(5,0.9), new M.MeshBasicMaterial({map:tT,transparent:true}));
-      tM.position.set(0,1.4,0.05); g.add(tM);
-      const pG = new M.BufferGeometry(); const pN=300, pP=new Float32Array(pN*3);
-      for(let i=0;i<pN;i++){pP[i*3]=(Math.random()-0.5)*14;pP[i*3+1]=(Math.random()-0.5)*8;pP[i*3+2]=(Math.random()-0.5)*8-3}
-      pG.setAttribute('position',new M.BufferAttribute(pP,3));
-      g.add(new M.Points(pG,new M.PointsMaterial({color:0x9b8cff,size:0.02,transparent:true,opacity:0.4,blending:M.AdditiveBlending,depthWrite:false})));
-    });
-
-    const sceneNames = ['00 LAPTOP','01 LOBBY','02 COMMERCIAL','03 AI VIDEO','04 REELS','05 BRAND FILMS','06 MOTION','07 PRODUCT ADS','08 AI SITES','08a LANDING','08b BRAND SITES','08c CINEMATIC','09 PRICING','10 PORTFOLIO','11 PROCESS','12 STUDIO','13 CONTACT'];
-    document.getElementById('sceneTotal').textContent = String(sceneNames.length);
-
-    const stages = document.querySelectorAll('.stage');
-    const progressBar = document.querySelector('.scroll-progress');
-    const sceneNow = document.getElementById('sceneNow');
-    const sceneLabel = document.getElementById('sceneLabel');
-    const scrollHint = document.getElementById('scrollHint');
-    const portalFlash = document.getElementById('portalFlash');
-    let globalProgress = 0;
-    function onScroll(){const total=document.documentElement.scrollHeight-window.innerHeight;globalProgress=total>0?clamp(window.scrollY/total,0,1):0;progressBar.style.width=(globalProgress*100)+'%';scrollHint.classList.toggle('hidden',window.scrollY>window.innerHeight*0.3)}
-    window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
-
-    const sObs = new IntersectionObserver(es=>{es.forEach(e=>{e.target.classList.toggle('in',e.isIntersecting);if(e.isIntersecting){const idx=parseInt(e.target.getAttribute('data-stage'),10);sceneNow.textContent=String(idx).padStart(2,'0');sceneLabel.textContent=sceneNames[idx].split(' ').slice(1).join(' ')||sceneNames[idx]}})},{threshold:0.5});
-    stages.forEach(s=>sObs.observe(s));
-
-    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'})}}));
-
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit',e=>{e.preventDefault();const st=form.querySelector('.form-status');const d=new FormData(form);const n=(d.get('name')||'').trim(),p=(d.get('phone')||'').trim();if(!n||!p){st.textContent=i18n[curLang].formError;st.style.color='#ff8c8c';return}st.textContent=i18n[curLang].formSuccess;st.style.color='#6ee7ff';form.reset()});
-
-    let activeSceneVideoIndex = -1;
-    function syncSceneVideos(activeIndex){
-      const keep = new Set();
-      for(let offset=-1; offset<=1; offset++){
-        const s = scenes[activeIndex + offset];
-        if(s && s.videoIds) s.videoIds.forEach(id=>keep.add(id));
-      }
-      document.querySelectorAll('video').forEach(v=>{
-        if(keep.has(v.id)){
-          primeVideo(v);
-        } else if(!v.paused) {
-          v.pause();
+            decorateChamber(s5, {accent:0xffaa66, warm:0xd9c8a9, floorY:-2.4, floorW:24, floorD:18, rayY:2, particles:240, floorTint:0x120804, noOrbs:true});
+// 05 BRAND FILMS
+      const s5 = makeSc(-125);
+      const cinemaWall = new M.Mesh(new M.PlaneGeometry(18.5, 9.2), new M.MeshStandardMaterial({color:0x08070a, metalness:0.24, roughness:0.76, side:M.DoubleSide}));
+      cinemaWall.position.set(0, 1.0, -3.35); s5.add(cinemaWall);
+      const cinemaFloor = new M.Mesh(new M.PlaneGeometry(22, 18), new M.MeshStandardMaterial({color:0x050508, metalness:0.7, roughness:0.38, side:M.DoubleSide}));
+      cinemaFloor.rotation.x = -Math.PI/2; cinemaFloor.position.set(0, -2.35, 2.1); s5.add(cinemaFloor);
+      const aisleGlow = new M.Mesh(new M.PlaneGeometry(2.4, 8.8), new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.055, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      aisleGlow.rotation.x = -Math.PI/2; aisleGlow.position.set(0, -2.27, 2.45); s5.add(aisleGlow);
+      const cinemaDark = new M.MeshStandardMaterial({color:0x090a0e, metalness:0.46, roughness:0.6});
+      const cinemaMetal = new M.MeshStandardMaterial({color:0x11131a, metalness:0.84, roughness:0.22});
+      const cinemaWarm = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.24, blending:M.AdditiveBlending, depthWrite:false});
+      const cinemaCyan = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.2, blending:M.AdditiveBlending, depthWrite:false});
+      const cinemaScreenGlow = new M.Mesh(new M.PlaneGeometry(14.2, 6.4), new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.065, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      cinemaScreenGlow.position.set(0, 1.6, -3.16); s5.add(cinemaScreenGlow);
+      const cs5 = new M.Mesh(new M.PlaneGeometry(12.6, 5.4), new M.MeshBasicMaterial({map:vidTex('v-brand'), side:M.DoubleSide}));
+      cs5.position.set(0, 1.6, -3); s5.add(cs5);
+      const fe5 = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(12.9, 5.7, 0.08)), wireMat(0x6ee7ff, 0.8));
+      fe5.position.set(0, 1.6, -3); s5.add(fe5);
+      const screenFrame = new M.Mesh(new M.BoxGeometry(13.2, 6.0, 0.16), cinemaMetal);
+      screenFrame.position.set(0, 1.6, -3.24); s5.add(screenFrame);
+      const screenMask = new M.Mesh(new M.PlaneGeometry(12.72, 5.52), new M.MeshBasicMaterial({color:0x050509, transparent:true, opacity:0.06, side:M.DoubleSide}));
+      screenMask.position.set(0, 1.6, -2.94); s5.add(screenMask);
+      const brandTitle = new M.Mesh(new M.PlaneGeometry(5.3, 0.52), new M.MeshBasicMaterial({map:textTex('BRAND FILM SCREENING', 52, '#f5f0e8'), transparent:true, side:M.DoubleSide, opacity:0.78}));
+      brandTitle.position.set(0, 4.76, -2.9); s5.add(brandTitle);
+      [
+        {x:-8.3, ry:0.36, c:cinemaWarm},
+        {x:8.3, ry:-0.36, c:cinemaCyan}
+      ].forEach(p=>{
+        const wall = new M.Mesh(new M.PlaneGeometry(4.2, 7.4), new M.MeshStandardMaterial({color:0x07070a, metalness:0.36, roughness:0.7, side:M.DoubleSide}));
+        wall.position.set(p.x, 0.5, 0.8); wall.rotation.y = p.ry; s5.add(wall);
+        for (let i=0; i<4; i++){
+          const strip = new M.Mesh(new M.BoxGeometry(0.04, 4.9, 0.035), p.c);
+          strip.position.set(p.x * 0.985, -0.25 + i * 0.02, -1.0 + i * 1.2);
+          strip.rotation.y = p.ry; s5.add(strip);
         }
       });
-    }
-
-    function updateCamera(p){
-      const n = scenes.length;
-      const idx = p*(n-1);
-      const i = Math.min(Math.floor(idx),n-2);
-      const t = idx-i;
-      if(i !== activeSceneVideoIndex){
-        activeSceneVideoIndex = i;
-        syncSceneVideos(i);
+      for (let i=-4; i<=4; i++){
+        const slat = new M.Mesh(new M.BoxGeometry(0.08, 0.08, 9.4), cinemaMetal);
+        slat.position.set(i * 1.35, 5.1, 0.25);
+        slat.rotation.x = 0.07; s5.add(slat);
       }
-      const easedT = easeInOut(t);
-      const a = scenes[i].z, b = scenes[i+1].z;
-      const sceneZ = lerp(a,b,easedT);
-      let camOffset=8, camY=0.6, camX=0, lookY=0, lookX=0;
-      const cur = scenes[i].label;
-      if(cur==='LAPTOP'){
-        const orbit = lerp(-0.6,0.0,smoothstep(0.0,0.6,t));
-        const dist = lerp(7,3.5,smoothstep(0.0,0.6,t));
-        camX = Math.sin(orbit)*dist;
-        camOffset = Math.cos(orbit)*dist;
-        camY = lerp(2.5,0.9,smoothstep(0.0,0.6,t));
-        lookY = lerp(0.3,0.9,smoothstep(0.0,0.7,t));
-        if(t>0.7){const zoom=smoothstep(0.7,1.0,t);camOffset=lerp(camOffset,0.4,zoom);camY=lerp(camY,0.9,zoom);camX=lerp(camX,0,zoom)}
+      const projectorBeamMat = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.055, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide});
+      const projectorBeam = new M.Mesh(new M.CylinderGeometry(0.42, 4.95, 8.0, 40, 1, true), projectorBeamMat);
+      projectorBeam.rotation.x = Math.PI/2; projectorBeam.position.set(0, 1.85, 1.0); s5.add(projectorBeam);
+      const projector = new M.Group();
+      const projectorBody = new M.Mesh(new M.BoxGeometry(1.25, 0.42, 0.72), cinemaMetal);
+      projector.add(projectorBody);
+      const projectorLens = new M.Mesh(new M.CylinderGeometry(0.18, 0.25, 0.38, 32), new M.MeshStandardMaterial({color:0x0a0a0a, metalness:0.9, roughness:0.12}));
+      projectorLens.rotation.x = Math.PI/2; projectorLens.position.set(0, 0, -0.53); projector.add(projectorLens);
+      projector.position.set(0, 2.15, 4.65); s5.add(projector);
+      const seatMat = new M.MeshStandardMaterial({color:0x08090d, metalness:0.34, roughness:0.82});
+      const seatEdgeMat = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.13, blending:M.AdditiveBlending, depthWrite:false});
+      for (let r=0;r<5;r++) for (let c=-5;c<=5;c++){
+        if (Math.abs(c) < 1 && r > 0) continue;
+        const seat = new M.Group();
+        const base = new M.Mesh(new M.BoxGeometry(0.68, 0.22, 0.72), seatMat);
+        base.position.y = -0.16; seat.add(base);
+        const back = new M.Mesh(new M.BoxGeometry(0.68, 0.82, 0.16), seatMat);
+        back.position.set(0, 0.22, 0.3); back.rotation.x = -0.12; seat.add(back);
+        const trim = new M.Mesh(new M.BoxGeometry(0.55, 0.025, 0.035), seatEdgeMat);
+        trim.position.set(0, 0.66, 0.22); seat.add(trim);
+        seat.position.set(c*0.9 + (r%2)*0.18, -1.74 + r*0.12, 1.75 + r*1.08);
+        seat.rotation.x = -0.02; s5.add(seat);
       }
-      const tilt = {LOBBY:{y:0,x:0},COMMERCIAL:{y:1,x:0},AI_VIDEO:{y:0,x:0},REELS:{y:0,x:0},BRAND_FILMS:{y:-0.3,x:0},MOTION:{y:0,x:0},PRODUCT_ADS:{y:-0.6,x:0},AI_SITES:{y:0,x:0},LANDING:{y:0,x:0},BRAND_SITES:{y:0,x:0},CINEMATIC_SITES:{y:0,x:0},PRICING:{y:0,x:0},PORTFOLIO:{y:0,x:0},PROCESS:{y:0,x:0},ABOUT:{y:0,x:0},CONTACT:{y:0.2,x:0}};
-      if(tilt[cur]){lookY=tilt[cur].y; lookX=tilt[cur].x}
-      if(cur==='REELS') camX = lerp(-2,2,t);
-      if(cur==='PORTFOLIO') camX = lerp(-3,3,t);
-      if(cur==='BRAND_FILMS'){camY=lerp(0,0.3,t); camOffset=lerp(9,7,t)}
-      if(cur==='AI_VIDEO') camOffset = lerp(8,5.5,t);
-      if(cur==='CINEMATIC_SITES'){const orb=lerp(0,0.5,t);camX=Math.sin(orb)*7;camOffset=Math.cos(orb)*7}
-      camera.position.set(camX,camY,sceneZ+camOffset);
-      camera.lookAt(lookX,lookY,sceneZ);
-      if(laptopMeta){
-        const lp = i===0 ? t : (i>0 ? 1 : 0);
-        laptopMeta.lidPivot.rotation.x = lerp(0,-Math.PI*0.58,smoothstep(0.08,0.42,lp));
-        const sa = smoothstep(0.20,0.48,lp);
-        laptopMeta.solidMat.opacity = sa;
-        laptopMeta.baseW.material.opacity = lerp(1,0.18,sa);
-        laptopMeta.lidW.material.opacity = lerp(1,0.18,sa);
-        laptopMeta.screenMat.opacity = smoothstep(0.55,0.68,lp);
-        const pa = smoothstep(0.48,0.58,lp)*(1-smoothstep(0.7,0.8,lp));
-        laptopMeta.partMat.opacity = pa*0.9;
-        const ba = smoothstep(0.48,0.62,lp)-smoothstep(0.62,0.78,lp);
-        const ar = laptopMeta.partGeom.attributes.position.array;
-        for(let k=0;k<laptopMeta.PC;k++){ar[k*3]=lerp(laptopMeta.po[k*3],laptopMeta.pt[k*3],ba);ar[k*3+1]=lerp(laptopMeta.po[k*3+1],laptopMeta.pt[k*3+1],ba);ar[k*3+2]=lerp(laptopMeta.po[k*3+2],laptopMeta.pt[k*3+2],ba)}
-        laptopMeta.partGeom.attributes.position.needsUpdate = true;
-        if(i===0 && t>0.92){portalFlash.style.opacity=(smoothstep(0.92,1.0,t)*0.7).toFixed(3)}
-        else if(i===1 && t<0.05){portalFlash.style.opacity=((1-smoothstep(0,0.05,t))*0.6).toFixed(3)}
-        else{portalFlash.style.opacity='0'}
+      const stepLights = [];
+      for (let r=0; r<5; r++){
+        [-0.72, 0.72].forEach(x=>{
+          const step = new M.Mesh(new M.BoxGeometry(0.12, 0.035, 0.56), cinemaWarm.clone());
+          step.position.set(x, -2.12 + r*0.12, 1.55 + r*1.08);
+          s5.add(step); stepLights.push(step);
+        });
       }
-    }
+      s5.userData.brandPulse = [cinemaScreenGlow, projectorBeam, ...stepLights];
+      const brandKey = new M.PointLight(0xd9c8a9, 0.68, 12);
+      brandKey.position.set(0, 3.2, 2.6); s5.add(brandKey);
+      const brandEdge = new M.PointLight(0x6ee7ff, 0.42, 11);
+      brandEdge.position.set(4.8, 1.9, 1.8); s5.add(brandEdge);
 
-    let t0 = performance.now();
-    function tick(){
-      requestAnimationFrame(tick);
-      const t = (performance.now()-t0)*0.001;
-      updateCamera(globalProgress);
-      const ai = scenes.find(s=>s.label==='AI_VIDEO');
-      if(ai && ai.group.userData.sphere){ai.group.userData.sphere.rotation.y=t*0.1;ai.group.userData.sphere.rotation.x=t*0.07}
-      const mo = scenes.find(s=>s.label==='MOTION');
-      if(mo && mo.group.userData.planes){mo.group.userData.planes.forEach((p,i)=>p.rotation.y+=0.002*(i%2?1:-1))}
-      const ci = scenes.find(s=>s.label==='CINEMATIC_SITES');
-      if(ci && ci.group.userData.torus){ci.group.userData.torus.rotation.x=t*0.3;ci.group.userData.torus.rotation.y=t*0.4}
-      const pr = scenes.find(s=>s.label==='PRODUCT_ADS');
-      if(pr && pr.group.userData.product){pr.group.userData.product.rotation.y=Math.sin(t*0.3)*0.15}
-      if(lobbyMeta && lobbyMeta.portals){lobbyMeta.portals.forEach((p,i)=>p.position.y+=Math.sin(t*0.5+i)*0.001)}
-      videoTextures.forEach((texture)=>{if(texture.image && texture.image.readyState >= 2 && !texture.image.paused) texture.needsUpdate = true});
-      renderer.render(scene,camera);
-    }
+            decorateChamber(s6, {accent:0x6ee7ff, warm:0xffe0a8, floorY:-2.2, floorW:22, floorD:14, rayY:1.5, particles:300});
+      // Полировка — добавим вращающийся круг подсветки под пьедестал
+      const polishRing = new M.Mesh(new M.RingGeometry(2.6, 2.85, 64),
+        new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.5, blending:M.AdditiveBlending, side:M.DoubleSide}));
+      polishRing.rotation.x = -Math.PI/2;
+      polishRing.position.set(3.5, -2.19, 0);
+      polishRing.userData.spin = true;
+      s6.add(polishRing);
+      animMeshes.push({type:'spinring', m:polishRing});
+// 06 VISUAL POLISH
+      const s6 = makeSc(-150);
+      const bgM = new M.Mesh(new M.PlaneGeometry(14, 8), new M.MeshBasicMaterial({map:vidTex('v-polish-bg'), side:M.DoubleSide, transparent:true, opacity:0.45}));
+      bgM.position.z = -5; s6.add(bgM);
+      const tHype = textTex('HYPE', 180, '#f8fbff');
+      [{x:-4.5,y:1.5,z:0,rotY:-0.5,scale:1.2},{x:-2.5,y:0.5,z:1,rotY:0.4,scale:1.4},{x:-3.5,y:-1.5,z:-1,rotY:-0.2,scale:1.0},{x:-5.0,y:-0.2,z:0.5,rotY:0.7,scale:1.1}].forEach(c=>{
+        const m = new M.Mesh(new M.PlaneGeometry(2.2, 0.55), new M.MeshBasicMaterial({map:tHype, transparent:true, side:M.DoubleSide, opacity:0.85}));
+        m.position.set(c.x, c.y, c.z); m.rotation.y = c.rotY; m.scale.setScalar(c.scale);
+        s6.add(m);
+      });
+      const pod = new M.Mesh(new M.CylinderGeometry(2.2, 2.6, 0.25, 40), new M.MeshStandardMaterial({color:0x0a0e18, metalness:0.8, roughness:0.3}));
+      pod.position.set(3.5, -1.5, 0); s6.add(pod);
+      const prod = new M.Mesh(new M.PlaneGeometry(1.8, 2.5), new M.MeshBasicMaterial({map:vidTex('v-polish-prod'), side:M.DoubleSide}));
+      prod.position.set(3.5, 0.6, 0); s6.add(prod); s6.userData.product = prod;
+      for (let i = 0; i < 6; i++){
+        const a = (i/6)*Math.PI*2;
+        const cone = new M.Mesh(new M.ConeGeometry(0.7, 4, 20, 1, true), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.07, side:M.DoubleSide, blending:M.AdditiveBlending, depthWrite:false}));
+        cone.position.set(3.5 + Math.cos(a)*2.2, 3, Math.sin(a)*2.2); cone.rotation.x = Math.PI;
+        cone.lookAt(new M.Vector3(3.5, -1, 0)); cone.rotateX(-Math.PI/2);
+        s6.add(cone);
+      }
 
-    let renderStarted = false;
-    function start(){
-      if(renderStarted) return;
-      renderStarted = true;
-      resize();
-      tick();
-    }
-    // Запускаем рендер сразу, но видео ждут клика
-    if(document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
-    setTimeout(start, 2500);
-    function enterStudio(){
-      syncSceneVideos(Math.max(activeSceneVideoIndex,0));
-      setTimeout(()=>document.getElementById('loading').classList.add('gone'), 400);
-    }
-    function showEnter(){
-      const btn=document.getElementById('enterBtn');
-      const bar=document.getElementById('lBar');
-      const st=document.getElementById('lStatus');
-      if(!btn) return;
-      if(bar) bar.style.display='none';
-      if(st) st.textContent='Click to start';
-      btn.style.display='inline-block';
-    }
-    document.getElementById('enterBtn').addEventListener('click', enterStudio);
-    if(document.readyState==='complete') showEnter();
-    else window.addEventListener('load', showEnter);
-    setTimeout(showEnter, 1800);
+            decorateChamber(s7, {accent:0x6ee7ff, warm:0xffcd6e, floorY:-2.6, floorW:20, floorD:14, rayY:1.5, particles:240, floorTint:0x06120c});
+// 07 AI SITES
+      const s7 = makeSc(-175);
+      const t71 = textTex('AI SITES', 180, '#f8fbff');
+      const m71 = new M.Mesh(new M.PlaneGeometry(8, 2), new M.MeshBasicMaterial({map:t71, transparent:true}));
+      m71.position.y = 1.5; s7.add(m71);
+      [{l:'LANDING', c:0x6ee7ff, v:'v-sites-1'},{l:'BRAND', c:0x9b8cff, v:'v-sites-2'},{l:'CINEMATIC', c:0xffcd6e, v:'v-sites-3'}].forEach((p, i)=>{
+        const x = (i-1)*3;
+        const fr = new M.Group(); fr.position.set(x, -1.4, -1.5);
+        const vp = new M.Mesh(new M.PlaneGeometry(1.8, 2.5), new M.MeshBasicMaterial({map:vidTex(p.v), side:M.DoubleSide}));
+        fr.add(vp);
+        const e = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.85, 2.55, 0.06)), wireMat(p.c, 0.9));
+        fr.add(e);
+        const lT = textTex(p.l, 64, '#f8fbff');
+        const lM = new M.Mesh(new M.PlaneGeometry(1.4, 0.35), new M.MeshBasicMaterial({map:lT, transparent:true}));
+        lM.position.y = -1.5; fr.add(lM);
+        s7.add(fr);
+      });
+
+            decorateChamber(s10, {accent:0x9b8cff, warm:0xd9c8a9, floorY:-2.6, floorW:22, floorD:16, rayY:1.5, particles:360, floorTint:0x080a14, noOrbs:true});
+      // Огромный световой столп позади панели — финальная нота
+      const finalPillar = new M.Mesh(new M.CylinderGeometry(0.18, 0.18, 14, 16),
+        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.4, blending:M.AdditiveBlending}));
+      finalPillar.position.set(0, 2, -2); s10.add(finalPillar);
+      const finalHalo = new M.Mesh(new M.PlaneGeometry(8, 14),
+        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.08, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      finalHalo.position.set(0, 2, -2.2); s10.add(finalHalo);
+// 08 CONTACT (был 10, сцены 08-09 удалены)
+      const s10 = makeSc(-200);
+      const pn = new M.Mesh(new M.PlaneGeometry(6, 4), new M.MeshStandardMaterial({color:0x6ee7ff, metalness:0.6, roughness:0.1, transparent:true, opacity:0.18, side:M.DoubleSide}));
+      pn.position.set(0, 0.3, 0); s10.add(pn);
+      const pe = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(6.2, 4.2, 0.04)), wireMat(0x6ee7ff, 0.9));
+      pe.position.set(0, 0.3, 0); s10.add(pe);
+      const tT = textTex('GET IN TOUCH', 90, '#f8fbff');
+      const tM = new M.Mesh(new M.PlaneGeometry(5, 0.9), new M.MeshBasicMaterial({map:tT, transparent:true}));
+      tM.position.set(0, 1.4, 0.05); s10.add(tM);
+      const pG = new M.BufferGeometry();
+      const pN = 250, pP = new Float32Array(pN*3);
+      for (let i = 0; i < pN; i++){
+        pP[i*3] = (Math.random()-0.5)*14;
+        pP[i*3+1] = (Math.random()-0.5)*8;
+        pP[i*3+2] = (Math.random()-0.5)*8 - 3;
+      }
+      pG.setAttribute('position', new M.BufferAttribute(pP, 3));
+      s10.add(new M.Points(pG, new M.PointsMaterial({color:0x9b8cff, size:0.025, transparent:true, opacity:0.4, blending:M.AdditiveBlending, depthWrite:false})));
+
+      const waypoints = [
+        {pos:[3, 1.8, 4],   look:[0, 0.4, 0]},
+        {pos:[0, 0.6, -17], look:[0, 0.5, -28]},
+        {pos:[0, 0.5, -40], look:[0, 1.2, -50]},
+        {pos:[0, 0, -67],   look:[0, 0, -75]},
+        {pos:[0, 0.5, -92], look:[0, 0, -100]},
+        {pos:[0, 0, -117],  look:[0, 1.6, -128]},
+        {pos:[0, 0.5, -142],look:[0, 0, -150]},
+        {pos:[0, 0.5, -169],look:[0, 0, -176]},
+        {pos:[0, 0.5, -193],look:[0, 0.3, -200]}
+      ];
+      const atmospheres = [
+        {bg:0x040810, near:3, far:18},   // 0 PORTAL — глубокий синий
+        {bg:0x0a1626, near:6, far:30},   // 1 LOBBY  — лазурный туман
+        {bg:0x1e0608, near:6, far:32},   // 2 COMMERCIAL — кроваво-винный
+        {bg:0x100722, near:5, far:24},   // 3 AI VIDEO — фиолетовый космос
+        {bg:0x1a0a26, near:7, far:32},   // 4 REELS — неоновая пыль
+        {bg:0x1a0804, near:7, far:38},   // 5 BRAND FILMS — янтарный бронз
+        {bg:0x081820, near:7, far:30},   // 6 VISUAL POLISH — стальной cyan
+        {bg:0x041208, near:6, far:28},   // 7 AI SITES — изумруд
+        {bg:0x0a0a18, near:6, far:32}    // 8 CONTACT — тёмная пурпура
+      ];
+      function updateCamera(p){
+        const n = waypoints.length;
+        const idx = p*(n-1);
+        const i = Math.min(Math.floor(idx), n-2);
+        const t = idx - i;
+        const e = t*t*(t*-2+3);
+        const a = waypoints[i], b = waypoints[i+1];
+        camera.position.set(lerp(a.pos[0],b.pos[0],e), lerp(a.pos[1],b.pos[1],e), lerp(a.pos[2],b.pos[2],e));
+        camera.lookAt(lerp(a.look[0],b.look[0],e), lerp(a.look[1],b.look[1],e), lerp(a.look[2],b.look[2],e));
+        const atmA = atmospheres[i], atmB = atmospheres[i+1] || atmA;
+        const cA = new M.Color(atmA.bg), cB = new M.Color(atmB.bg);
+        scene.background.copy(cA).lerp(cB, e);
+        scene.fog.color.copy(cA).lerp(cB, e);
+        scene.fog.near = lerp(atmA.near, atmB.near, e);
+        scene.fog.far = lerp(atmA.far, atmB.far, e);
+      }
+
+      const sceneVideos = [
+        [],
+        ['v-lobby-cm','v-lobby-ai','v-lobby-rl','v-lobby-br','v-lobby-vp','v-lobby-wb'],
+        ['v-com'],['v-ai'],['v-r1','v-r2','v-r3','v-r4','v-r5'],
+        ['v-brand'],['v-polish-prod'],
+        [],
+        []
+      ];
+      let activeIdx = -1;
+      function syncVideos(idx){
+        const keep = new Set();
+        for (let off = -1; off <= 1; off++){
+          (sceneVideos[idx + off] || []).forEach(v => keep.add(v));
+        }
+        document.querySelectorAll('video').forEach(v=>{
+          if (keep.has(v.id)){
+            try { if (v.readyState === 0) v.load(); } catch(e){}
+            if (v.paused){ try{const p = v.play(); if(p&&p.catch) p.catch(()=>{});}catch(e){} }
+          } else if (!v.paused){ v.pause(); }
+        });
+        activeIdx = idx;
+      }
+
+      let composer = null, bloomPass = null;
+      if (typeof M.EffectComposer === 'function'){
+        composer = new M.EffectComposer(renderer);
+        composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        composer.addPass(new M.RenderPass(scene, camera));
+        bloomPass = new M.UnrealBloomPass(new M.Vector2(canvas.clientWidth, canvas.clientHeight), 0.7, 0.45, 0.78);
+        composer.addPass(bloomPass);
+      }
+
+      let lenis = null;
+      if (typeof Lenis !== 'undefined'){
+        lenis = new Lenis({duration: 1.3, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true, smoothTouch: false});
+      }
+
+      let t0 = performance.now();
+      function tick(time){
+        requestAnimationFrame(tick);
+        if (lenis) lenis.raf(time || performance.now());
+        const t = (performance.now() - t0) * 0.001;
+        const p = gp();
+        updateCamera(p);
+        const N = waypoints.length;
+        const sIdx = Math.min(Math.floor(p * N), N-1);
+        syncVideos(sIdx);
+        // KRITICHNO: VideoTexture в r128 не обновляется автоматически.
+        // Ставим needsUpdate всегда когда данные есть — даже для paused
+        // (чтобы первый кадр отрендерился сразу).
+        for (const id in videoCache){
+          const tex = videoCache[id];
+          const v = tex && tex.image;
+          if (v && v.readyState >= 2){
+            tex.needsUpdate = true;
+          }
+        }
+        if (s3.userData.sphere){
+          s3.userData.sphere.rotation.y = t*0.1;
+          s3.userData.sphere.rotation.x = t*0.07;
+        }
+        if (s3.userData.aiRings){
+          s3.userData.aiRings[0].rotation.z = t * 0.18;
+          s3.userData.aiRings[1].rotation.x = t * 0.13;
+          s3.userData.aiRings[2].rotation.y = t * -0.16;
+        }
+        if (s4.userData.reelFrames){
+          s4.userData.reelFrames.forEach((panel, i)=>{
+            const phase = panel.userData.floatPhase || 0;
+            panel.position.y = panel.userData.baseY + Math.sin(t * 0.75 + phase) * 0.055;
+            panel.rotation.z = panel.userData.baseRotZ + Math.sin(t * 0.55 + phase) * 0.012;
+          });
+        }
+        if (s4.userData.timelineBars){
+          s4.userData.timelineBars.forEach((bar, i)=>{
+            bar.material.opacity = 0.14 + Math.sin(t * 1.4 + i * 0.6) * 0.055 + 0.14;
+          });
+        }
+        if (s5.userData.brandPulse){
+          s5.userData.brandPulse.forEach((mesh, i)=>{
+            if (mesh.material){
+              mesh.material.opacity = 0.055 + Math.sin(t * 0.85 + i * 0.45) * 0.018 + 0.04;
+            }
+          });
+        }
+        if (s6.userData.product){
+          s6.userData.product.rotation.y = Math.sin(t*0.3) * 0.15;
+        }
+        // === Атмосферные анимации (god-rays, particles, orbs, spin-rings) ===
+        for (let i = 0; i < animMeshes.length; i++){
+          const item = animMeshes[i];
+          if (item.type === 'godray'){
+            item.m.rotation.y += item.m.userData.spinSpeed * 0.016;
+          } else if (item.type === 'particles'){
+            item.m.rotation.y = t * (item.m.userData.driftX || 0.01) * 5;
+            item.m.position.y = Math.sin(t * 0.2 + i) * (item.m.userData.driftY || 0.03);
+          } else if (item.type === 'orb'){
+            const bp = item.m.userData.basePos;
+            const pulse = 1 + Math.sin(t * item.m.userData.pulseSpeed + i) * 0.25;
+            if (item.m.userData.haloRef) item.m.userData.haloRef.scale.setScalar(pulse);
+            item.m.position.y = bp[1] + Math.sin(t * 0.6 + i*0.7) * 0.15;
+          } else if (item.type === 'spinring'){
+            item.m.rotation.z = t * 0.3;
+          }
+        }
+        if (composer) composer.render(); else renderer.render(scene, camera);
+      }
+
+      // Debug HUD (?debug=1 в URL)
+      if (new URL(location.href).searchParams.get('debug') === '1'){
+        const hud = document.createElement('div');
+        hud.style.cssText = 'position:fixed;top:60px;right:8px;z-index:9999;font:11px/1.4 monospace;color:#6ee7ff;background:rgba(0,0,0,0.78);padding:8px 10px;border:1px solid #6ee7ff;max-height:80vh;overflow:auto;max-width:280px;white-space:pre';
+        document.body.appendChild(hud);
+        setInterval(()=>{
+          const rows = [];
+          const states = ['NOTHING','META','CURR','FUT','ENOUGH'];
+          document.querySelectorAll('video').forEach(v=>{
+            const st = states[v.readyState] || '?';
+            const pl = v.paused ? 'P' : '>';
+            rows.push((v.id||'').padEnd(14) + ' ' + pl + ' ' + st.padEnd(7) + ' t=' + v.currentTime.toFixed(1));
+          });
+          hud.textContent = rows.join('\n');
+        }, 500);
+      }
+
+      const loader = document.getElementById('loader');
+      const enterBtn = document.getElementById('enterBtn');
+      const lbar = document.getElementById('lbar');
+      let started = false;
+      function start(){ if (started) return; started = true; resize(); tick(); }
+      enterBtn.addEventListener('click', ()=>{
+        console.log('[HYPE] ENTER pressed - starting current scene videos');
+        syncVideos(0);
+        setTimeout(()=> loader.classList.add('gone'), 500);
+      });
+      function showEnter(){ lbar.style.display = 'none'; enterBtn.style.display = 'inline-block'; }
+      if (document.fonts && document.fonts.ready){ document.fonts.ready.then(()=>{ start(); setTimeout(showEnter, 600); }); }
+      else { start(); setTimeout(showEnter, 600); }
+      setTimeout(()=>{ start(); showEnter(); }, 2500);
+    })();
   </script>
 </body>
 </html>
