@@ -928,13 +928,7 @@
       // Лёгкий подъём орб-света вокруг ноутбука
       makeOrbLight(s0, -2.5, 0.8, 1.2, 0x6ee7ff, 0.5);
       makeOrbLight(s0,  2.8, 0.6, 0.8, 0xd9c8a9, 0.4);
-            // ATMOSPHERIC: Lobby получает 5 god-rays + двойной слой частиц
-      decorateChamber(s1, {accent:0x6ee7ff, warm:0xd9c8a9, floorY:-2.5, floorW:22, floorD:16, rayY:2.5, particles:300});
-      // Дополнительный central pillar of light
-      const pillar1 = new M.Mesh(new M.CylinderGeometry(0.05, 0.05, 7, 8),
-        new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.32, blending:M.AdditiveBlending}));
-      pillar1.position.set(0, 1.5, -5); s1.add(pillar1);
-// 01 LOBBY
+      // 01 LOBBY
       const s1 = makeSc(-25);
       const lobbyWallMat = new M.MeshStandardMaterial({color:0x050915, metalness:0.28, roughness:0.82, side:M.DoubleSide});
       const lobbyBack = new M.Mesh(new M.PlaneGeometry(18, 8.5), lobbyWallMat);
@@ -1036,8 +1030,7 @@
         anchor.position.set(p.x, -2.22, p.z + 0.15); s1.add(anchor);
       });
 
-            decorateChamber(s2, {accent:0xff6e6e, warm:0xd9c8a9, floorY:-2.2, floorW:24, floorD:18, rayY:3, particles:260, floorTint:0x140707});
-// 02 COMMERCIAL
+      // 02 COMMERCIAL
       const s2 = makeSc(-50);
       const bw=9, bh=5.2;
       const bb = new M.Mesh(new M.PlaneGeometry(bw, bh), new M.MeshBasicMaterial({map:vidTex('v-com'), side:M.DoubleSide}));
@@ -1106,8 +1099,7 @@
       const commercialFill = new M.PointLight(0xd9c8a9, 0.52, 10);
       commercialFill.position.set(4.8, 1.8, 3.2); s2.add(commercialFill);
 
-            decorateChamber(s3, {accent:0x9b8cff, warm:0x6ee7ff, floorY:-3.5, floorW:18, floorD:14, rayY:0, particles:380, floorTint:0x0a0716});
-// 03 AI VIDEO
+      // 03 AI VIDEO
       const s3 = makeSc(-75);
       const aiWall = new M.Mesh(new M.PlaneGeometry(17, 9), new M.MeshStandardMaterial({color:0x050817, metalness:0.3, roughness:0.78, side:M.DoubleSide}));
       aiWall.position.set(0, 0.1, -3.9); s3.add(aiWall);
@@ -1184,8 +1176,7 @@
       const aiFill = new M.PointLight(0x9b8cff, 0.62, 9);
       aiFill.position.set(3.0, 1.8, 1.7); s3.add(aiFill);
 
-            decorateChamber(s4, {accent:0xff8ce6, warm:0xd9c8a9, floorY:-2.4, floorW:22, floorD:14, rayY:1.5, particles:280, floorTint:0x10081a});
-// 04 REELS
+      // 04 REELS
       const s4 = makeSc(-100);
       const reelWall = new M.Mesh(new M.PlaneGeometry(18, 8.8), new M.MeshStandardMaterial({color:0x090611, metalness:0.34, roughness:0.72, side:M.DoubleSide}));
       reelWall.position.set(0, 0.2, -3.4); s4.add(reelWall);
@@ -1271,8 +1262,7 @@
       const reelFill = new M.PointLight(0x6ee7ff, 0.62, 9);
       reelFill.position.set(3.6, 1.9, 2.1); s4.add(reelFill);
 
-            decorateChamber(s5, {accent:0xffaa66, warm:0xd9c8a9, floorY:-2.4, floorW:24, floorD:18, rayY:2, particles:240, floorTint:0x120804, noOrbs:true});
-// 05 BRAND FILMS
+      // 05 BRAND FILMS
       const s5 = makeSc(-125);
       const cinemaWall = new M.Mesh(new M.PlaneGeometry(18.5, 9.2), new M.MeshStandardMaterial({color:0x08070a, metalness:0.24, roughness:0.76, side:M.DoubleSide}));
       cinemaWall.position.set(0, 1.0, -3.35); s5.add(cinemaWall);
@@ -1350,16 +1340,7 @@
       const brandEdge = new M.PointLight(0x6ee7ff, 0.42, 11);
       brandEdge.position.set(4.8, 1.9, 1.8); s5.add(brandEdge);
 
-            decorateChamber(s6, {accent:0x6ee7ff, warm:0xffe0a8, floorY:-2.2, floorW:22, floorD:14, rayY:1.5, particles:300});
-      // Полировка — добавим вращающийся круг подсветки под пьедестал
-      const polishRing = new M.Mesh(new M.RingGeometry(2.6, 2.85, 64),
-        new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.5, blending:M.AdditiveBlending, side:M.DoubleSide}));
-      polishRing.rotation.x = -Math.PI/2;
-      polishRing.position.set(3.5, -2.19, 0);
-      polishRing.userData.spin = true;
-      s6.add(polishRing);
-      animMeshes.push({type:'spinring', m:polishRing});
-// 06 VISUAL POLISH
+      // 06 VISUAL POLISH
       const s6 = makeSc(-150);
       const bgM = new M.Mesh(new M.PlaneGeometry(14, 8), new M.MeshBasicMaterial({map:vidTex('v-polish-bg'), side:M.DoubleSide, transparent:true, opacity:0.45}));
       bgM.position.z = -5; s6.add(bgM);
@@ -1381,8 +1362,7 @@
         s6.add(cone);
       }
 
-            decorateChamber(s7, {accent:0x6ee7ff, warm:0xffcd6e, floorY:-2.6, floorW:20, floorD:14, rayY:1.5, particles:240, floorTint:0x06120c});
-// 07 AI SITES
+      // 07 AI SITES
       const s7 = makeSc(-175);
       const t71 = textTex('AI SITES', 180, '#f8fbff');
       const m71 = new M.Mesh(new M.PlaneGeometry(8, 2), new M.MeshBasicMaterial({map:t71, transparent:true}));
@@ -1400,15 +1380,7 @@
         s7.add(fr);
       });
 
-            decorateChamber(s10, {accent:0x9b8cff, warm:0xd9c8a9, floorY:-2.6, floorW:22, floorD:16, rayY:1.5, particles:360, floorTint:0x080a14, noOrbs:true});
-      // Огромный световой столп позади панели — финальная нота
-      const finalPillar = new M.Mesh(new M.CylinderGeometry(0.18, 0.18, 14, 16),
-        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.4, blending:M.AdditiveBlending}));
-      finalPillar.position.set(0, 2, -2); s10.add(finalPillar);
-      const finalHalo = new M.Mesh(new M.PlaneGeometry(8, 14),
-        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.08, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
-      finalHalo.position.set(0, 2, -2.2); s10.add(finalHalo);
-// 08 CONTACT (был 10, сцены 08-09 удалены)
+      // 08 CONTACT (был 10, сцены 08-09 удалены)
       const s10 = makeSc(-200);
       const pn = new M.Mesh(new M.PlaneGeometry(6, 4), new M.MeshStandardMaterial({color:0x6ee7ff, metalness:0.6, roughness:0.1, transparent:true, opacity:0.18, side:M.DoubleSide}));
       pn.position.set(0, 0.3, 0); s10.add(pn);
@@ -1426,6 +1398,37 @@
       }
       pG.setAttribute('position', new M.BufferAttribute(pP, 3));
       s10.add(new M.Points(pG, new M.PointsMaterial({color:0x9b8cff, size:0.025, transparent:true, opacity:0.4, blending:M.AdditiveBlending, depthWrite:false})));
+
+
+      // === ATMOSPHERIC DECORATION для всех сцен (s0..s10 уже объявлены) ===
+      decorateChamber(s1, {accent:0x6ee7ff, warm:0xd9c8a9, floorY:-2.5, floorW:22, floorD:16, rayY:2.5, particles:300});
+      const pillar1 = new M.Mesh(new M.CylinderGeometry(0.05, 0.05, 7, 8),
+        new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.32, blending:M.AdditiveBlending}));
+      pillar1.position.set(0, 1.5, -5); s1.add(pillar1);
+
+      decorateChamber(s2, {accent:0xff6e6e, warm:0xd9c8a9, floorY:-2.2, floorW:24, floorD:18, rayY:3, particles:260, floorTint:0x140707});
+      decorateChamber(s3, {accent:0x9b8cff, warm:0x6ee7ff, floorY:-3.5, floorW:18, floorD:14, rayY:0, particles:380, floorTint:0x0a0716});
+      decorateChamber(s4, {accent:0xff8ce6, warm:0xd9c8a9, floorY:-2.4, floorW:22, floorD:14, rayY:1.5, particles:280, floorTint:0x10081a});
+      decorateChamber(s5, {accent:0xffaa66, warm:0xd9c8a9, floorY:-2.4, floorW:24, floorD:18, rayY:2, particles:240, floorTint:0x120804, noOrbs:true});
+
+      decorateChamber(s6, {accent:0x6ee7ff, warm:0xffe0a8, floorY:-2.2, floorW:22, floorD:14, rayY:1.5, particles:300});
+      const polishRing = new M.Mesh(new M.RingGeometry(2.6, 2.85, 64),
+        new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.5, blending:M.AdditiveBlending, side:M.DoubleSide}));
+      polishRing.rotation.x = -Math.PI/2;
+      polishRing.position.set(3.5, -2.19, 0);
+      s6.add(polishRing);
+      animMeshes.push({type:'spinring', m:polishRing});
+
+      decorateChamber(s7, {accent:0x6ee7ff, warm:0xffcd6e, floorY:-2.6, floorW:20, floorD:14, rayY:1.5, particles:240, floorTint:0x06120c});
+
+      decorateChamber(s10, {accent:0x9b8cff, warm:0xd9c8a9, floorY:-2.6, floorW:22, floorD:16, rayY:1.5, particles:360, floorTint:0x080a14, noOrbs:true});
+      const finalPillar = new M.Mesh(new M.CylinderGeometry(0.18, 0.18, 14, 16),
+        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.4, blending:M.AdditiveBlending}));
+      finalPillar.position.set(0, 2, -2); s10.add(finalPillar);
+      const finalHalo = new M.Mesh(new M.PlaneGeometry(8, 14),
+        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.08, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      finalHalo.position.set(0, 2, -2.2); s10.add(finalHalo);
+      // === END DECORATION ===
 
       const waypoints = [
         {pos:[3, 1.8, 4],   look:[0, 0.4, 0]},
