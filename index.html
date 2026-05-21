@@ -637,6 +637,68 @@
         return t;
       }
       function wireMat(c, o){ return new M.LineBasicMaterial({color:c, transparent:true, opacity:o||0.7}); }
+      function addRefSceneShell(target, opts){
+        const accent = opts.accent || 0x6ee7ff;
+        const warm = opts.warm || 0xd9c8a9;
+        const zBack = opts.zBack || -5;
+        const zMid = opts.zMid || -0.5;
+        const darkMat = new M.MeshStandardMaterial({color:opts.dark || 0x03070b, metalness:0.58, roughness:0.48, side:M.DoubleSide});
+        const wallMat = new M.MeshStandardMaterial({color:opts.wall || 0x060b12, metalness:0.74, roughness:0.34, side:M.DoubleSide});
+        const floorMat = new M.MeshStandardMaterial({color:opts.floor || 0x030405, metalness:0.92, roughness:0.18, side:M.DoubleSide});
+        const rigMat = new M.MeshStandardMaterial({color:0x111821, metalness:0.9, roughness:0.18});
+        const accentMat = new M.MeshBasicMaterial({color:accent, transparent:true, opacity:0.34, blending:M.AdditiveBlending, depthWrite:false});
+        const warmMat = new M.MeshBasicMaterial({color:warm, transparent:true, opacity:0.24, blending:M.AdditiveBlending, depthWrite:false});
+        const pulse = [];
+        const back = new M.Mesh(new M.PlaneGeometry(21, 10), darkMat);
+        back.position.set(0, 0.45, zBack); target.add(back);
+        const floor = new M.Mesh(new M.PlaneGeometry(24, 18), floorMat);
+        floor.rotation.x = -Math.PI/2; floor.position.set(0, -2.62, zMid - 0.1); target.add(floor);
+        const ceiling = new M.Mesh(new M.PlaneGeometry(22, 15), darkMat);
+        ceiling.rotation.x = Math.PI/2; ceiling.position.set(0, 4.15, zMid - 0.3); target.add(ceiling);
+        const mirror = new M.Mesh(new M.PlaneGeometry(10, 12), new M.MeshBasicMaterial({color:accent, transparent:true, opacity:0.06, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        mirror.rotation.x = -Math.PI/2; mirror.position.set(0, -2.51, zMid + 0.55); target.add(mirror); pulse.push(mirror);
+        [-8.2, 8.2].forEach((x, sideIdx)=>{
+          const side = new M.Mesh(new M.PlaneGeometry(7.5, 8.4), wallMat);
+          side.position.set(x, 0.35, zMid - 1.4); side.rotation.y = x < 0 ? 0.54 : -0.54; target.add(side);
+          for (let k=0; k<4; k++){
+            const panel = new M.Mesh(new M.PlaneGeometry(1.55, 2.15), new M.MeshBasicMaterial({color:sideIdx ? warm : accent, transparent:true, opacity:0.095, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+            panel.position.set(x * 0.98, 0.25 + (k%2)*1.25, zMid + 1.55 - k*1.6);
+            panel.rotation.y = side.rotation.y; target.add(panel); pulse.push(panel);
+            const edge = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.72, 2.32, 0.035)), wireMat(sideIdx ? warm : accent, 0.42));
+            edge.position.copy(panel.position); edge.rotation.y = panel.rotation.y; target.add(edge);
+          }
+        });
+        for (let i=0; i<8; i++){
+          const z = zMid + 3.15 - i * 1.18;
+          const w = 13.4 - i * 0.58;
+          const h = 6.4 - i * 0.08;
+          const top = new M.Mesh(new M.BoxGeometry(w, 0.1, 0.12), rigMat);
+          top.position.set(0, 3.72, z); target.add(top);
+          const left = new M.Mesh(new M.BoxGeometry(0.1, h, 0.12), rigMat);
+          left.position.set(-w/2, 0.55, z); target.add(left);
+          const right = new M.Mesh(new M.BoxGeometry(0.1, h, 0.12), rigMat);
+          right.position.set(w/2, 0.55, z); target.add(right);
+          const topLight = new M.Mesh(new M.BoxGeometry(Math.max(2.2, w*0.52), 0.035, 0.04), i%2 ? warmMat : accentMat);
+          topLight.position.set(0, 3.52, z + 0.08); target.add(topLight); pulse.push(topLight);
+          [-1, 1].forEach(s=>{
+            const sideLight = new M.Mesh(new M.BoxGeometry(0.035, h*0.62, 0.035), i%2 ? accentMat : warmMat);
+            sideLight.position.set(s*(w/2-0.18), 0.58, z + 0.1); target.add(sideLight); pulse.push(sideLight);
+          });
+        }
+        for (let i=-4; i<=4; i++){
+          const floorLine = new M.Mesh(new M.BoxGeometry(0.025, 0.018, 9.5), i%2 ? warmMat : accentMat);
+          floorLine.position.set(i*0.92, -2.38, zMid - 0.7); target.add(floorLine); pulse.push(floorLine);
+        }
+        const centerBeam = new M.Mesh(new M.CylinderGeometry(0.28, 2.9, 7.6, 32, 1, true), new M.MeshBasicMaterial({color:accent, transparent:true, opacity:0.045, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        centerBeam.rotation.x = Math.PI/2; centerBeam.position.set(0, 0.65, zMid - 0.5); target.add(centerBeam); pulse.push(centerBeam);
+        const farGlow = new M.Mesh(new M.CircleGeometry(1.45, 48), new M.MeshBasicMaterial({color:warm, transparent:true, opacity:0.16, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+        farGlow.position.set(0, 0.62, zBack + 0.08); target.add(farGlow); pulse.push(farGlow);
+        const key = new M.PointLight(accent, 0.35, 10);
+        key.position.set(-3.7, 2.1, zMid + 2.4); target.add(key);
+        const fill = new M.PointLight(warm, 0.22, 9);
+        fill.position.set(3.7, 1.7, zMid + 1.8); target.add(fill);
+        target.userData.refPulse = (target.userData.refPulse || []).concat(pulse);
+      }
 
       function makeScreen(vidId, w, h){
         const grp = new M.Group();
@@ -650,154 +712,6 @@
         return grp;
       }
       function makeSc(z){ const g = new M.Group(); g.position.set(0,0,z); scene.add(g); return g; }
-
-
-      // === ATMOSPHERIC CHAMBER HELPERS ===
-      // Глобальный массив анимаций (частицы, лучи) — обновляется в tick()
-      const animMeshes = [];
-
-      function makeWetFloor(group, y, w, d, tint){
-        // Тёмное «мокрое» зеркало: высокий металлик, низкий roughness
-        const m = new M.MeshStandardMaterial({
-          color: tint || 0x05070b,
-          metalness: 1.0,
-          roughness: 0.08,
-          envMapIntensity: 1.2
-        });
-        const floor = new M.Mesh(new M.PlaneGeometry(w, d), m);
-        floor.rotation.x = -Math.PI/2;
-        floor.position.y = y;
-        group.add(floor);
-        // Тонкая warm-полоска по периметру переда — даёт «горизонт»
-        const edge = new M.Mesh(new M.BoxGeometry(w*0.92, 0.012, 0.012),
-          new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.42}));
-        edge.position.set(0, y+0.008, d*0.42);
-        group.add(edge);
-        return floor;
-      }
-
-      function makeGodRays(group, x, y, z, colorA, colorB){
-        // 4 пересекающихся плоскости под лёгким углом, additive
-        const colors = [colorA||0x6ee7ff, colorB||0xd9c8a9, colorA||0x6ee7ff, colorB||0xd9c8a9];
-        const rays = [];
-        for (let i = 0; i < 4; i++){
-          const ray = new M.Mesh(
-            new M.PlaneGeometry(0.9, 6.5),
-            new M.MeshBasicMaterial({
-              color: colors[i],
-              transparent: true,
-              opacity: 0.085 + Math.random()*0.04,
-              blending: M.AdditiveBlending,
-              depthWrite: false,
-              side: M.DoubleSide
-            })
-          );
-          ray.position.set(x + (Math.random()-0.5)*0.8, y, z + (Math.random()-0.5)*0.8);
-          ray.rotation.y = (i/4) * Math.PI * 2;
-          ray.rotation.z = (Math.random()-0.5)*0.15;
-          ray.userData.spinSpeed = 0.04 + Math.random()*0.05;
-          group.add(ray);
-          rays.push(ray);
-          animMeshes.push({type:'godray', m:ray});
-        }
-        return rays;
-      }
-
-      function makeAtmoParticles(group, count, range, color, opacity){
-        const g = new M.BufferGeometry();
-        const p = new Float32Array(count*3);
-        for (let i = 0; i < count; i++){
-          p[i*3]   = (Math.random()-0.5) * range[0];
-          p[i*3+1] = (Math.random()-0.5) * range[1];
-          p[i*3+2] = (Math.random()-0.5) * range[2];
-        }
-        g.setAttribute('position', new M.BufferAttribute(p, 3));
-        const pts = new M.Points(g, new M.PointsMaterial({
-          color: color || 0xd9c8a9,
-          size: 0.018,
-          transparent: true,
-          opacity: opacity || 0.55,
-          blending: M.AdditiveBlending,
-          depthWrite: false,
-          sizeAttenuation: true
-        }));
-        pts.userData.driftY = 0.02 + Math.random()*0.03;
-        pts.userData.driftX = (Math.random()-0.5)*0.01;
-        group.add(pts);
-        animMeshes.push({type:'particles', m:pts});
-        return pts;
-      }
-
-      function makeTrimLight(group, x, y, z, sx, sy, sz, color){
-        const m = new M.Mesh(
-          new M.BoxGeometry(sx, sy, sz),
-          new M.MeshBasicMaterial({color: color || 0xd9c8a9, transparent:true, opacity:0.85})
-        );
-        m.position.set(x, y, z);
-        group.add(m);
-        // Glow halo вокруг
-        const halo = new M.Mesh(
-          new M.PlaneGeometry(sx*3 + sz*3, sy*8),
-          new M.MeshBasicMaterial({color: color || 0xd9c8a9, transparent:true, opacity:0.12, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide})
-        );
-        halo.position.set(x, y, z + 0.01);
-        group.add(halo);
-        return m;
-      }
-
-      function makeOrbLight(group, x, y, z, color, intensity){
-        const sphere = new M.Mesh(
-          new M.SphereGeometry(0.08, 16, 16),
-          new M.MeshBasicMaterial({color: color, transparent:true, opacity:0.95})
-        );
-        sphere.position.set(x, y, z);
-        group.add(sphere);
-        const halo = new M.Mesh(
-          new M.SphereGeometry(0.25, 16, 16),
-          new M.MeshBasicMaterial({color: color, transparent:true, opacity:0.18, blending:M.AdditiveBlending, depthWrite:false})
-        );
-        halo.position.set(x, y, z);
-        group.add(halo);
-        const pl = new M.PointLight(color, intensity || 0.8, 8);
-        pl.position.set(x, y, z);
-        group.add(pl);
-        sphere.userData.basePos = [x, y, z];
-        sphere.userData.haloRef = halo;
-        sphere.userData.pulseSpeed = 0.8 + Math.random()*0.6;
-        animMeshes.push({type:'orb', m:sphere});
-        return sphere;
-      }
-
-      function decorateChamber(group, opts){
-        // Универсальная атмосферная обработка любой сцены.
-        // opts: {floorY, floorW, floorD, accent, warm, rayY, rayX, particles}
-        const o = opts || {};
-        const fy = o.floorY !== undefined ? o.floorY : -2.2;
-        const fw = o.floorW || 22;
-        const fd = o.floorD || 16;
-        const accent = o.accent || 0x6ee7ff;
-        const warm = o.warm || 0xd9c8a9;
-        // Mirror floor
-        makeWetFloor(group, fy, fw, fd, o.floorTint);
-        // God rays from above
-        const rx = o.rayX !== undefined ? o.rayX : 0;
-        const ry = o.rayY !== undefined ? o.rayY : 1.5;
-        const rz = o.rayZ !== undefined ? o.rayZ : -3;
-        makeGodRays(group, rx, ry, rz, accent, warm);
-        // Atmospheric particles
-        const pcount = o.particles || 220;
-        makeAtmoParticles(group, pcount, [fw*0.9, 8, fd*0.9], warm, 0.45);
-        makeAtmoParticles(group, Math.floor(pcount*0.5), [fw*0.7, 5, fd*0.7], accent, 0.32);
-        // Floor-level trim strip front
-        makeTrimLight(group, 0, fy+0.005, fd*0.40, fw*0.6, 0.008, 0.01, warm);
-        // Two corner orbs
-        if (!o.noOrbs){
-          makeOrbLight(group, -fw*0.32, fy+1.0, fd*0.20, accent, 0.7);
-          makeOrbLight(group,  fw*0.32, fy+0.8, fd*0.20, warm, 0.55);
-        }
-      }
-
-      // === END HELPERS ===
 
       // 00 LAPTOP
       const s0 = makeSc(0);
@@ -892,42 +806,6 @@
       const warm0 = new M.PointLight(0xd9c8a9, 0.58, 6);
       warm0.position.set(2.6, 1.45, 1.6); s0.add(warm0);
 
-      decorateChamber(s0, {accent:0x6ee7ff, warm:0xd9c8a9, floorY:-1.8, floorW:18, floorD:14, rayY:2, particles:200});
-      // === HOLOGRAPHIC UI CARDS вокруг лаптопа ===
-      function makeHoloCard(label, value, color, w, h){
-        const cnv = document.createElement('canvas'); cnv.width=512; cnv.height=320;
-        const x = cnv.getContext('2d');
-        x.fillStyle = 'rgba(8,12,22,0.78)';
-        x.fillRect(0,0,512,320);
-        x.strokeStyle = color;
-        x.lineWidth = 3; x.strokeRect(4,4,504,312);
-        // Grid
-        x.strokeStyle = 'rgba(110,231,255,0.10)';
-        x.lineWidth = 1;
-        for (let i=20;i<500;i+=30){ x.beginPath(); x.moveTo(i,0); x.lineTo(i,320); x.stroke(); }
-        for (let i=20;i<300;i+=30){ x.beginPath(); x.moveTo(0,i); x.lineTo(512,i); x.stroke(); }
-        // Bars
-        x.fillStyle = color; x.globalAlpha = 0.72;
-        for (let i=0;i<4;i++) x.fillRect(40, 80 + i*42, 240 - i*30, 18);
-        x.globalAlpha = 1;
-        // Label
-        x.fillStyle = color; x.font = '700 26px Inter, Arial'; x.fillText(label, 40, 50);
-        // Value
-        x.fillStyle = '#f5f0e8'; x.font = '900 88px Inter, Arial Black'; x.fillText(value, 280, 200);
-        const t = new M.CanvasTexture(cnv); t.minFilter = M.LinearFilter; t.magFilter = M.LinearFilter;
-        const mesh = new M.Mesh(new M.PlaneGeometry(w||1.6, h||1.0),
-          new M.MeshBasicMaterial({map:t, transparent:true, side:M.DoubleSide}));
-        return mesh;
-      }
-      const card1 = makeHoloCard('PROJECTS', '120+', '#6ee7ff', 1.5, 0.94);
-      card1.position.set(-3.6, 1.9, 0); card1.rotation.y = 0.35; s0.add(card1);
-      const card2 = makeHoloCard('YEARS', '07', '#d9c8a9', 1.3, 0.82);
-      card2.position.set(3.7, 2.2, -0.3); card2.rotation.y = -0.42; s0.add(card2);
-      const card3 = makeHoloCard('FORMATS', '4K · AI', '#9b8cff', 1.5, 0.94);
-      card3.position.set(-4.0, 0.4, 1.8); card3.rotation.y = 0.5; s0.add(card3);
-      // Лёгкий подъём орб-света вокруг ноутбука
-      makeOrbLight(s0, -2.5, 0.8, 1.2, 0x6ee7ff, 0.5);
-      makeOrbLight(s0,  2.8, 0.6, 0.8, 0xd9c8a9, 0.4);
       // 01 LOBBY
       const s1 = makeSc(-25);
       const lobbyWallMat = new M.MeshStandardMaterial({color:0x050915, metalness:0.28, roughness:0.82, side:M.DoubleSide});
@@ -1029,6 +907,7 @@
         anchor.rotation.x = -Math.PI/2; anchor.rotation.z = -p.ry * 0.28;
         anchor.position.set(p.x, -2.22, p.z + 0.15); s1.add(anchor);
       });
+      addRefSceneShell(s1, {label:'NAVIGATION HUB', accent:0x6ee7ff, warm:0xd9c8a9, zBack:-8.5, zMid:-2.2, dark:0x05080f, floor:0x04070b});
 
       // 02 COMMERCIAL
       const s2 = makeSc(-50);
@@ -1098,6 +977,7 @@
       commercialKey.position.set(-4.8, 2.2, 3.4); s2.add(commercialKey);
       const commercialFill = new M.PointLight(0xd9c8a9, 0.52, 10);
       commercialFill.position.set(4.8, 1.8, 3.2); s2.add(commercialFill);
+      addRefSceneShell(s2, {label:'LED PRODUCTION', accent:0xff7a4a, warm:0x6ee7ff, zBack:-4.6, zMid:1.2, dark:0x0b0708, floor:0x060607});
 
       // 03 AI VIDEO
       const s3 = makeSc(-75);
@@ -1175,6 +1055,7 @@
       aiKey.position.set(-2.8, 2.4, 2.2); s3.add(aiKey);
       const aiFill = new M.PointLight(0x9b8cff, 0.62, 9);
       aiFill.position.set(3.0, 1.8, 1.7); s3.add(aiFill);
+      addRefSceneShell(s3, {label:'AI RENDER LAB', accent:0x6ee7ff, warm:0x9b8cff, zBack:-5.2, zMid:-0.4, dark:0x050817, floor:0x040812});
 
       // 04 REELS
       const s4 = makeSc(-100);
@@ -1261,6 +1142,7 @@
       reelKey.position.set(-3.7, 2.4, 2.4); s4.add(reelKey);
       const reelFill = new M.PointLight(0x6ee7ff, 0.62, 9);
       reelFill.position.set(3.6, 1.9, 2.1); s4.add(reelFill);
+      addRefSceneShell(s4, {label:'VERTICAL MEDIA BAY', accent:0xff4fc8, warm:0x6ee7ff, zBack:-4.8, zMid:0.2, dark:0x090611, floor:0x050507});
 
       // 05 BRAND FILMS
       const s5 = makeSc(-125);
@@ -1339,21 +1221,113 @@
       brandKey.position.set(0, 3.2, 2.6); s5.add(brandKey);
       const brandEdge = new M.PointLight(0x6ee7ff, 0.42, 11);
       brandEdge.position.set(4.8, 1.9, 1.8); s5.add(brandEdge);
+      addRefSceneShell(s5, {label:'CINEMA REVIEW ROOM', accent:0xd9c8a9, warm:0x6ee7ff, zBack:-5.0, zMid:2.0, dark:0x08070a, floor:0x050508});
 
       // 06 VISUAL POLISH
       const s6 = makeSc(-150);
-      const bgM = new M.Mesh(new M.PlaneGeometry(14, 8), new M.MeshBasicMaterial({map:vidTex('v-polish-bg'), side:M.DoubleSide, transparent:true, opacity:0.45}));
-      bgM.position.z = -5; s6.add(bgM);
+      function scopeTex6(label, accent, mode){
+        const cnv = document.createElement('canvas'); cnv.width = 512; cnv.height = 320;
+        const x = cnv.getContext('2d');
+        x.fillStyle = '#03060b'; x.fillRect(0, 0, cnv.width, cnv.height);
+        x.strokeStyle = 'rgba(255,255,255,0.08)'; x.lineWidth = 1;
+        for (let i=1; i<8; i++){ x.beginPath(); x.moveTo(i*64, 64); x.lineTo(i*64, 286); x.stroke(); }
+        for (let i=1; i<5; i++){ x.beginPath(); x.moveTo(28, 62+i*45); x.lineTo(484, 62+i*45); x.stroke(); }
+        x.fillStyle = 'rgba(245,240,232,0.9)'; x.font = '700 28px Inter, Arial'; x.fillText(label, 28, 42);
+        if (mode === 'vectors'){
+          x.save(); x.translate(256, 178);
+          x.strokeStyle = 'rgba(110,231,255,0.22)';
+          for (let r=34; r<=112; r+=26){ x.beginPath(); x.arc(0,0,r,0,Math.PI*2); x.stroke(); }
+          for (let a=0; a<Math.PI*2; a+=Math.PI/6){ x.beginPath(); x.moveTo(0,0); x.lineTo(Math.cos(a)*122, Math.sin(a)*122); x.stroke(); }
+          for (let i=0; i<70; i++){
+            const a = i*0.42, r = 22 + (i%19)*4.7;
+            x.fillStyle = i%3===0 ? 'rgba(217,200,169,0.55)' : accent;
+            x.beginPath(); x.arc(Math.cos(a)*r, Math.sin(a)*r*0.74, 2.2, 0, Math.PI*2); x.fill();
+          }
+          x.restore();
+        } else {
+          x.strokeStyle = accent; x.lineWidth = 3; x.beginPath();
+          for (let i=0; i<180; i++){
+            const px = 36 + i*2.45;
+            const py = 176 + Math.sin(i*0.16)*34 + Math.sin(i*0.045)*54;
+            if (i===0) x.moveTo(px, py); else x.lineTo(px, py);
+          }
+          x.stroke();
+          for (let i=0; i<34; i++){
+            x.fillStyle = i%4===0 ? 'rgba(217,200,169,0.45)' : 'rgba(110,231,255,0.36)';
+            x.fillRect(42+i*13, 260 - (i%9)*9, 8, 6 + (i%11)*8);
+          }
+        }
+        const tex = new M.CanvasTexture(cnv);
+        tex.minFilter = M.LinearFilter; tex.magFilter = M.LinearFilter;
+        return tex;
+      }
+      const polishBackWall = new M.Mesh(new M.PlaneGeometry(18.5, 9.2), new M.MeshStandardMaterial({color:0x070809, metalness:0.32, roughness:0.74, side:M.DoubleSide}));
+      polishBackWall.position.set(0, 0.7, -4.0); s6.add(polishBackWall);
+      const polishFloor = new M.Mesh(new M.PlaneGeometry(22, 15), new M.MeshStandardMaterial({color:0x050607, metalness:0.82, roughness:0.28, side:M.DoubleSide}));
+      polishFloor.rotation.x = -Math.PI/2; polishFloor.position.set(0, -2.35, 0.75); s6.add(polishFloor);
+      const polishFloorGlow = new M.Mesh(new M.PlaneGeometry(11.5, 4.8), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.052, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      polishFloorGlow.rotation.x = -Math.PI/2; polishFloorGlow.position.set(0.6, -2.28, 0.85); s6.add(polishFloorGlow);
+      const polishRigMat = new M.MeshStandardMaterial({color:0x101217, metalness:0.82, roughness:0.24});
+      const polishPanelMat = new M.MeshStandardMaterial({color:0x080a0d, metalness:0.5, roughness:0.58, side:M.DoubleSide});
+      const polishCyan = new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.2, blending:M.AdditiveBlending, depthWrite:false});
+      const polishWarm = new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.18, blending:M.AdditiveBlending, depthWrite:false});
+      const polishViolet = new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.18, blending:M.AdditiveBlending, depthWrite:false});
+      [-7.8, 7.8].forEach((x, i)=>{
+        const wall = new M.Mesh(new M.PlaneGeometry(4.0, 7.2), polishPanelMat);
+        wall.position.set(x, 0.25, -0.2); wall.rotation.y = x < 0 ? 0.4 : -0.4; s6.add(wall);
+        const strip = new M.Mesh(new M.BoxGeometry(0.035, 5.8, 0.035), i ? polishWarm : polishCyan);
+        strip.position.set(x * 0.98, 0.2, -0.05); strip.rotation.y = wall.rotation.y; s6.add(strip);
+      });
+      for (let i=-4; i<=4; i++){
+        const rail = new M.Mesh(new M.BoxGeometry(0.07, 0.07, 8.8), polishRigMat);
+        rail.position.set(i*1.5, 4.45, -0.1); s6.add(rail);
+      }
       const tHype = textTex('HYPE', 180, '#f8fbff');
       [{x:-4.5,y:1.5,z:0,rotY:-0.5,scale:1.2},{x:-2.5,y:0.5,z:1,rotY:0.4,scale:1.4},{x:-3.5,y:-1.5,z:-1,rotY:-0.2,scale:1.0},{x:-5.0,y:-0.2,z:0.5,rotY:0.7,scale:1.1}].forEach(c=>{
-        const m = new M.Mesh(new M.PlaneGeometry(2.2, 0.55), new M.MeshBasicMaterial({map:tHype, transparent:true, side:M.DoubleSide, opacity:0.85}));
+        const m = new M.Mesh(new M.PlaneGeometry(2.2, 0.55), new M.MeshBasicMaterial({map:tHype, transparent:true, side:M.DoubleSide, opacity:0.62}));
         m.position.set(c.x, c.y, c.z); m.rotation.y = c.rotY; m.scale.setScalar(c.scale);
         s6.add(m);
       });
+      [
+        {label:'WAVEFORM', x:-3.95, y:1.45, z:-2.25, ry:0.24, tex:scopeTex6('WAVEFORM', 'rgba(110,231,255,0.86)', 'wave')},
+        {label:'VECTORSCOPE', x:-1.25, y:1.55, z:-2.65, ry:0.08, tex:scopeTex6('VECTORSCOPE', 'rgba(155,140,255,0.8)', 'vectors')},
+        {label:'LUMA', x:1.35, y:1.45, z:-2.55, ry:-0.08, tex:scopeTex6('LUMA', 'rgba(217,200,169,0.82)', 'wave')}
+      ].forEach(p=>{
+        const panel = new M.Mesh(new M.PlaneGeometry(2.05, 1.28), new M.MeshBasicMaterial({map:p.tex, transparent:true, side:M.DoubleSide, opacity:0.9}));
+        panel.position.set(p.x, p.y, p.z); panel.rotation.y = p.ry; s6.add(panel);
+        const edge = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(2.14, 1.37, 0.05)), wireMat(0x6ee7ff, 0.42));
+        edge.position.copy(panel.position); edge.rotation.y = p.ry; s6.add(edge);
+      });
+      const gradingDesk = new M.Group();
+      const deskBody6 = new M.Mesh(new M.BoxGeometry(4.5, 0.34, 1.05), polishRigMat);
+      deskBody6.position.y = -1.86; gradingDesk.add(deskBody6);
+      const deskTop6 = new M.Mesh(new M.BoxGeometry(4.25, 0.08, 0.9), new M.MeshStandardMaterial({color:0x07090d, metalness:0.74, roughness:0.22}));
+      deskTop6.position.set(0, -1.58, -0.05); gradingDesk.add(deskTop6);
+      const polishWheels = [];
+      [0xff4fc8, 0x6ee7ff, 0xd9c8a9].forEach((color, i)=>{
+        const wheel = new M.Mesh(new M.TorusGeometry(0.28, 0.018, 10, 64), new M.MeshBasicMaterial({color, transparent:true, opacity:0.62, blending:M.AdditiveBlending}));
+        wheel.position.set(-1.1 + i*0.72, -1.5, -0.18); wheel.rotation.x = Math.PI/2;
+        gradingDesk.add(wheel); polishWheels.push(wheel);
+        const dot = new M.Mesh(new M.SphereGeometry(0.045, 12, 12), new M.MeshBasicMaterial({color}));
+        dot.position.set(-1.1 + i*0.72, -1.5, -0.18); gradingDesk.add(dot);
+      });
+      for (let i=0; i<10; i++){
+        const fader = new M.Mesh(new M.BoxGeometry(0.035, 0.035, 0.44), i%2 ? polishWarm : polishCyan);
+        fader.position.set(1.0 + i*0.17, -1.49, -0.2 + (i%3)*0.05); gradingDesk.add(fader);
+      }
+      gradingDesk.position.set(-0.9, 0, 2.95); gradingDesk.rotation.y = 0.05; s6.add(gradingDesk);
       const pod = new M.Mesh(new M.CylinderGeometry(2.2, 2.6, 0.25, 40), new M.MeshStandardMaterial({color:0x0a0e18, metalness:0.8, roughness:0.3}));
       pod.position.set(3.5, -1.5, 0); s6.add(pod);
+      const productRig = new M.Group();
+      const productGlow6 = new M.Mesh(new M.PlaneGeometry(2.45, 3.15), new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.07, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
+      productGlow6.position.z = -0.09; productRig.add(productGlow6);
+      const productBack6 = new M.Mesh(new M.PlaneGeometry(2.04, 2.76), new M.MeshStandardMaterial({color:0x07090d, metalness:0.72, roughness:0.2, transparent:true, opacity:0.8, side:M.DoubleSide}));
+      productBack6.position.z = -0.045; productRig.add(productBack6);
       const prod = new M.Mesh(new M.PlaneGeometry(1.8, 2.5), new M.MeshBasicMaterial({map:vidTex('v-polish-prod'), side:M.DoubleSide}));
-      prod.position.set(3.5, 0.6, 0); s6.add(prod); s6.userData.product = prod;
+      prod.position.z = 0.02; productRig.add(prod);
+      const productFrame6 = new M.LineSegments(new M.EdgesGeometry(new M.BoxGeometry(1.95, 2.65, 0.08)), wireMat(0xd9c8a9, 0.82));
+      productFrame6.position.z = 0.045; productRig.add(productFrame6);
+      productRig.position.set(3.5, 0.6, 0); s6.add(productRig); s6.userData.product = productRig;
       for (let i = 0; i < 6; i++){
         const a = (i/6)*Math.PI*2;
         const cone = new M.Mesh(new M.ConeGeometry(0.7, 4, 20, 1, true), new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.07, side:M.DoubleSide, blending:M.AdditiveBlending, depthWrite:false}));
@@ -1361,6 +1335,13 @@
         cone.lookAt(new M.Vector3(3.5, -1, 0)); cone.rotateX(-Math.PI/2);
         s6.add(cone);
       }
+      s6.userData.polishWheels = polishWheels;
+      s6.userData.polishPulse = [polishFloorGlow, productGlow6];
+      const polishKey = new M.PointLight(0x6ee7ff, 0.62, 11);
+      polishKey.position.set(-3.4, 2.5, 2.8); s6.add(polishKey);
+      const polishFill = new M.PointLight(0xd9c8a9, 0.55, 10);
+      polishFill.position.set(3.8, 2.0, 2.1); s6.add(polishFill);
+      addRefSceneShell(s6, {accent:0x6ee7ff, warm:0xd9c8a9, zBack:-5.0, zMid:0.6, dark:0x05080d, floor:0x040506});
 
       // 07 AI SITES
       const s7 = makeSc(-175);
@@ -1379,6 +1360,7 @@
         lM.position.y = -1.5; fr.add(lM);
         s7.add(fr);
       });
+      addRefSceneShell(s7, {accent:0x58ff9a, warm:0x6ee7ff, zBack:-5.0, zMid:0.0, dark:0x030905, floor:0x030604});
 
       // 08 CONTACT (был 10, сцены 08-09 удалены)
       const s10 = makeSc(-200);
@@ -1398,37 +1380,7 @@
       }
       pG.setAttribute('position', new M.BufferAttribute(pP, 3));
       s10.add(new M.Points(pG, new M.PointsMaterial({color:0x9b8cff, size:0.025, transparent:true, opacity:0.4, blending:M.AdditiveBlending, depthWrite:false})));
-
-
-      // === ATMOSPHERIC DECORATION для всех сцен (s0..s10 уже объявлены) ===
-      decorateChamber(s1, {accent:0x6ee7ff, warm:0xd9c8a9, floorY:-2.5, floorW:22, floorD:16, rayY:2.5, particles:300});
-      const pillar1 = new M.Mesh(new M.CylinderGeometry(0.05, 0.05, 7, 8),
-        new M.MeshBasicMaterial({color:0xd9c8a9, transparent:true, opacity:0.32, blending:M.AdditiveBlending}));
-      pillar1.position.set(0, 1.5, -5); s1.add(pillar1);
-
-      decorateChamber(s2, {accent:0xff6e6e, warm:0xd9c8a9, floorY:-2.2, floorW:24, floorD:18, rayY:3, particles:260, floorTint:0x140707});
-      decorateChamber(s3, {accent:0x9b8cff, warm:0x6ee7ff, floorY:-3.5, floorW:18, floorD:14, rayY:0, particles:380, floorTint:0x0a0716});
-      decorateChamber(s4, {accent:0xff8ce6, warm:0xd9c8a9, floorY:-2.4, floorW:22, floorD:14, rayY:1.5, particles:280, floorTint:0x10081a});
-      decorateChamber(s5, {accent:0xffaa66, warm:0xd9c8a9, floorY:-2.4, floorW:24, floorD:18, rayY:2, particles:240, floorTint:0x120804, noOrbs:true});
-
-      decorateChamber(s6, {accent:0x6ee7ff, warm:0xffe0a8, floorY:-2.2, floorW:22, floorD:14, rayY:1.5, particles:300});
-      const polishRing = new M.Mesh(new M.RingGeometry(2.6, 2.85, 64),
-        new M.MeshBasicMaterial({color:0x6ee7ff, transparent:true, opacity:0.5, blending:M.AdditiveBlending, side:M.DoubleSide}));
-      polishRing.rotation.x = -Math.PI/2;
-      polishRing.position.set(3.5, -2.19, 0);
-      s6.add(polishRing);
-      animMeshes.push({type:'spinring', m:polishRing});
-
-      decorateChamber(s7, {accent:0x6ee7ff, warm:0xffcd6e, floorY:-2.6, floorW:20, floorD:14, rayY:1.5, particles:240, floorTint:0x06120c});
-
-      decorateChamber(s10, {accent:0x9b8cff, warm:0xd9c8a9, floorY:-2.6, floorW:22, floorD:16, rayY:1.5, particles:360, floorTint:0x080a14, noOrbs:true});
-      const finalPillar = new M.Mesh(new M.CylinderGeometry(0.18, 0.18, 14, 16),
-        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.4, blending:M.AdditiveBlending}));
-      finalPillar.position.set(0, 2, -2); s10.add(finalPillar);
-      const finalHalo = new M.Mesh(new M.PlaneGeometry(8, 14),
-        new M.MeshBasicMaterial({color:0x9b8cff, transparent:true, opacity:0.08, blending:M.AdditiveBlending, depthWrite:false, side:M.DoubleSide}));
-      finalHalo.position.set(0, 2, -2.2); s10.add(finalHalo);
-      // === END DECORATION ===
+      addRefSceneShell(s10, {accent:0xd9c8a9, warm:0x6ee7ff, zBack:-5.0, zMid:0.2, dark:0x090705, floor:0x050403});
 
       const waypoints = [
         {pos:[3, 1.8, 4],   look:[0, 0.4, 0]},
@@ -1442,15 +1394,10 @@
         {pos:[0, 0.5, -193],look:[0, 0.3, -200]}
       ];
       const atmospheres = [
-        {bg:0x040810, near:3, far:18},   // 0 PORTAL — глубокий синий
-        {bg:0x0a1626, near:6, far:30},   // 1 LOBBY  — лазурный туман
-        {bg:0x1e0608, near:6, far:32},   // 2 COMMERCIAL — кроваво-винный
-        {bg:0x100722, near:5, far:24},   // 3 AI VIDEO — фиолетовый космос
-        {bg:0x1a0a26, near:7, far:32},   // 4 REELS — неоновая пыль
-        {bg:0x1a0804, near:7, far:38},   // 5 BRAND FILMS — янтарный бронз
-        {bg:0x081820, near:7, far:30},   // 6 VISUAL POLISH — стальной cyan
-        {bg:0x041208, near:6, far:28},   // 7 AI SITES — изумруд
-        {bg:0x0a0a18, near:6, far:32}    // 8 CONTACT — тёмная пурпура
+        {bg:0x000000, near:4, far:20},{bg:0x080d18, near:8, far:40},{bg:0x180b08, near:8, far:40},
+        {bg:0x0a1430, near:6, far:30},{bg:0x1a0820, near:8, far:40},{bg:0x180c05, near:8, far:50},
+        {bg:0x101010, near:8, far:40},{bg:0x051408, near:6, far:30},
+        {bg:0x05080f, near:8, far:40}
       ];
       function updateCamera(p){
         const n = waypoints.length;
@@ -1526,6 +1473,15 @@
             tex.needsUpdate = true;
           }
         }
+        [s1, s2, s3, s4, s5, s6, s7, s10].forEach((world, wi)=>{
+          if (world.userData.refPulse){
+            world.userData.refPulse.forEach((mesh, i)=>{
+              if (mesh.material){
+                mesh.material.opacity = 0.045 + Math.sin(t * 0.8 + i * 0.42 + wi) * 0.014 + 0.08;
+              }
+            });
+          }
+        });
         if (s3.userData.sphere){
           s3.userData.sphere.rotation.y = t*0.1;
           s3.userData.sphere.rotation.x = t*0.07;
@@ -1557,22 +1513,17 @@
         if (s6.userData.product){
           s6.userData.product.rotation.y = Math.sin(t*0.3) * 0.15;
         }
-        // === Атмосферные анимации (god-rays, particles, orbs, spin-rings) ===
-        for (let i = 0; i < animMeshes.length; i++){
-          const item = animMeshes[i];
-          if (item.type === 'godray'){
-            item.m.rotation.y += item.m.userData.spinSpeed * 0.016;
-          } else if (item.type === 'particles'){
-            item.m.rotation.y = t * (item.m.userData.driftX || 0.01) * 5;
-            item.m.position.y = Math.sin(t * 0.2 + i) * (item.m.userData.driftY || 0.03);
-          } else if (item.type === 'orb'){
-            const bp = item.m.userData.basePos;
-            const pulse = 1 + Math.sin(t * item.m.userData.pulseSpeed + i) * 0.25;
-            if (item.m.userData.haloRef) item.m.userData.haloRef.scale.setScalar(pulse);
-            item.m.position.y = bp[1] + Math.sin(t * 0.6 + i*0.7) * 0.15;
-          } else if (item.type === 'spinring'){
-            item.m.rotation.z = t * 0.3;
-          }
+        if (s6.userData.polishWheels){
+          s6.userData.polishWheels.forEach((wheel, i)=>{
+            wheel.rotation.z = t * (0.18 + i * 0.04);
+          });
+        }
+        if (s6.userData.polishPulse){
+          s6.userData.polishPulse.forEach((mesh, i)=>{
+            if (mesh.material){
+              mesh.material.opacity = 0.06 + Math.sin(t * 0.9 + i * 0.7) * 0.018;
+            }
+          });
         }
         if (composer) composer.render(); else renderer.render(scene, camera);
       }
