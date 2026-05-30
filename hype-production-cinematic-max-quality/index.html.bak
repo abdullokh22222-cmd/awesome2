@@ -1385,8 +1385,8 @@
         <div class="m-idx">00</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 00</p>
-          <h2 class="m-title" data-i18n="m0Title">ВХОД</h2>
-          <p class="m-desc" data-i18n="m0Desc">Гигантский портал. Масштаб. Туман. Ощущение силы и пути в другой мир.</p>
+          <h2 class="m-title">ВХОД</h2>
+          <p class="m-desc">Гигантский портал. Масштаб. Туман. Ощущение силы и пути в другой мир.</p>
         </div>
         <div class="m-scroll-hint">Scroll ↓</div>
       </section>
@@ -1414,8 +1414,8 @@
         <div class="m-idx">01</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 01</p>
-          <h2 class="m-title" data-i18n="m1Title">ХАБ&nbsp;6&nbsp;НАПРАВЛЕНИЙ</h2>
-          <p class="m-desc" data-i18n="m1Desc">Навигационный хаб со световыми линиями и выбором направления.</p>
+          <h2 class="m-title">ХАБ&nbsp;6&nbsp;НАПРАВЛЕНИЙ</h2>
+          <p class="m-desc">Навигационный хаб со световыми линиями и выбором направления.</p>
         </div>
       </section>
 
@@ -1443,8 +1443,8 @@
         <div class="m-idx">02</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 02</p>
-          <h2 class="m-title" data-i18n="m2Title">COMMERCIAL&nbsp;VIDEOS</h2>
-          <p class="m-desc" data-i18n="m2Desc">Зона продакшна: камеры, свет, LED-экраны, съёмочные павильоны, студийная атмосфера.</p>
+          <h2 class="m-title">COMMERCIAL&nbsp;VIDEOS</h2>
+          <p class="m-desc">Зона продакшна: камеры, свет, LED-экраны, съёмочные павильоны, студийная атмосфера.</p>
         </div>
       </section>
 
@@ -1470,8 +1470,8 @@
         <div class="m-idx">03</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 03</p>
-          <h2 class="m-title" data-i18n="m3Title">AI&nbsp;VIDEO</h2>
-          <p class="m-desc" data-i18n="m3Desc">AI лаборатория: нейросети, рендеры, голограммы, футуристичные экраны.</p>
+          <h2 class="m-title">AI&nbsp;VIDEO</h2>
+          <p class="m-desc">AI лаборатория: нейросети, рендеры, голограммы, футуристичные экраны.</p>
         </div>
       </section>
 
@@ -1498,8 +1498,8 @@
         <div class="m-idx">04</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 04</p>
-          <h2 class="m-title" data-i18n="m4Title">REELS</h2>
-          <p class="m-desc" data-i18n="m4Desc">Мир коротких видео: вертикальные экраны, динамические ленты, энергия, движение.</p>
+          <h2 class="m-title">REELS</h2>
+          <p class="m-desc">Мир коротких видео: вертикальные экраны, динамические ленты, энергия, движение.</p>
         </div>
       </section>
 
@@ -1526,8 +1526,8 @@
         <div class="m-idx">05</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 05</p>
-          <h2 class="m-title" data-i18n="m5Title">BRAND&nbsp;FILMS</h2>
-          <p class="m-desc" data-i18n="m5Desc">Кино мир: огромные декорации, камеры, анаморфный свет, киношная атмосфера.</p>
+          <h2 class="m-title">BRAND&nbsp;FILMS</h2>
+          <p class="m-desc">Кино мир: огромные декорации, камеры, анаморфный свет, киношная атмосфера.</p>
         </div>
       </section>
 
@@ -1558,8 +1558,8 @@
         <div class="m-idx">06</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 06</p>
-          <h2 class="m-title" data-i18n="m6Title">VISUAL&nbsp;POLISH</h2>
-          <p class="m-desc" data-i18n="m6Desc">Пост-продакшн: грейдинг, цвет, референсы, чистые стеклянные комнаты.</p>
+          <h2 class="m-title">VISUAL&nbsp;POLISH</h2>
+          <p class="m-desc">Пост-продакшн: грейдинг, цвет, референсы, чистые стеклянные комнаты.</p>
         </div>
       </section>
 
@@ -1588,8 +1588,8 @@
         <div class="m-idx">07</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 07</p>
-          <h2 class="m-title" data-i18n="m7Title">AI&nbsp;SITES</h2>
-          <p class="m-desc" data-i18n="m7Desc">Цифровой мир: интерфейсы, сайты, UI-панели, цифровой город внутри стен.</p>
+          <h2 class="m-title">AI&nbsp;SITES</h2>
+          <p class="m-desc">Цифровой мир: интерфейсы, сайты, UI-панели, цифровой город внутри стен.</p>
         </div>
       </section>
 
@@ -1621,8 +1621,8 @@
         <div class="m-idx">08</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 08</p>
-          <h2 class="m-title" data-i18n="m8Title">AUTOMATIONS</h2>
-          <p class="m-desc" data-i18n="m8Desc">Мир автоматизации: процессы, схемы, потоки, интеграции, AI-помощники.</p>
+          <h2 class="m-title">AUTOMATIONS</h2>
+          <p class="m-desc">Мир автоматизации: процессы, схемы, потоки, интеграции, AI-помощники.</p>
         </div>
       </section>
 
@@ -1649,8 +1649,8 @@
         <div class="m-idx">09</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 09</p>
-          <h2 class="m-title" data-i18n="m9Title">SYSTEMS</h2>
-          <p class="m-desc" data-i18n="m9Desc">Системы и решения: дашборды, данные, управление, контрольный центр.</p>
+          <h2 class="m-title">SYSTEMS</h2>
+          <p class="m-desc">Системы и решения: дашборды, данные, управление, контрольный центр.</p>
         </div>
       </section>
 
@@ -1677,12 +1677,12 @@
         <div class="m-idx">10</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 10</p>
-          <h2 class="m-title" data-i18n="m10Title">ФИНАЛЬНАЯ&nbsp;ЗОНА</h2>
-          <p class="m-desc" data-i18n="m10Desc">Огромная финальная зона, световой портал, логотип, CTA зона. Ощущение завершения.</p>
+          <h2 class="m-title">ФИНАЛЬНАЯ&nbsp;ЗОНА</h2>
+          <p class="m-desc">Огромная финальная зона, световой портал, логотип, CTA зона. Ощущение завершения.</p>
           <div class="m-stats">
-            <div class="stat"><strong>120+</strong><span data-i18n="mStatProjects">Проектов</span></div>
-            <div class="stat"><strong>7+</strong><span data-i18n="mStatCompanies">Компаний</span></div>
-            <div class="stat"><strong>15</strong><span data-i18n="mStatBloggers">Блогеров</span></div>
+            <div class="stat"><strong>120+</strong><span>Проектов</span></div>
+            <div class="stat"><strong>7+</strong><span>Компаний</span></div>
+            <div class="stat"><strong>15</strong><span>Блогеров</span></div>
           </div>
         </div>
       </section>
@@ -1711,8 +1711,8 @@
         <div class="m-idx">11</div>
         <div class="m-content">
           <p class="m-eyebrow">Scene 11</p>
-          <h2 class="m-title" data-i18n="m11Title">LAUNCH</h2>
-          <p class="m-desc" data-i18n="m11Desc">Запуск проекта в мир. Переход в новую реальность. Финальный эффект.</p>
+          <h2 class="m-title">LAUNCH</h2>
+          <p class="m-desc">Запуск проекта в мир. Переход в новую реальность. Финальный эффект.</p>
         </div>
       </section>
     </div>
@@ -1728,19 +1728,19 @@
 
     <!-- floating CTA -->
     <div class="m-fab">
-      <button type="button" onclick="window.mOpenSheet&&window.mOpenSheet()" data-i18n="mDiscuss">Обсудить проект</button>
+      <button type="button" onclick="window.mOpenSheet&&window.mOpenSheet()">Обсудить проект</button>
     </div>
 
     <!-- menu drawer -->
     <nav class="m-menu-panel" aria-label="Menu">
       <ul>
-        <li><button type="button" onclick="window.mGo&&window.mGo(2)" data-i18n="mMenuProjects">Проекты</button></li>
-        <li><button type="button" onclick="window.mGo&&window.mGo(1)" data-i18n="mMenuProcess">Процесс</button></li>
-        <li><button type="button" onclick="window.mGo&&window.mGo(0)" data-i18n="mMenuBg">Фон</button></li>
-        <li><button type="button" onclick="window.mGo&&window.mGo(10)" data-i18n="mMenuAbout">О нас</button></li>
-        <li><button type="button" onclick="window.mOpenSheet&&window.mOpenSheet(true)" data-i18n="mMenuContacts">Контакты</button></li>
+        <li><button type="button" onclick="window.mGo&&window.mGo(2)">Проекты</button></li>
+        <li><button type="button" onclick="window.mGo&&window.mGo(1)">Процесс</button></li>
+        <li><button type="button" onclick="window.mGo&&window.mGo(0)">Фон</button></li>
+        <li><button type="button" onclick="window.mGo&&window.mGo(10)">О нас</button></li>
+        <li><button type="button" onclick="window.mOpenSheet&&window.mOpenSheet(true)">Контакты</button></li>
       </ul>
-      <button type="button" class="m-menu-cta" onclick="window.mOpenSheet&&window.mOpenSheet(true)" data-i18n="mDiscuss">Обсудить проект</button>
+      <button type="button" class="m-menu-cta" onclick="window.mOpenSheet&&window.mOpenSheet(true)">Обсудить проект</button>
       <div class="m-lang-row">
         <button type="button" data-mlang="en">EN</button>
         <button type="button" data-mlang="ru" class="active">RU</button>
@@ -1752,21 +1752,21 @@
     <div class="m-sheet" id="m-sheet" onclick="if(event.target===this)window.mCloseSheet&&window.mCloseSheet()">
       <div class="m-sheet-card">
         <button type="button" class="m-sheet-close" aria-label="Close" onclick="window.mCloseSheet&&window.mCloseSheet()">×</button>
-        <h3 data-i18n="mDiscuss">Обсудить проект</h3>
-        <p class="sub" data-i18n="mSheetSub">Расскажи о задаче — мы подскажем лучшее решение.</p>
+        <h3>Обсудить проект</h3>
+        <p class="sub">Расскажи о задаче — мы подскажем лучшее решение.</p>
         <form id="m-contact-form" novalidate>
-          <input type="text" name="name" placeholder="Имя" data-i18n-placeholder="mFormName" autocomplete="name" />
-          <input type="tel"  name="phone" placeholder="Ваш номер телефона" data-i18n-placeholder="mFormPhone" autocomplete="tel" />
-          <textarea name="project" placeholder="О проекте" data-i18n-placeholder="mFormProject"></textarea>
-          <button type="submit" data-i18n="mFormSubmit">Отправить</button>
+          <input type="text" name="name" placeholder="Имя" autocomplete="name" />
+          <input type="tel"  name="phone" placeholder="Telegram / WhatsApp / +998" autocomplete="tel" />
+          <textarea name="project" placeholder="О проекте"></textarea>
+          <button type="submit">Отправить</button>
           <p class="m-form-status"></p>
         </form>
         <div class="m-contact-links">
           <a href="https://www.instagram.com/HYPE_PROMOTION_UZ" target="_blank" rel="noreferrer">
-            <span data-i18n="instagramLabel">Instagram</span><strong>HYPE_PROMOTION_UZ</strong>
+            <span>Instagram</span><strong>HYPE_PROMOTION_UZ</strong>
           </a>
           <a href="tel:+998935064200">
-            <span data-i18n="phoneLabel">Телефон</span><strong>+998 93 506 42 00</strong>
+            <span>Телефон</span><strong>+998 93 506 42 00</strong>
           </a>
         </div>
       </div>
@@ -1778,9 +1778,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     const i18n = {
-      en: { headerCta:"Start project",scrollHint:"Scroll",ctaStart:"Start a project",ctaWorks:"View works",ctaDiscuss:"Discuss project",statVideos:"videos created",statCompanies:"companies",statBloggers:"bloggers",s0Eyebrow:"Cinematic Video Studio",s0Title:"HYPE PRODUCTION",s0Lead:"We turn any idea into a powerful video.",s1Eyebrow:"Enter the studio",s1Title:"8 <span class='gradient'>directions.</span> One studio.",s1Lead:"Each direction has its own room. Keep scrolling.",s2Eyebrow:"Commercial Videos",s2Title:"Built for <span class='gradient'>paid media.</span>",s2Lead:"High-impact videos for ad campaigns and launches.",s3Eyebrow:"AI Generated",s3Title:"Concept worlds <span class='gradient'>by AI.</span>",s3Lead:"Concepts and visual systems powered by AI.",s4Eyebrow:"Social Media Reels",s4Title:"Built for <span class='gradient'>the thumb.</span>",s4Lead:"Vertical edits. Hook, retention, DM shares.",s5Eyebrow:"Brand Promo Films",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic shooting, sound design, color.",s6Eyebrow:"Motion Design",s6Title:"Kinetic <span class='gradient'>typography.</span>",s6Lead:"Titles, transitions, UI motion, kinetic typography.",s7Eyebrow:"Product Ads",s7Title:"Clean. Focused. <span class='gradient'>Converts.</span>",s7Lead:"Product ads for funnels and launches.",s8Eyebrow:"New service",s8Title:"We build <span class='gradient'>sites too.</span>",s8Lead:"From prompt to launched site — in days.",s9Eyebrow:"Landing pages",s9Title:"One page. <span class='gradient'>One goal.</span>",s9Lead:"3–5 sections, form, mobile — in days.",s9Price:"<strong style='color:var(--blue)'>from 4 000 000 UZS</strong> · 5–7 days",s10Eyebrow:"Brand sites",s10Title:"Full <span class='gradient'>brand experience.</span>",s10Lead:"Multi-page site with animations and blog.",s10Price:"<strong style='color:var(--violet)'>from 9 000 000 UZS</strong> · 2–3 weeks",s11Eyebrow:"Cinematic sites",s11Title:"Like the one <span class='gradient'>you're in.</span>",s11Lead:"3D scenes, scroll-driven animations, custom graphics.",s11Price:"<strong style='color:var(--gold)'>from 18 000 000 UZS</strong> · 4–6 weeks",s12Eyebrow:"Video packages",s12Title:"Start simple. <span class='gradient'>Scale when it works.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"from 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"from 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"from 7 000 000 UZS",s13Eyebrow:"Selected work",s13Title:"AI, reels <span class='gradient'>and cinematic.</span>",s13Lead:"Camera drifts past a wall of screens.",s14Eyebrow:"How we work",s14Title:"From idea <span class='gradient'>to launch.</span>",s14Lead:"5 steps from first meeting to publication.",s15Eyebrow:"Studio",s15Title:"HYPE PRODUCTION creates <span class='gradient'>AI videos, reels and premium content</span> for brands.",s16Eyebrow:"Request",s16Title:"Ready to <span class='gradient'>launch?</span>",s16Lead:"Tell us your idea. We'll respond within 24h.",instagramLabel:"Instagram",phoneLabel:"Phone",formName:"Name",formNamePlaceholder:"Your name",formPhone:"Phone",formPhonePlaceholder:"+998",formProject:"Project",formProjectPlaceholder:"What do you want to create?",formSubmit:"Send request",formSuccess:"Thanks — we'll be in touch within 24h.",formError:"Please fill in name and phone.",m0Title:"ENTRANCE",m0Desc:"A giant portal. Scale. Fog. A sense of power and a path into another world.",m1Title:"6-DIRECTION&nbsp;HUB",m1Desc:"A navigation hub with light lines and a choice of direction.",m2Title:"COMMERCIAL&nbsp;VIDEOS",m2Desc:"Production zone: cameras, lighting, LED screens, sound stages, studio atmosphere.",m3Title:"AI&nbsp;VIDEO",m3Desc:"AI lab: neural networks, renders, holograms, futuristic screens.",m4Title:"REELS",m4Desc:"The world of short video: vertical screens, dynamic feeds, energy, motion.",m5Title:"BRAND&nbsp;FILMS",m5Desc:"Cinema world: huge sets, cameras, anamorphic light, a filmic atmosphere.",m6Title:"VISUAL&nbsp;POLISH",m6Desc:"Post-production: grading, color, references, clean glass rooms.",m7Title:"AI&nbsp;SITES",m7Desc:"Digital world: interfaces, websites, UI panels, a digital city within the walls.",m8Title:"AUTOMATIONS",m8Desc:"Automation world: processes, flows, integrations, AI assistants.",m9Title:"SYSTEMS",m9Desc:"Systems and solutions: dashboards, data, control, a command center.",m10Title:"FINAL&nbsp;ZONE",m10Desc:"A vast final zone, a light portal, the logo, a CTA area. A sense of completion.",m11Title:"LAUNCH",m11Desc:"Launching the project into the world. A transition into a new reality. The final effect.",mStatProjects:"Projects",mStatCompanies:"Companies",mStatBloggers:"Bloggers",mMenuProjects:"Projects",mMenuProcess:"Process",mMenuBg:"Story",mMenuAbout:"About",mMenuContacts:"Contacts",mDiscuss:"Discuss project",mSheetSub:"Tell us about your task — we will suggest the best solution.",mFormName:"Name",mFormPhone:"Your phone number",mFormProject:"About the project",mFormSubmit:"Send" },
-      ru: { headerCta:"Начать проект",scrollHint:"Скроль",ctaStart:"Начать проект",ctaWorks:"Смотреть работы",ctaDiscuss:"Обсудить проект",statVideos:"созданных видео",statCompanies:"компаний",statBloggers:"блогеров",s0Eyebrow:"Cinematic-студия видеопродакшна",s0Title:"HYPE PRODUCTION",s0Lead:"Воплощаем любые идеи в кадре.",s1Eyebrow:"Войди в студию",s1Title:"8 <span class='gradient'>направлений.</span> Одна студия.",s1Lead:"Каждое направление — собственная сцена. Камера проведёт через все.",s2Eyebrow:"Рекламные видео",s2Title:"Сделано для <span class='gradient'>рекламы.</span>",s2Lead:"Видео высокого импакта для рекламных кампаний.",s3Eyebrow:"AI-видео",s3Title:"Концепт-миры <span class='gradient'>с помощью AI.</span>",s3Lead:"Концепты и визуальные системы на основе AI.",s4Eyebrow:"Reels для соцсетей",s4Title:"Сделано <span class='gradient'>для большого пальца.</span>",s4Lead:"Вертикальные монтажи. Хук, удержание, пересылки.",s5Eyebrow:"Brand-фильмы",s5Title:"Премиальный <span class='gradient'>сторителлинг.</span>",s5Lead:"Cinematic-съёмка, саунд-дизайн, цветокоррекция.",s6Eyebrow:"Motion-дизайн",s6Title:"Кинетическая <span class='gradient'>типографика.</span>",s6Lead:"Титры, переходы, UI-motion, типографика в движении.",s7Eyebrow:"Product-реклама",s7Title:"Чисто. Сфокусированно. <span class='gradient'>Продаёт.</span>",s7Lead:"Продуктовая реклама для воронок и запусков.",s8Eyebrow:"Новая услуга",s8Title:"Мы делаем <span class='gradient'>и сайты.</span>",s8Lead:"От промпта до запущенного сайта — за дни.",s9Eyebrow:"Лендинги",s9Title:"Одна страница. <span class='gradient'>Одна цель.</span>",s9Lead:"3–5 секций, форма, мобильная версия — за дни.",s9Price:"<strong style='color:var(--blue)'>от 4 000 000 UZS</strong> · 5–7 дней",s10Eyebrow:"Brand-сайты",s10Title:"Полный <span class='gradient'>brand-опыт.</span>",s10Lead:"Многостраничный сайт со скролл-анимациями и блогом.",s10Price:"<strong style='color:var(--violet)'>от 9 000 000 UZS</strong> · 2–3 недели",s11Eyebrow:"Cinematic-сайты",s11Title:"Как тот, <span class='gradient'>в котором ты сейчас.</span>",s11Lead:"3D-сцены, scroll-driven анимации, кастомная графика.",s11Price:"<strong style='color:var(--gold)'>от 18 000 000 UZS</strong> · 4–6 недель",s12Eyebrow:"Видео-пакеты",s12Title:"Начни просто. <span class='gradient'>Масштабируй, когда контент работает.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"от 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"от 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"от 7 000 000 UZS",s13Eyebrow:"Избранные работы",s13Title:"AI, reels <span class='gradient'>и cinematic.</span>",s13Lead:"Камера медленно проезжает мимо стены экранов.",s14Eyebrow:"Как мы работаем",s14Title:"От идеи <span class='gradient'>до запуска.</span>",s14Lead:"5 этапов от первой встречи до публикации.",s15Eyebrow:"Студия",s15Title:"HYPE PRODUCTION делает <span class='gradient'>AI-видео, reels и премиум-контент</span> для брендов.",s16Eyebrow:"Заявка",s16Title:"Готовы <span class='gradient'>запускать?</span>",s16Lead:"Расскажи идею. Ответим в течение 24 часов.",instagramLabel:"Instagram",phoneLabel:"Телефон",formName:"Имя",formNamePlaceholder:"Ваше имя",formPhone:"Телефон",formPhonePlaceholder:"+998",formProject:"Проект",formProjectPlaceholder:"Что хотите создать?",formSubmit:"Отправить заявку",formSuccess:"Спасибо — ответим в течение 24 часов.",formError:"Заполните имя и телефон.",m0Title:"ВХОД",m0Desc:"Гигантский портал. Масштаб. Туман. Ощущение силы и пути в другой мир.",m1Title:"ХАБ&nbsp;6&nbsp;НАПРАВЛЕНИЙ",m1Desc:"Навигационный хаб со световыми линиями и выбором направления.",m2Title:"COMMERCIAL&nbsp;VIDEOS",m2Desc:"Зона продакшна: камеры, свет, LED-экраны, съёмочные павильоны, студийная атмосфера.",m3Title:"AI&nbsp;VIDEO",m3Desc:"AI-лаборатория: нейросети, рендеры, голограммы, футуристичные экраны.",m4Title:"REELS",m4Desc:"Мир коротких видео: вертикальные экраны, динамические ленты, энергия, движение.",m5Title:"BRAND&nbsp;FILMS",m5Desc:"Кино-мир: огромные декорации, камеры, анаморфный свет, киношная атмосфера.",m6Title:"VISUAL&nbsp;POLISH",m6Desc:"Пост-продакшн: грейдинг, цвет, референсы, чистые стеклянные комнаты.",m7Title:"AI&nbsp;SITES",m7Desc:"Цифровой мир: интерфейсы, сайты, UI-панели, цифровой город внутри стен.",m8Title:"AUTOMATIONS",m8Desc:"Мир автоматизации: процессы, схемы, потоки, интеграции, AI-помощники.",m9Title:"SYSTEMS",m9Desc:"Системы и решения: дашборды, данные, управление, контрольный центр.",m10Title:"ФИНАЛЬНАЯ&nbsp;ЗОНА",m10Desc:"Огромная финальная зона, световой портал, логотип, CTA-зона. Ощущение завершения.",m11Title:"LAUNCH",m11Desc:"Запуск проекта в мир. Переход в новую реальность. Финальный эффект.",mStatProjects:"Проектов",mStatCompanies:"Компаний",mStatBloggers:"Блогеров",mMenuProjects:"Проекты",mMenuProcess:"Процесс",mMenuBg:"Фон",mMenuAbout:"О нас",mMenuContacts:"Контакты",mDiscuss:"Обсудить проект",mSheetSub:"Расскажи о задаче — мы подскажем лучшее решение.",mFormName:"Имя",mFormPhone:"Ваш номер телефона",mFormProject:"О проекте",mFormSubmit:"Отправить" },
-      uz: { headerCta:"Loyiha boshlash",scrollHint:"Pastga",ctaStart:"Loyiha boshlash",ctaWorks:"Ishlarni ko'rish",ctaDiscuss:"Muhokama",statVideos:"yaratilgan video",statCompanies:"kompaniya",statBloggers:"bloger",s0Eyebrow:"Cinematic video studio",s0Title:"HYPE PRODUCTION",s0Lead:"Har qanday g'oyani videoga aylantiramiz.",s1Eyebrow:"Studiyaga kirish",s1Title:"8 <span class='gradient'>yo'nalish.</span> Bir studiya.",s1Lead:"Har biri o'z sahnasi. Kamera olib o'tadi.",s2Eyebrow:"Reklama videolari",s2Title:"Reklama uchun <span class='gradient'>yaratilgan.</span>",s2Lead:"Yuqori ta'sirli reklama videolari.",s3Eyebrow:"AI-videolar",s3Title:"AI yordamida <span class='gradient'>konsept dunyolar.</span>",s3Lead:"AI asosidagi konsept va vizual tizimlar.",s4Eyebrow:"Reels",s4Title:"Bosh barmoq uchun <span class='gradient'>yaratilgan.</span>",s4Lead:"Vertikal montajlar.",s5Eyebrow:"Brend-filmlar",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic suratga olish, ovoz dizayn.",s6Eyebrow:"Motion-dizayn",s6Title:"Kinetik <span class='gradient'>tipografika.</span>",s6Lead:"Titrlar, o'tishlar, UI-motion.",s7Eyebrow:"Mahsulot reklamasi",s7Title:"Toza. Aniq. <span class='gradient'>Sotadi.</span>",s7Lead:"Mahsulotga yo'naltirilgan reklama.",s8Eyebrow:"Yangi xizmat",s8Title:"Biz <span class='gradient'>saytlar ham qilamiz.</span>",s8Lead:"Promptdan ishga tushgan saytgacha — kunlarda.",s9Eyebrow:"Lending",s9Title:"Bir sahifa. <span class='gradient'>Bir maqsad.</span>",s9Lead:"Bir maqsad uchun lending. Kunlarda.",s9Price:"<strong style='color:var(--blue)'>4 000 000 UZSdan</strong> · 5–7 kun",s10Eyebrow:"Brend saytlar",s10Title:"To'liq <span class='gradient'>brend tajriba.</span>",s10Lead:"Ko'p sahifali sayt.",s10Price:"<strong style='color:var(--violet)'>9 000 000 UZSdan</strong> · 2–3 hafta",s11Eyebrow:"Cinematic saytlar",s11Title:"Siz <span class='gradient'>turgan saytga o'xshash.</span>",s11Lead:"3D sahnalar va maxsus grafika.",s11Price:"<strong style='color:var(--gold)'>18 000 000 UZSdan</strong> · 4–6 hafta",s12Eyebrow:"Video paketlar",s12Title:"Sodda boshlang. <span class='gradient'>Ishlasa — kengaytiring.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"1 000 000 UZSdan",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"3 000 000 UZSdan",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"7 000 000 UZSdan",s13Eyebrow:"Tanlangan ishlar",s13Title:"AI, reels <span class='gradient'>va cinematic.</span>",s13Lead:"Kamera ekranlar devori bo'ylab harakatlanadi.",s14Eyebrow:"Qanday ishlaymiz",s14Title:"G'oyadan <span class='gradient'>ishga tushirishgacha.</span>",s14Lead:"5 bosqich.",s15Eyebrow:"Studiya",s15Title:"HYPE PRODUCTION <span class='gradient'>AI-video, reels va premium kontent</span> yaratadi.",s16Eyebrow:"Buyurtma",s16Title:"Boshlashga <span class='gradient'>tayyormisiz?</span>",s16Lead:"G'oyangizni ayting. 24 soat ichida javob beramiz.",instagramLabel:"Instagram",phoneLabel:"Telefon",formName:"Ism",formNamePlaceholder:"Sizning ismingiz",formPhone:"Telefon",formPhonePlaceholder:"+998",formProject:"Loyiha",formProjectPlaceholder:"Nimani yaratmoqchisiz?",formSubmit:"Yuborish",formSuccess:"Rahmat — 24 soat ichida javob beramiz.",formError:"Ism va telefonni to'ldiring.",m0Title:"KIRISH",m0Desc:"Ulkan portal. Masshtab. Tuman. Kuch va boshqa dunyoga yo'l hissi.",m1Title:"6&nbsp;YO'NALISH&nbsp;MARKAZI",m1Desc:"Yorug' chiziqlar va yo'nalish tanlovi bo'lgan navigatsiya markazi.",m2Title:"COMMERCIAL&nbsp;VIDEOS",m2Desc:"Prodakshn zonasi: kameralar, yorug'lik, LED-ekranlar, suratga olish pavilyonlari, studiya muhiti.",m3Title:"AI&nbsp;VIDEO",m3Desc:"AI laboratoriyasi: neyron tarmoqlar, renderlar, gologrammalar, futuristik ekranlar.",m4Title:"REELS",m4Desc:"Qisqa videolar olami: vertikal ekranlar, dinamik lentalar, energiya, harakat.",m5Title:"BRAND&nbsp;FILMS",m5Desc:"Kino olami: ulkan dekoratsiyalar, kameralar, anamorf yorug'lik, kino muhiti.",m6Title:"VISUAL&nbsp;POLISH",m6Desc:"Post-prodakshn: grading, rang, referenslar, toza shisha xonalar.",m7Title:"AI&nbsp;SITES",m7Desc:"Raqamli olam: interfeyslar, saytlar, UI-panellar, devorlar ichidagi raqamli shahar.",m8Title:"AUTOMATIONS",m8Desc:"Avtomatlashtirish olami: jarayonlar, sxemalar, oqimlar, integratsiyalar, AI-yordamchilar.",m9Title:"SYSTEMS",m9Desc:"Tizimlar va yechimlar: dashboardlar, ma'lumotlar, boshqaruv, nazorat markazi.",m10Title:"YAKUNIY&nbsp;ZONA",m10Desc:"Ulkan yakuniy zona, yorug'lik portali, logotip, CTA zonasi. Yakunlanish hissi.",m11Title:"LAUNCH",m11Desc:"Loyihani dunyoga chiqarish. Yangi voqelikka o'tish. Yakuniy effekt.",mStatProjects:"Loyiha",mStatCompanies:"Kompaniya",mStatBloggers:"Bloger",mMenuProjects:"Loyihalar",mMenuProcess:"Jarayon",mMenuBg:"Tarix",mMenuAbout:"Biz haqimizda",mMenuContacts:"Kontaktlar",mDiscuss:"Loyihani muhokama qilish",mSheetSub:"Vazifangiz haqida gapiring — biz eng yaxshi yechimni taklif qilamiz.",mFormName:"Ism",mFormPhone:"Telefon raqamingiz",mFormProject:"Loyiha haqida",mFormSubmit:"Yuborish" }
+      en: { headerCta:"Start project",scrollHint:"Scroll",ctaStart:"Start a project",ctaWorks:"View works",ctaDiscuss:"Discuss project",statVideos:"videos created",statCompanies:"companies",statBloggers:"bloggers",s0Eyebrow:"Cinematic Video Studio",s0Title:"HYPE PRODUCTION",s0Lead:"We turn any idea into a powerful video.",s1Eyebrow:"Enter the studio",s1Title:"8 <span class='gradient'>directions.</span> One studio.",s1Lead:"Each direction has its own room. Keep scrolling.",s2Eyebrow:"Commercial Videos",s2Title:"Built for <span class='gradient'>paid media.</span>",s2Lead:"High-impact videos for ad campaigns and launches.",s3Eyebrow:"AI Generated",s3Title:"Concept worlds <span class='gradient'>by AI.</span>",s3Lead:"Concepts and visual systems powered by AI.",s4Eyebrow:"Social Media Reels",s4Title:"Built for <span class='gradient'>the thumb.</span>",s4Lead:"Vertical edits. Hook, retention, DM shares.",s5Eyebrow:"Brand Promo Films",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic shooting, sound design, color.",s6Eyebrow:"Motion Design",s6Title:"Kinetic <span class='gradient'>typography.</span>",s6Lead:"Titles, transitions, UI motion, kinetic typography.",s7Eyebrow:"Product Ads",s7Title:"Clean. Focused. <span class='gradient'>Converts.</span>",s7Lead:"Product ads for funnels and launches.",s8Eyebrow:"New service",s8Title:"We build <span class='gradient'>sites too.</span>",s8Lead:"From prompt to launched site — in days.",s9Eyebrow:"Landing pages",s9Title:"One page. <span class='gradient'>One goal.</span>",s9Lead:"3–5 sections, form, mobile — in days.",s9Price:"<strong style='color:var(--blue)'>from 4 000 000 UZS</strong> · 5–7 days",s10Eyebrow:"Brand sites",s10Title:"Full <span class='gradient'>brand experience.</span>",s10Lead:"Multi-page site with animations and blog.",s10Price:"<strong style='color:var(--violet)'>from 9 000 000 UZS</strong> · 2–3 weeks",s11Eyebrow:"Cinematic sites",s11Title:"Like the one <span class='gradient'>you're in.</span>",s11Lead:"3D scenes, scroll-driven animations, custom graphics.",s11Price:"<strong style='color:var(--gold)'>from 18 000 000 UZS</strong> · 4–6 weeks",s12Eyebrow:"Video packages",s12Title:"Start simple. <span class='gradient'>Scale when it works.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"from 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"from 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"from 7 000 000 UZS",s13Eyebrow:"Selected work",s13Title:"AI, reels <span class='gradient'>and cinematic.</span>",s13Lead:"Camera drifts past a wall of screens.",s14Eyebrow:"How we work",s14Title:"From idea <span class='gradient'>to launch.</span>",s14Lead:"5 steps from first meeting to publication.",s15Eyebrow:"Studio",s15Title:"HYPE PRODUCTION creates <span class='gradient'>AI videos, reels and premium content</span> for brands.",s16Eyebrow:"Request",s16Title:"Ready to <span class='gradient'>launch?</span>",s16Lead:"Tell us your idea. We'll respond within 24h.",instagramLabel:"Instagram",phoneLabel:"Phone",formName:"Name",formNamePlaceholder:"Your name",formPhone:"Phone",formPhonePlaceholder:"+998",formProject:"Project",formProjectPlaceholder:"What do you want to create?",formSubmit:"Send request",formSuccess:"Thanks — we'll be in touch within 24h.",formError:"Please fill in name and phone." },
+      ru: { headerCta:"Начать проект",scrollHint:"Скроль",ctaStart:"Начать проект",ctaWorks:"Смотреть работы",ctaDiscuss:"Обсудить проект",statVideos:"созданных видео",statCompanies:"компаний",statBloggers:"блогеров",s0Eyebrow:"Cinematic-студия видеопродакшна",s0Title:"HYPE PRODUCTION",s0Lead:"Воплощаем любые идеи в кадре.",s1Eyebrow:"Войди в студию",s1Title:"8 <span class='gradient'>направлений.</span> Одна студия.",s1Lead:"Каждое направление — собственная сцена. Камера проведёт через все.",s2Eyebrow:"Рекламные видео",s2Title:"Сделано для <span class='gradient'>рекламы.</span>",s2Lead:"Видео высокого импакта для рекламных кампаний.",s3Eyebrow:"AI-видео",s3Title:"Концепт-миры <span class='gradient'>с помощью AI.</span>",s3Lead:"Концепты и визуальные системы на основе AI.",s4Eyebrow:"Reels для соцсетей",s4Title:"Сделано <span class='gradient'>для большого пальца.</span>",s4Lead:"Вертикальные монтажи. Хук, удержание, пересылки.",s5Eyebrow:"Brand-фильмы",s5Title:"Премиальный <span class='gradient'>сторителлинг.</span>",s5Lead:"Cinematic-съёмка, саунд-дизайн, цветокоррекция.",s6Eyebrow:"Motion-дизайн",s6Title:"Кинетическая <span class='gradient'>типографика.</span>",s6Lead:"Титры, переходы, UI-motion, типографика в движении.",s7Eyebrow:"Product-реклама",s7Title:"Чисто. Сфокусированно. <span class='gradient'>Продаёт.</span>",s7Lead:"Продуктовая реклама для воронок и запусков.",s8Eyebrow:"Новая услуга",s8Title:"Мы делаем <span class='gradient'>и сайты.</span>",s8Lead:"От промпта до запущенного сайта — за дни.",s9Eyebrow:"Лендинги",s9Title:"Одна страница. <span class='gradient'>Одна цель.</span>",s9Lead:"3–5 секций, форма, мобильная версия — за дни.",s9Price:"<strong style='color:var(--blue)'>от 4 000 000 UZS</strong> · 5–7 дней",s10Eyebrow:"Brand-сайты",s10Title:"Полный <span class='gradient'>brand-опыт.</span>",s10Lead:"Многостраничный сайт со скролл-анимациями и блогом.",s10Price:"<strong style='color:var(--violet)'>от 9 000 000 UZS</strong> · 2–3 недели",s11Eyebrow:"Cinematic-сайты",s11Title:"Как тот, <span class='gradient'>в котором ты сейчас.</span>",s11Lead:"3D-сцены, scroll-driven анимации, кастомная графика.",s11Price:"<strong style='color:var(--gold)'>от 18 000 000 UZS</strong> · 4–6 недель",s12Eyebrow:"Видео-пакеты",s12Title:"Начни просто. <span class='gradient'>Масштабируй, когда контент работает.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"от 1 000 000 UZS",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"от 3 000 000 UZS",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"от 7 000 000 UZS",s13Eyebrow:"Избранные работы",s13Title:"AI, reels <span class='gradient'>и cinematic.</span>",s13Lead:"Камера медленно проезжает мимо стены экранов.",s14Eyebrow:"Как мы работаем",s14Title:"От идеи <span class='gradient'>до запуска.</span>",s14Lead:"5 этапов от первой встречи до публикации.",s15Eyebrow:"Студия",s15Title:"HYPE PRODUCTION делает <span class='gradient'>AI-видео, reels и премиум-контент</span> для брендов.",s16Eyebrow:"Заявка",s16Title:"Готовы <span class='gradient'>запускать?</span>",s16Lead:"Расскажи идею. Ответим в течение 24 часов.",instagramLabel:"Instagram",phoneLabel:"Телефон",formName:"Имя",formNamePlaceholder:"Ваше имя",formPhone:"Телефон",formPhonePlaceholder:"+998",formProject:"Проект",formProjectPlaceholder:"Что хотите создать?",formSubmit:"Отправить заявку",formSuccess:"Спасибо — ответим в течение 24 часов.",formError:"Заполните имя и телефон." },
+      uz: { headerCta:"Loyiha boshlash",scrollHint:"Pastga",ctaStart:"Loyiha boshlash",ctaWorks:"Ishlarni ko'rish",ctaDiscuss:"Muhokama",statVideos:"yaratilgan video",statCompanies:"kompaniya",statBloggers:"bloger",s0Eyebrow:"Cinematic video studio",s0Title:"HYPE PRODUCTION",s0Lead:"Har qanday g'oyani videoga aylantiramiz.",s1Eyebrow:"Studiyaga kirish",s1Title:"8 <span class='gradient'>yo'nalish.</span> Bir studiya.",s1Lead:"Har biri o'z sahnasi. Kamera olib o'tadi.",s2Eyebrow:"Reklama videolari",s2Title:"Reklama uchun <span class='gradient'>yaratilgan.</span>",s2Lead:"Yuqori ta'sirli reklama videolari.",s3Eyebrow:"AI-videolar",s3Title:"AI yordamida <span class='gradient'>konsept dunyolar.</span>",s3Lead:"AI asosidagi konsept va vizual tizimlar.",s4Eyebrow:"Reels",s4Title:"Bosh barmoq uchun <span class='gradient'>yaratilgan.</span>",s4Lead:"Vertikal montajlar.",s5Eyebrow:"Brend-filmlar",s5Title:"Premium <span class='gradient'>storytelling.</span>",s5Lead:"Cinematic suratga olish, ovoz dizayn.",s6Eyebrow:"Motion-dizayn",s6Title:"Kinetik <span class='gradient'>tipografika.</span>",s6Lead:"Titrlar, o'tishlar, UI-motion.",s7Eyebrow:"Mahsulot reklamasi",s7Title:"Toza. Aniq. <span class='gradient'>Sotadi.</span>",s7Lead:"Mahsulotga yo'naltirilgan reklama.",s8Eyebrow:"Yangi xizmat",s8Title:"Biz <span class='gradient'>saytlar ham qilamiz.</span>",s8Lead:"Promptdan ishga tushgan saytgacha — kunlarda.",s9Eyebrow:"Lending",s9Title:"Bir sahifa. <span class='gradient'>Bir maqsad.</span>",s9Lead:"Bir maqsad uchun lending. Kunlarda.",s9Price:"<strong style='color:var(--blue)'>4 000 000 UZSdan</strong> · 5–7 kun",s10Eyebrow:"Brend saytlar",s10Title:"To'liq <span class='gradient'>brend tajriba.</span>",s10Lead:"Ko'p sahifali sayt.",s10Price:"<strong style='color:var(--violet)'>9 000 000 UZSdan</strong> · 2–3 hafta",s11Eyebrow:"Cinematic saytlar",s11Title:"Siz <span class='gradient'>turgan saytga o'xshash.</span>",s11Lead:"3D sahnalar va maxsus grafika.",s11Price:"<strong style='color:var(--gold)'>18 000 000 UZSdan</strong> · 4–6 hafta",s12Eyebrow:"Video paketlar",s12Title:"Sodda boshlang. <span class='gradient'>Ishlasa — kengaytiring.</span>",priceStartLabel:"START",priceStartTitle:"AI Reel",priceStartPrice:"1 000 000 UZSdan",priceGrowthLabel:"GROWTH",priceGrowthTitle:"Reels Pack",priceGrowthPrice:"3 000 000 UZSdan",priceHypeLabel:"HYPE",priceHypeTitle:"AI Promo",priceHypePrice:"7 000 000 UZSdan",s13Eyebrow:"Tanlangan ishlar",s13Title:"AI, reels <span class='gradient'>va cinematic.</span>",s13Lead:"Kamera ekranlar devori bo'ylab harakatlanadi.",s14Eyebrow:"Qanday ishlaymiz",s14Title:"G'oyadan <span class='gradient'>ishga tushirishgacha.</span>",s14Lead:"5 bosqich.",s15Eyebrow:"Studiya",s15Title:"HYPE PRODUCTION <span class='gradient'>AI-video, reels va premium kontent</span> yaratadi.",s16Eyebrow:"Buyurtma",s16Title:"Boshlashga <span class='gradient'>tayyormisiz?</span>",s16Lead:"G'oyangizni ayting. 24 soat ichida javob beramiz.",instagramLabel:"Instagram",phoneLabel:"Telefon",formName:"Ism",formNamePlaceholder:"Sizning ismingiz",formPhone:"Telefon",formPhonePlaceholder:"+998",formProject:"Loyiha",formProjectPlaceholder:"Nimani yaratmoqchisiz?",formSubmit:"Yuborish",formSuccess:"Rahmat — 24 soat ichida javob beramiz.",formError:"Ism va telefonni to'ldiring." }
     };
     let curLang = 'ru';
 
@@ -1816,7 +1816,7 @@
       .catch(err => ({ ok: false, error: String(err && err.message || err) }));
     }
 
-    function applyLang(L){if(!i18n[L])return;curLang=L;document.documentElement.lang=L;const t=i18n[L];document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(t[k]!==undefined)e.innerHTML=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>{const k=e.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)e.setAttribute('placeholder',t[k])});document.querySelectorAll('.lang-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===L));document.querySelectorAll('[data-mlang]').forEach(b=>b.classList.toggle('active',b.getAttribute('data-mlang')===L));try{if(window.mRefreshLabel)window.mRefreshLabel();}catch(e){}}
+    function applyLang(L){if(!i18n[L])return;curLang=L;document.documentElement.lang=L;const t=i18n[L];document.querySelectorAll('[data-i18n]').forEach(e=>{const k=e.getAttribute('data-i18n');if(t[k]!==undefined)e.innerHTML=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>{const k=e.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)e.setAttribute('placeholder',t[k])});document.querySelectorAll('.lang-switcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===L))}
     document.querySelectorAll('.lang-switcher button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
     applyLang('ru');
 
@@ -2411,8 +2411,7 @@
       const nowEl     = document.getElementById('m-now');
       const labelEl   = document.getElementById('m-label');
       const dotsHost  = document.getElementById('m-dots');
-      const TITLE_KEYS = ['m0Title','m1Title','m2Title','m3Title','m4Title','m5Title','m6Title','m7Title','m8Title','m9Title','m10Title','m11Title'];
-      function getTitles(){ var t = (typeof i18n!=='undefined' && i18n[curLang]) ? i18n[curLang] : {}; return TITLE_KEYS.map(function(k){ return (t[k]||'').replace(/&nbsp;/g,' '); }); }
+      const TITLES = ['ВХОД','ХАБ 6 НАПРАВЛЕНИЙ','COMMERCIAL VIDEOS','AI VIDEO','REELS','BRAND FILMS','VISUAL POLISH','AI SITES','AUTOMATIONS','SYSTEMS','ФИНАЛЬНАЯ ЗОНА','LAUNCH'];
 
       if(!scrollEl || !sceneEls.length) return;
 
@@ -2431,7 +2430,7 @@
         sceneEls.forEach((s, j) => s.classList.toggle('active', j === i));
         dots.forEach((d, j) => d.classList.toggle('active', j === i));
         if(nowEl)   nowEl.textContent   = String(i).padStart(2, '0');
-        if(labelEl) labelEl.textContent = getTitles()[i] || '';
+        if(labelEl) labelEl.textContent = TITLES[i] || '';
         if(fillEl)  fillEl.style.width  = ((i / Math.max(1, sceneEls.length - 1)) * 100) + '%';
       }
       setActive(0);
@@ -2463,7 +2462,6 @@
       window.mCloseSheet = function(){
         document.documentElement.classList.remove('sheet-open');
       };
-      window.mRefreshLabel = function(){ if(labelEl) labelEl.textContent = getTitles()[activeIdx] || ''; };
 
       // Language buttons inside the mobile menu reuse the desktop applyLang().
       document.querySelectorAll('[data-mlang]').forEach(btn => {
